@@ -40,7 +40,7 @@ $code = $aouth->redirect('github',[
 //$user = $aouth->driver('github',[
 //    'client_id' => '684a49aa60ce60372463',
 //    'redirect_url' => 'http://oauth.test/test.php',
-//    'client_secret' => 'db6509a0d4b384e9432273274b9381e1ffb90bb6'
+//    'client_secret' => ''
 //
 //])->user();
 
