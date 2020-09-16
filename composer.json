@@ -9,7 +9,7 @@
             "email": "pltruenine@163.com"
         }
     ],
-    "minimum-stability": "^1.0",
+    "minimum-stability": "^0.0.1",
     "autoload": {
         "psr-4": {
             "Thirdparty\\": "./"
