@@ -27,7 +27,7 @@ $aouth = new SocialiteAuth();
 $user = $aouth->driver('weibo',[
     'client_id' => '1949419161',
     'redirect_url' => 'http://oauth.test/test.php',
-    'client_secret' => '38ad194c8302f42d8d6c7bc7704595e7'
+    'client_secret' => ''
 
 ])->user();
 
