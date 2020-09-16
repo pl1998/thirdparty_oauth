@@ -19,19 +19,24 @@ trait Oauth
     private static  $api = [
         'github' => [
             'authorization' => 'https://github.com/login/oauth/authorize?client_id=%s&redirect_uri=%s',
-            'access_token' => 'https://github.com/login/oauth/access_token',
-            'user' => 'https://api.github.com/user',
+            'access_token'  => 'https://github.com/login/oauth/access_token',
+            'user'          => 'https://api.github.com/user',
         ],
         'gitee' => [
-            'authorization'         => 'https://gitee.com/oauth/authorize?client_id=%s&redirect_uri=%s&response_type=code',
-            'access_token' => 'https://gitee.com/oauth/token?grant_type=authorization_code&code=%s&client_id=%s&redirect_uri=%s&client_secret=%s',
-            'user' => 'https://gitee.com/api/v5/user?access_token=%s',
+            'authorization' => 'https://gitee.com/oauth/authorize?client_id=%s&redirect_uri=%s&response_type=code',
+            'access_token'  => 'https://gitee.com/oauth/token?grant_type=authorization_code&code=%s&client_id=%s&redirect_uri=%s&client_secret=%s',
+            'user'          => 'https://gitee.com/api/v5/user?access_token=%s',
         ],
         'weibo' => [
-            'authorization' => '',
-            'access_token' => 'https://api.weibo.com/oauth2/access_token?client_id=%s&client_secret=%s&grant_type=authorization_code&code=%s&redirect_uri=%s',
-            'uid' => 'https://api.weibo.com/oauth2/get_token_info?access_token=%s',
-            'user' => 'https://api.weibo.com/2/users/show.json?uid=%s&access_token=%s',
+            'authorization' => 'https://api.weibo.com/oauth2/authorize?client_id=%s&redirect_uri=%s',
+            'access_token'  => 'https://api.weibo.com/oauth2/access_token?client_id=%s&client_secret=%s&grant_type=authorization_code&code=%s&redirect_uri=%s',
+            'uid'           => 'https://api.weibo.com/oauth2/get_token_info?access_token=%s',
+            'user'          => 'https://api.weibo.com/2/users/show.json?uid=%s&access_token=%s',
+        ],
+        'gitlab'=> [
+            'authorization' => 'https://gitlab.example.com/oauth/authorize?client_id=%s&redirect_uri=%s&response_type=%s&state=YOUR_UNIQUE_STATE_HASH&scope=REQUESTED_SCOPES',
+            'access_token'  => 'https://gitlab.example.com/oauth/token',
+            'user'          => 'https://gitlab.example.com/api/v4/user',
         ]
     ];
 
@@ -53,7 +58,10 @@ trait Oauth
             case 'weibo':
                 return sprintf(self::$api[$deiver][$filed],$config['client_id'],$config['client_secret'],$_GET['code'],$config['redirect_url']);
             case 'github':
-                return self::$api[$deiver][$filed];
+                return self::$api[$this->deiver][$filed];
+                break;
+            case 'gitlab':
+                return self::$api[$this->deiver][$filed];
                 break;
         }
 
@@ -65,7 +73,7 @@ trait Oauth
      */
     public function getAuthorizationUrl()
     {
-        return self::$api[$this->deiver]['authorization'];
+        return sprintf(self::$api[$this->deiver]['authorization'],$this->config['client_id'],$this->config['redirect_url']);
     }
 
     /**
@@ -93,6 +101,9 @@ trait Oauth
                 return sprintf(self::$api[$this->deiver]['user'],$uid,$access_token);
                 break;
             case 'github':
+                return self::$api[$this->deiver]['user'];
+                break;
+            case 'gitlab':
                 return self::$api[$this->deiver]['user'];
                 break;
         }

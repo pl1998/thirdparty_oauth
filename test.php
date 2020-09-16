@@ -24,10 +24,17 @@ $aouth = new SocialiteAuth();
 //
 //])->user();
 
-$user = $aouth->driver('weibo',[
-    'client_id' => '1949419161',
+//$user = $aouth->driver('weibo',[
+//    'client_id' => '1949419161',
+//    'redirect_url' => 'http://oauth.test/test.php',
+//    'client_secret' => ''
+//
+//])->user();
+
+$user = $aouth->driver('gitlab',[
+    'client_id' => '12c7e66df203caa44cf50608cec8c9ea43fe04aa1f8e02c1fc0a966784c61dcd',
     'redirect_url' => 'http://oauth.test/test.php',
-    'client_secret' => ''
+    'client_secret' => '08fea056f9dc0f84eb691284bcea0520726d3f6fe25c1d525be8a25b67649420'
 
 ])->user();
 

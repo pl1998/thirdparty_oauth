@@ -1,4 +1,4 @@
-## 这是一个第三方登录扩展包 目前支持 github gitee 微博登录
+## 这是一个第三方登录扩展包 目前支持 github gitee 微博 gitlab 登录
     
 ##### 参数说明 
 
@@ -10,6 +10,7 @@
     
    * [github应用创建地址](https://github.com/settings/developers)
    * [gitee应用创建地址](https://gitee.com/oauth/applications)
+   * [gitlab应用创建地址](https://gitlab.com/oauth/applications)
    * [微博应用创建地址](https://open.weibo.com/)
    
    

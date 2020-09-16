@@ -20,10 +20,6 @@ class Helpers
     public static function getAccessToken($deiver,$aouth,$key='access_token')
     {
         switch ($deiver) {
-            case 'gitee':
-                $aouth = json_decode($aouth,true);
-                return  $aouth[$key];
-                break;
             case 'github':
                 $params       = explode('=',$aouth);
                 $access_token = $params[1];
@@ -31,10 +27,15 @@ class Helpers
                 $access_token = $access_token[0];
                 return "Bearer ".$access_token;
                 break;
-            case 'weibo':
+            case 'gitlab':
+                $aouth = json_decode($aouth,true);
+                return "Bearer ".$aouth[$key];
+                break;
+            default:
                 $aouth = json_decode($aouth,true);
                 return  $aouth[$key];
                 break;
+
         }
     }
 

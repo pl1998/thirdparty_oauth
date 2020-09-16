@@ -74,7 +74,6 @@ class SocialiteApi
     {
        $url = $this->getRelevantUrl($this->deiver,$this->config,'access_token');
 
-
        switch ($this->deiver) {
            case 'gitee':
                return $this->client->request('POST',$url,[
@@ -86,9 +85,7 @@ class SocialiteApi
            case 'weibo':
                return $this->client->post($url);
                break;
-
            case 'github':
-
                return $this->client->request('POST',$url,[
                    'form_params' => [
                        'client_secret'=> $this->config['client_secret'],
@@ -97,7 +94,16 @@ class SocialiteApi
                        'redirect_uri' => $this->config['redirect_url'],
                    ]
                ]);
-
+               break;
+           case 'gitlab':
+               return  $this->client->request('POST',$url,[
+                   'form_params' => [
+                       'client_secret'=> $this->config['client_secret'],
+                       'code'         => $this->code,
+                       'client_id'    => $this->config['client_id'],
+                       'redirect_uri' => $this->config['redirect_url'],
+                   ]
+               ]);
                break;
        }
     }
@@ -126,6 +132,10 @@ class SocialiteApi
                         'Authorization'=>$access_token
                     ]
                 ]);
+                break;
+            case 'gitlab':
+                $url = $this->getUserInfoUrl();
+                return  $this->client->post($url);
                 break;
         }
     }

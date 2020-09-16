@@ -26,7 +26,7 @@ class SocialiteAuth implements Socialite
      * 目前支持的授权平台
      * @var string[]
      */
-    private static $deiver = ['gitee','github','weibo'];
+    private static $deiver = ['gitee','github','weibo','gitlab'];
 
     /**
      * 获取回调地址信息
@@ -39,10 +39,6 @@ class SocialiteAuth implements Socialite
     {
         if(!in_array($deiver,self::$deiver)) {
             throw new \Exception("目前不支持 $deiver");
-        }
-
-        if(strtolower($deiver) == 'redirect') {
-            return $this->redirect();
         }
 
         if(Helpers::intendedEffect(array_keys($config)) == false) {

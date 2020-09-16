@@ -21,10 +21,12 @@
   <component name="ChangeListManager">
     <list default="true" id="58665e2f-90d6-44a4-892f-485fd0f6f7f4" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Helpers.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Helpers.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/SocialiteAuth.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/SocialiteAuth.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/api/Oauth.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/Oauth.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/api/SocialiteApi.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/SocialiteApi.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test.php" beforeDir="false" afterPath="$PROJECT_DIR$/test.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
