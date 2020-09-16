@@ -56,8 +56,17 @@ class SocialiteApi
         if(in_array(strtolower($deiver),self::$api)) {
             throw new ParameterException();
         }
-
     }
+
+
+    /** 执行授权请求
+     * @return \Psr\Http\Message\ResponseInterface
+     */
+    public function authorization()
+    {
+        return $this->client->get($this->getAuthorizationUrl());
+    }
+
 
     private function getAccessToken()
     {

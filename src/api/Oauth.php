@@ -13,17 +13,17 @@ trait Oauth
 {
     private static  $api = [
         'github' => [
-            'code' => 'https://github.com/login/oauth/authorize?client_id=%s&redirect_uri=%s',
+            'authorization' => 'https://github.com/login/oauth/authorize?client_id=%s&redirect_uri=%s',
             'access_token' => 'https://github.com/login/oauth/access_token',
             'user' => 'https://api.github.com/user',
         ],
         'gitee' => [
-            'code'         => 'https://gitee.com/oauth/authorize?client_id=%s&redirect_uri=%s&response_type=code',
+            'authorization'         => 'https://gitee.com/oauth/authorize?client_id=%s&redirect_uri=%s&response_type=code',
             'access_token' => 'https://gitee.com/oauth/token?grant_type=authorization_code&code=%s&client_id=%s&redirect_uri=%s&client_secret=%s',
             'user' => 'https://gitee.com/api/v5/user?access_token=%s',
         ],
         'weibo' => [
-            'code' => '',
+            'authorization' => '',
             'access_token' => 'https://api.weibo.com/oauth2/access_token?client_id=%s&client_secret=%s&grant_type=authorization_code&code=%s&redirect_uri=%s',
             'uid' => 'https://api.weibo.com/oauth2/get_token_info?access_token=%s',
             'user' => 'https://api.weibo.com/2/users/show.json?uid=%s&access_token=%s',
@@ -52,7 +52,11 @@ trait Oauth
                 break;
         }
 
+    }
 
+    public function getAuthorizationUrl()
+    {
+        return self::$api[$this->deiver]['authorization'];
     }
 
     /**

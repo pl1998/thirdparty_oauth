@@ -20,4 +20,7 @@ interface Socialite
     public function driver($deiver);
 
     public function user();
+
+
+    public function redirect($deiver);
 }
