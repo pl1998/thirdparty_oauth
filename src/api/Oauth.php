@@ -13,7 +13,9 @@ trait Oauth
 {
     private static  $api = [
         'github' => [
-            ''
+            'code' => 'https://github.com/login/oauth/authorize?client_id=%s&redirect_uri=%s',
+            'access_token' => 'https://github.com/login/oauth/access_token',
+            'user' => 'https://api.github.com/user',
         ],
         'gitee' => [
             'code'         => 'https://gitee.com/oauth/authorize?client_id=%s&redirect_uri=%s&response_type=code',
@@ -23,7 +25,7 @@ trait Oauth
         'weibo' => [
             'code' => '',
             'access_token' => 'https://api.weibo.com/oauth2/access_token?client_id=%s&client_secret=%s&grant_type=authorization_code&code=%s&redirect_uri=%s',
-            'uid' => 'https://api.weibo.com/oauth2/get_token_info?access_token=',
+            'uid' => 'https://api.weibo.com/oauth2/get_token_info?access_token=%s',
             'user' => 'https://api.weibo.com/2/users/show.json?uid=%s&access_token=%s',
         ]
     ];
@@ -39,19 +41,46 @@ trait Oauth
 
     public function getRelevantUrl($deiver,$config,$filed)
     {
-        return sprintf(self::$api[$deiver][$filed],$_GET['code'],$config['client_id'],$config['redirect_url'],$config['client_secret']);
+        switch ($deiver) {
+            case 'gitee':
+                return sprintf(self::$api[$deiver][$filed],$_GET['code'],$config['client_id'],$config['redirect_url'],$config['client_secret']);
+                break;
+            case 'weibo':
+                return sprintf(self::$api[$deiver][$filed],$config['client_id'],$config['client_secret'],$_GET['code'],$config['redirect_url']);
+            case 'github':
+                return self::$api[$deiver][$filed];
+                break;
+        }
+
+
     }
 
-
+    /**
+     * @param $access_token
+     * @return string
+     */
     public function getUidUrl($access_token)
     {
         return sprintf(self::$api[$this->deiver]['uid'],$access_token);
     }
 
-    public function getUserInfoUrl($access_token,$uid ='')
+    /**
+     * @param $access_token
+     * @param string $uid
+     * @return string
+     */
+    public function getUserInfoUrl($access_token='',$uid ='')
     {
-        if($this->deiver == 'weibo') {
-            return sprintf(self::$api[$this->deiver]['user'],$uid,$access_token);
+        switch ($this->deiver) {
+            case 'gitee':
+                return sprintf(self::$api[$this->deiver]['user'],$access_token);
+                break;
+            case 'weibo':
+                return sprintf(self::$api[$this->deiver]['user'],$uid,$access_token);
+            case 'github':
+                return self::$api[$this->deiver]['user'];
+                break;
         }
+
     }
 }

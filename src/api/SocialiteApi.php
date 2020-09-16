@@ -35,6 +35,8 @@ class SocialiteApi
      */
     protected $client;
 
+    protected $code;
+
 
     /**
      * 实例化请求api
@@ -49,6 +51,7 @@ class SocialiteApi
         $this->config = $config;
         $this->client = new Client();
         $this->deiver = $deiver;
+        $this->code   = $_GET['code'];
 
         if(in_array(strtolower($deiver),self::$api)) {
             throw new ParameterException();
@@ -60,6 +63,7 @@ class SocialiteApi
     {
        $url = $this->getRelevantUrl($this->deiver,$this->config,'access_token');
 
+
        switch ($this->deiver) {
            case 'gitee':
                return $this->client->request('POST',$url,[
@@ -70,6 +74,19 @@ class SocialiteApi
                break;
            case 'weibo':
                return $this->client->post($url);
+               break;
+
+           case 'github':
+
+               return $this->client->request('POST',$url,[
+                   'form_params' => [
+                       'client_secret'=> $this->config['client_secret'],
+                       'code'         => $this->code,
+                       'client_id'    => $this->config['client_id'],
+                       'redirect_uri' => $this->config['redirect_url'],
+                   ]
+               ]);
+
                break;
        }
     }
@@ -84,15 +101,22 @@ class SocialiteApi
         switch ($this->deiver) {
             case 'gitee':
                 $url          =  sprintf(self::$api[$this->deiver]['user'],$access_token);
+                return $this->client->request('GET',$url);
                 break;
             case 'weibo':
                 $uid = $this->getUid($access_token);
                 $url = $this->getUserInfoUrl($access_token,$uid);
+                return $this->client->request('GET',$url);
+                break;
+            case 'github':
+                $url = $this->getUserInfoUrl();
+                return $this->client->request('GET',$url,[
+                    'headers' =>[
+                        'Authorization'=>$access_token
+                    ]
+                ]);
                 break;
         }
-
-        return $this->client->request('GET',$url);
-
     }
 
     /**

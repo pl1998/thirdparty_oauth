@@ -48,14 +48,14 @@
     <property name="node.js.path.for.package.tslint" value="project" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
-    <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
+    <property name="settings.editor.selected.configurable" value="web-ide.project.structure" />
   </component>
   <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="E:\WWW\php_thirdparty_oauth" />
-    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="E:\WWW\php_thirdparty_oauth\src\api" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="E:\WWW\php_thirdparty_oauth" />
     </key>
   </component>
   <component name="SvnConfiguration">
@@ -73,7 +73,9 @@
       <workItem from="1600075174852" duration="834000" />
       <workItem from="1600133009400" duration="4016000" />
       <workItem from="1600148000949" duration="375000" />
-      <workItem from="1600148401522" duration="9887000" />
+      <workItem from="1600148401522" duration="10094000" />
+      <workItem from="1600161989213" duration="194000" />
+      <workItem from="1600219140327" duration="5535000" />
     </task>
     <servers />
   </component>
@@ -85,22 +87,22 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="690" y="268" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1600152517705" />
-    <state x="740" y="274" key="FileChooserDialogImpl" timestamp="1600148337968">
+    <state x="740" y="274" key="FileChooserDialogImpl" timestamp="1600219215609">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="740" y="274" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1600148337968" />
-    <state x="781" y="335" key="NewPhpClassDialog" timestamp="1600153030124">
+    <state x="740" y="274" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1600219215609" />
+    <state x="781" y="335" key="NewPhpClassDialog" timestamp="1600219643469">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="781" y="335" key="NewPhpClassDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1600153030124" />
+    <state x="781" y="335" key="NewPhpClassDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1600219643469" />
     <state x="797" y="443" key="NewPhpFileDialog" timestamp="1600156623506">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="797" y="443" key="NewPhpFileDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1600156623506" />
-    <state x="476" y="163" key="SettingsEditor" timestamp="1600052874497">
+    <state x="476" y="163" key="SettingsEditor" timestamp="1600162141973">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="476" y="163" key="SettingsEditor/0.0.1920.1040@0.0.1920.1040" timestamp="1600052874497" />
+    <state x="476" y="163" key="SettingsEditor/0.0.1920.1040@0.0.1920.1040" timestamp="1600162141973" />
     <state x="616" y="240" key="run.anything.popup" timestamp="1600153379524">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>

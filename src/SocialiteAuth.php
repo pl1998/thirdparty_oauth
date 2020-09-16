@@ -16,8 +16,6 @@ use Thirdparty\Src\Api\SocialiteApi;
 class SocialiteAuth implements Socialite
 {
 
-    protected static $driver;
-
     protected  $json = [];
 
     private static $deiver = ['gitee','github','weibo'];
@@ -28,7 +26,6 @@ class SocialiteAuth implements Socialite
         if(!in_array($deiver,self::$deiver)) {
             throw new \Exception("目前不支持 $deiver aouth");
         }
-
 
         if(Helpers::intendedEffect(array_keys($config)) == false) {
             throw new \Exception('参数错误');
