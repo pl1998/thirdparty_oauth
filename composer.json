@@ -1,5 +1,5 @@
 {
-    "name": "pltrue/php_thirdparty_oauth",
+    "name": "pltrue/thirdparty_oauth",
     "description": "这是一个社会化登录aouth扩展包 目前支持 gitee、github、微博登录",
     "type": "composer-plugin",
     "license": "MIT",
