@@ -19,7 +19,6 @@ class Helpers
      */
     public static function getAccessToken($deiver,$aouth,$key='access_token')
     {
-
         switch ($deiver) {
             case 'gitee':
                 $aouth = json_decode($aouth,true);
@@ -48,7 +47,6 @@ class Helpers
     public static function intendedEffect(array  $array)
     {
         $effect_array = ['client_id','redirect_url','client_secret'];
-
 
         if(array_diff($array,$effect_array) == []) {
             return true;

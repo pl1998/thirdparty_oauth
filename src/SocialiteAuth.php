@@ -16,13 +16,27 @@ use Thirdparty\Src\Api\SocialiteApi;
 class SocialiteAuth implements Socialite
 {
 
-    protected  $json = [];
+    /**
+     * 用户json数据
+     * @var
+     */
+    protected  $userJson;
 
+    /**
+     * 目前支持的授权平台
+     * @var string[]
+     */
     private static $deiver = ['gitee','github','weibo'];
 
+    /**
+     * 获取回调地址信息
+     * @param $deiver
+     * @param array $config
+     * @return $this|int
+     * @throws \Exception
+     */
     public  function driver($deiver,array $config = [])
     {
-
         if(!in_array($deiver,self::$deiver)) {
             throw new \Exception("目前不支持 $deiver");
         }
@@ -37,7 +51,7 @@ class SocialiteAuth implements Socialite
 
         $api    = new SocialiteApi($config,$deiver);
 
-        $this->json = $api->getUserInfo()->getBody()->getContents();
+        $this->userJson = $api->getUserInfo()->getBody()->getContents();
 
         return $this;
     }
@@ -48,7 +62,7 @@ class SocialiteAuth implements Socialite
      */
     public function user()
     {
-        return $this->json;
+        return $this->userJson;
     }
 
     /**
@@ -59,9 +73,9 @@ class SocialiteAuth implements Socialite
      */
     public function redirect($deiver,array  $config = [])
     {
-        $api    = new SocialiteApi($deiver,$config);
-        $code   = $api->authorization()->getStatusCode();
-        return  $code;
+        $api        = new SocialiteApi($deiver,$config);
+        $httpcCode   = $api->authorization()->getStatusCode();
+        return $httpcCode ;
     }
 
 }

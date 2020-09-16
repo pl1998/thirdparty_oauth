@@ -11,6 +11,11 @@ namespace Thirdparty\Src\Api;
 
 trait Oauth
 {
+
+    /**
+     * 所有api接口
+     * @var \string[][]
+     */
     private static  $api = [
         'github' => [
             'authorization' => 'https://github.com/login/oauth/authorize?client_id=%s&redirect_uri=%s',
@@ -54,12 +59,17 @@ trait Oauth
 
     }
 
+    /**
+     * 执行授权请求
+     * @return string
+     */
     public function getAuthorizationUrl()
     {
         return self::$api[$this->deiver]['authorization'];
     }
 
     /**
+     * 获取微博用户uid
      * @param $access_token
      * @return string
      */
@@ -81,6 +91,7 @@ trait Oauth
                 break;
             case 'weibo':
                 return sprintf(self::$api[$this->deiver]['user'],$uid,$access_token);
+                break;
             case 'github':
                 return self::$api[$this->deiver]['user'];
                 break;

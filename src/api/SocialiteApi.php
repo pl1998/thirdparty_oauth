@@ -35,8 +35,11 @@ class SocialiteApi
      */
     protected $client;
 
+    /**
+     * 授权code
+     * @var mixed
+     */
     protected $code;
-
 
     /**
      * 实例化请求api
@@ -47,7 +50,6 @@ class SocialiteApi
      */
     public function __construct(array $config,$deiver)
     {
-
         $this->config = $config;
         $this->client = new Client();
         $this->deiver = $deiver;
