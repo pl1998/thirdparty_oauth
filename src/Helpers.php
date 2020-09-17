@@ -1,9 +1,12 @@
 <?php
-/**
- * Created by PhpStorm
- * User: pl
- * Date: 2020/9/17
- * Time: 10:16.
+
+/*
+ * This file is part of the pl1998/thirdparty_oauth.
+ *
+ * (c) pl1998<pltruenine@163.com>
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
  */
 
 namespace Pl1998\ThirdpartyOauth;
@@ -37,20 +40,17 @@ class Helpers
 
                 return  $aouth[$key];
                 break;
-
         }
     }
 
     /**
      * 判断两个数组是否相同.
      *
-     * @param array $array
-     *
      * @return bool
      */
     public static function intendedEffect(array $array, $effect_array)
     {
-        if (array_diff($array, $effect_array) == []) {
+        if ([] == array_diff($array, $effect_array)) {
             return true;
         } else {
             return false;
