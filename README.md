@@ -1,58 +1,59 @@
-<h1 align="center"> thirdparty_oauth </h1>
+<h1> thirdparty_oauth </h1>
 
-<p align="center"> 这是一个社会 目前支持 github gitee 微博 gitlab 登录.</p>
+<p> 这是一个社会第三方登录扩展包 目前支持 github gitee 微博 gitlab 登录.</p>
 
 
-## Installing
+## 安装
 
 ```shell
 $ composer require pl1998/thirdparty_oauth -vvv
 ```
 
-## Usage
+<hr>
 
-TODO
+## 贡献
+你可以通过以下三种方式做出贡献:
 
-## Contributing
+1. bug反馈   [issue tracker](https://github.com/pl1998/thirdparty_oauth/issues).
+2. 回答问题或修复错误 [issue tracker](https://github.com/pl1998/thirdparty_oauth/issues).
+3. 贡献新特性或更新wiki。
 
-You can contribute in one of three ways:
 
-1. File bug reports using the [issue tracker](https://github.com/pl1998/thirdparty_oauth/issues).
-2. Answer questions or fix bugs on the [issue tracker](https://github.com/pl1998/thirdparty_oauth/issues).
-3. Contribute new features or update the wiki.
+<hr>
 
-_The code contribution process is not very formal. You just need to make sure that you follow the PSR-0, PSR-1, and PSR-2 coding guidelines. Any new code contributions must be accompanied by unit tests where applicable._
-
-## License
-
-MIT
-
-    
-##### 参数说明 
-
-> `redirect_url`   回调地址将使用方法写到回调接口即可 获取到用户的一些基础信息
-> `client_id`     应用授权id
-> `client_secret` 应用授权key
-
-##### 如何申请应用授权
+## 如何申请应用授权？
     
    * [github应用创建地址](https://github.com/settings/developers)
    * [gitee应用创建地址](https://gitee.com/oauth/applications)
    * [gitlab应用创建地址](https://gitlab.com/oauth/applications)
    * [微博应用创建地址](https://open.weibo.com/)
    
-   
-   
+
+##### 参数说明 
+
+>   <kbd>redirect_url</kbd>   回调地址将使用方法写到回调接口即可 获取到用户的一些基础信息 <br/>
+> <kbd>client_id</kbd>     应用授权id <br/>
+>  <kbd>client_secret</kbd>  应用授权key <br/>
+
+
+
 ##### 建议
 
-> 建议前端页面取请求 授权接口 后端做回调接口保存用户信息到mysql\session 即可
 
 
-##### php项目如何使用？
+> 前后端分离下建议前端直接请求授权接口，后端负责回调接口即可
 
 
-    
-## 授权方法
+## php项目中如何使用？
+
+<hr>
+
+<br/>
+<br/>
+
+#### 授权方法  
+
+
 
 ```php
 
@@ -68,9 +69,9 @@ $api = new SocialiteAuth([
 $json = $api->redirect('weibo');
 
 var_dump($json);
-```    
+```
     
-## 回调接口方法
+#### 回调接口方法
 
 ```php
 
@@ -90,20 +91,22 @@ var_dump($user);die;
 
 ```
 
+<br/>
 
+## 在 Thinkphp5中如何使用?
 
-##### 在 Thinkphp5中如何使用?
-
-##### 注册两条路由
+<hr>
 
 ```php
-//在路由文件新建两天路由
+
+//在路由文件新建两条路由
 Route::get('authorization','api/TestController/authorization')->name('请求授权');
 Route::get('gitee/callback','api/TestController/giteeCallback')->name('授权回调接口');
 
 ```
 
-##### 配置文件
+## 配置文件
+
 ```php
 return [
     'github' => [
@@ -171,7 +174,7 @@ class TestController
 ```
 
 
-##### 返回的信息
+## 返回示例
 
 ```json
 {
@@ -208,4 +211,14 @@ class TestController
     "created_at": "2018-10-09T12:42:14Z",
     "updated_at": "2020-09-17T04:49:23Z"
 }
+
 ```
+<br/>
+<br/>
+
+
+## License
+<hr>
+MIT
+
+
