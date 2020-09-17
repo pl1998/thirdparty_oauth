@@ -8,7 +8,7 @@
 ## 安装
 
 ```shell
-$ composer require pl1998/thirdparty_oauth -vvv
+$ composer require pl1998/thirdparty_oauth 
 ```
 
 <hr>
@@ -19,6 +19,15 @@ $ composer require pl1998/thirdparty_oauth -vvv
 1. bug反馈   [issue tracker](https://github.com/pl1998/thirdparty_oauth/issues).
 2. 回答问题或修复错误 [issue tracker](https://github.com/pl1998/thirdparty_oauth/issues).
 3. 贡献新特性或更新wiki。
+
+## 兼容
+> * 支持php >=5.6 
+
+## 如何使用
+
+> * [php项目中如何使用?](#测试1)
+> * [在Thinkphp中如何使用?](#测试2)
+> * [在laravel中如何使用?](#测试3)
 
 
 <hr>
@@ -41,12 +50,9 @@ $ composer require pl1998/thirdparty_oauth -vvv
 
 ##### 建议
 
-
-
 > 前后端分离下建议前端直接请求授权接口，后端负责回调接口即可
 
-
-## php项目中如何使用？
+## <a id="测试1">php项目中如何使用</a>
 
 <hr>
 
@@ -95,7 +101,8 @@ var_dump($user);die;
 
 <br/>
 
-## 在 Thinkphp5中如何使用?
+## <a id="测试2">在Thinkphp中如何使用?</a>
+
 
 <hr>
 
@@ -174,6 +181,74 @@ class TestController
 }
 
 ```
+
+## <a id="测试3">在laravel中如何使用?</a>
+
+
+> 在laravle的 <kbd>service.php</kbd>配置文件中加入配置
+
+```php
+
+   .
+   .
+   .
+  'oauth' => [
+         'github' => [
+             'client_id'    => env('GITHUB_CLIENT_ID'),
+             'redirect_uri' => env('GITHUB_REDIRECT_URI'),
+             'client_secret'=>env('GITHUB_CLIENT_SECRET')
+         ]
+  ]
+   .....
+```
+
+#### 在 <kbd>.env</kdb>中配置
+
+```shell
+GITHUB_CLIENT_ID=xxxx
+GITHUB_REDIRECT_URI=xxx
+GITHUB_CLIENT_SECRET=xxx
+```
+
+## 创建路由
+
+```php
+Route::get('auth/github','IndexController@auth')->name('github授权');
+Route::get('callback/github','IndexController@callback')->name('github回调接口');
+```
+
+## 控制器方法
+
+```php
+ /**
+     * 授权方法
+     * @return mixed
+     */
+    public function auth()
+    {
+        //普通写法
+        // $auth = new SocialiteAuth(config('services.oauth'));
+        // $auth->redirect('github');
+
+        //laravel 容器使用
+         app('socialiteAuth')->redirect('github');
+
+    }
+    /**
+     * 回调方法
+     */
+    public function callback()
+    {
+        //普通写法
+        //$auth = new SocialiteAuth(config('services.oauth.github'));
+        //$user = $auth->driver('github')->user();
+        //var_dump($user);
+        //laravel 容器使用
+        $user = app('socialiteAuth')->driver('github')->user();
+        var_dump($user);
+    }
+```
+
 
 
 ## 返回示例

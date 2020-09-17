@@ -1,6 +1,6 @@
 {
     "name": "pl1998/thirdparty_oauth",
-    "description": "这是一个社会 目前支持github gitlab gitee  授权登录",
+    "description": "这是一个第三方授权登录扩展包 目前支持github gitlab gitee  授权登录",
     "license": "MIT",
     "authors": [
         {
@@ -9,7 +9,7 @@
         }
     ],
     "require": {
-        "guzzlehttp/guzzle": "~6.3",
+        "guzzlehttp/guzzle": "~6.0",
         "phpunit/phpunit": "~5",
         "mockery/mockery": "^1.1"
     },
