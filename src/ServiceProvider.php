@@ -1,18 +1,19 @@
 <?php
-/**
- * Created by PhpStorm
- * User: pl
- * Date: 2020/9/17
- * Time: 10:24
+
+/*
+ * This file is part of the pl1998/thirdparty_oauth.
+ *
+ * (c) pl1998<pltruenine@163.com>
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
  */
 
 namespace Pl1998\ThirdpartyOauth;
 
-
 /**
  * 支持 laravel 服务注入
- * Class ServiceProvider
- * @package Pl1998\ThirdpartyOauth
+ * Class ServiceProvider.
  */
 class ServiceProvider extends \Illuminate\Support\ServiceProvider
 {
@@ -20,7 +21,7 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
 
     public function register()
     {
-        $this->app->singleton(SocialiteAuth::class, function(){
+        $this->app->singleton(SocialiteAuth::class, function () {
             return new SocialiteAuth(config('services.aouth'));
         });
 

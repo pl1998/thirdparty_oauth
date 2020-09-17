@@ -1,13 +1,15 @@
 <?php
-/**
- * Created by PhpStorm
- * User: pl
- * Date: 2020/9/17
- * Time: 10:40
+
+/*
+ * This file is part of the pl1998/thirdparty_oauth.
+ *
+ * (c) pl1998<pltruenine@163.com>
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
  */
 
 namespace Pl1998\ThirdpartyOauth\Api;
-
 
 use Pl1998\ThirdpartyOauth\Handle\GiteeOauth;
 use Pl1998\ThirdpartyOauth\Handle\GithubOauth;
@@ -17,12 +19,11 @@ use Pl1998\ThirdpartyOauth\Helpers;
 
 class SocialiteApi implements OauthLinterface
 {
-
     protected $api;
 
     protected $deiver;
 
-    public function __construct($deiver,array $config)
+    public function __construct($deiver, array $config)
     {
         $this->deiver = $deiver;
         switch ($deiver) {
@@ -39,7 +40,6 @@ class SocialiteApi implements OauthLinterface
                 return $this->api = new GiteeOauth($config);
                 break;
         }
-
     }
 
     public function authorization()
@@ -56,9 +56,8 @@ class SocialiteApi implements OauthLinterface
     {
         $aouth = $this->getAccessToken();
 
-        $access_token = Helpers::getAccessToken($this->deiver,$aouth);
+        $access_token = Helpers::getAccessToken($this->deiver, $aouth);
 
         return $this->api->getUserInfo($access_token);
     }
-
 }
