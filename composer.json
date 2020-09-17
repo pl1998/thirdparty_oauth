@@ -24,7 +24,6 @@
         }
     },
     "require-dev": {
-        "phpunit/phpunit": "^9.3",
         "mockery/mockery": "^1.4"
     }
 }
