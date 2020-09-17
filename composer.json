@@ -9,7 +9,9 @@
         }
     ],
     "require": {
-        "guzzlehttp/guzzle": "~6.3"
+        "guzzlehttp/guzzle": "~6.3",
+        "phpunit/phpunit": "~5",
+        "mockery/mockery": "^1.1"
     },
     "autoload": {
         "psr-4": {
@@ -22,8 +24,5 @@
                 "Pl1998\\ThirdpartyOauth\\ServiceProvider"
             ]
         }
-    },
-    "require-dev": {
-        "mockery/mockery": "^1.4"
     }
 }
