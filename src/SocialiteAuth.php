@@ -3,34 +3,33 @@
  * Created by PhpStorm
  * User: pl
  * Date: 2020/9/17
- * Time: 10:29
+ * Time: 10:29.
  */
 
 namespace Pl1998\ThirdpartyOauth;
 
-
-
 use Pl1998\ThirdpartyOauth\Api\SocialiteApi;
 use Pl1998\ThirdpartyOauth\Exceptions\InvalidArgumentException;
-
 
 class SocialiteAuth implements Socialite
 {
     /**
-     * 用户json数据
+     * 用户json数据.
+     *
      * @var
      */
-    protected  $userJson;
+    protected $userJson;
 
     /**
-     * 目前支持的授权平台
+     * 目前支持的授权平台.
+     *
      * @var string[]
      */
-
-    private static $deiver = ['gitee','github','weibo','gitlab'];
+    private static $deiver = ['gitee', 'github', 'weibo', 'gitlab'];
 
     /**
-     * 配置文件
+     * 配置文件.
+     *
      * @var array
      */
     protected $config = [];
@@ -41,18 +40,20 @@ class SocialiteAuth implements Socialite
     }
 
     /**
-     * 获取回调地址信息
+     * 获取回调地址信息.
+     *
      * @param $deiver
      * @param array $config
-     * @return $this
+     *
      * @throws InvalidArgumentException
+     *
+     * @return $this
      */
-    public  function driver($deiver)
+    public function driver($deiver)
     {
-
         $this->verified($deiver);
 
-        $api    = new SocialiteApi($deiver,$this->config);
+        $api = new SocialiteApi($deiver, $this->config);
 
         $this->userJson = $api->getUserInfo();
 
@@ -60,7 +61,8 @@ class SocialiteAuth implements Socialite
     }
 
     /**
-     * 获取用户信息
+     * 获取用户信息.
+     *
      * @return mixed
      */
     public function user()
@@ -70,35 +72,37 @@ class SocialiteAuth implements Socialite
 
     /**
      * 执行授权请求
+     *
      * @param $deiver
      * @param array $config
+     *
      * @return int
      */
     public function redirect($deiver)
     {
+        $api = new SocialiteApi($deiver, $this->config);
+        $httpcCode = $api->authorization();
 
-        $api    = new SocialiteApi($deiver,$this->config);
-        $httpcCode   = $api->authorization();
-        return $httpcCode ;
+        return $httpcCode;
     }
 
     /**
-     * 效验参数方法
+     * 效验参数方法.
+     *
      * @param $deiver
+     *
      * @throws InvalidArgumentException
      */
     private function verified($deiver)
     {
-        $parameter =   ['client_id','redirect_uri','client_secret'];
+        $parameter = ['client_id', 'redirect_uri', 'client_secret'];
 
-        if(!in_array($deiver,self::$deiver)) {
+        if (!in_array($deiver, self::$deiver)) {
             throw new InvalidArgumentException('目前不支持该平台');
         }
 
-        if(Helpers::intendedEffect(array_keys($this->config),$parameter) == false) {
+        if (Helpers::intendedEffect(array_keys($this->config), $parameter) == false) {
             throw new InvalidArgumentException('配置信息错误');
         }
-
-        return;
     }
 }
