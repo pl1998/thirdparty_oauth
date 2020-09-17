@@ -55,8 +55,8 @@ class SocialiteAuth implements Socialite
     public function driver($deiver)
     {
         //兼容laravel app容器注入
-        if(array_key_exists($deiver,$this->config)){
-            $this->config  = $this->config[$deiver];
+        if (array_key_exists($deiver, $this->config)) {
+            $this->config = $this->config[$deiver];
         }
 
         $this->verified($deiver);
@@ -88,11 +88,10 @@ class SocialiteAuth implements Socialite
      */
     public function redirect($deiver)
     {
+        //该方法兼容laravel app容器注入
 
-         //该方法兼容laravel app容器注入
-
-        if(array_key_exists($deiver,$this->config)){
-            $this->config  = $this->config[$deiver];
+        if (array_key_exists($deiver, $this->config)) {
+            $this->config = $this->config[$deiver];
         }
 
         $api = new SocialiteApi($deiver, $this->config);
