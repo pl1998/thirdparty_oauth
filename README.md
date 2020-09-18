@@ -1,6 +1,6 @@
 <h1> thirdparty_oauth </h1>
 
-<p> 这是一个社会第三方登录扩展包 目前支持 github gitee 微博 gitlab 登录.</p>
+<p> 这是一个社会第三方登录扩展包 目前支持 github gitee 微博 gitlab QQ 微信 登录.</p>
 
 [![Build Status](https://travis-ci.org/pl1998/thirdparty_oauth.svg?branch=master)](https://travis-ci.org/pl1998/thirdparty_oauth)
 ![StyleCI build status](https://github.styleci.io/repos/295677202/shield)
@@ -45,6 +45,7 @@ $ composer require pl1998/thirdparty_oauth
 >   <kbd>redirect_url</kbd>   回调地址将使用方法写到回调接口即可 获取到用户的一些基础信息 <br/>
 > <kbd>client_id</kbd>     应用授权id <br/>
 >  <kbd>client_secret</kbd>  应用授权key <br/>
+>  所有支持平台的类型 `github` `gitee` `gitlab` `weibo` `qq` `weixin` 配置文件下标一致
 
 
 
