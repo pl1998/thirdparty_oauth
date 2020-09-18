@@ -14,6 +14,7 @@ namespace Pl1998\ThirdpartyOauth\Api;
 use Pl1998\ThirdpartyOauth\Handle\GiteeOauth;
 use Pl1998\ThirdpartyOauth\Handle\GithubOauth;
 use Pl1998\ThirdpartyOauth\Handle\GitlabOauth;
+use Pl1998\ThirdpartyOauth\Handle\QqOauth;
 use Pl1998\ThirdpartyOauth\Handle\WeiboOauth;
 use Pl1998\ThirdpartyOauth\Helpers;
 
@@ -41,6 +42,9 @@ class SocialiteApi implements OauthLinterface
                 break;
             case 'weixin':
                 return $this->api = new WeiboOauth($config);
+                break;
+            case 'qq':
+                return $this->api = new QqOauth($config);
                 break;
         }
     }
