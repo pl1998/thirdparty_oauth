@@ -59,12 +59,12 @@ class SocialiteApi implements OauthLinterface
     {
         $aouth = $this->getAccessToken();
 
-        if ($this->deiver == 'weixin') {
-            return $this->api->getUserInfo(json_decode($aouth,true));
-        } else{
+        if ('weixin' == $this->deiver) {
+            return $this->api->getUserInfo(json_decode($aouth, true));
+        } else {
             $access_token = Helpers::getAccessToken($this->deiver, $aouth);
+
             return $this->api->getUserInfo($access_token);
         }
-
     }
 }

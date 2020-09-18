@@ -1,13 +1,15 @@
 <?php
-/**
- * Created by PhpStorm
- * User: pl
- * Date: 2020/9/18
- * Time: 10:37
+
+/*
+ * This file is part of the pl1998/thirdparty_oauth.
+ *
+ * (c) pl1998<pltruenine@163.com>
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
  */
 
 namespace Pl1998\ThirdpartyOauth\Handle;
-
 
 use GuzzleHttp\Client;
 
@@ -33,7 +35,7 @@ class WeiXinOauth
             'callback' => $this->config['redirect_uri'],
             'response_type' => 'code',
             'scope' => 'snsapi_login',
-            'state' => 'STATE'
+            'state' => 'STATE',
         ]);
 
         $url = $url.'?'.http_build_query($query).'#wechat_redirect';
