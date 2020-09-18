@@ -13,7 +13,7 @@ namespace Pl1998\ThirdpartyOauth\Handle;
 
 use GuzzleHttp\Client;
 
-class WeiXinOauth
+class WeiXinOauth implements Handle
 {
     protected $client;
     protected $config;

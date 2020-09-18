@@ -13,7 +13,7 @@ namespace Pl1998\ThirdpartyOauth\Handle;
 
 use GuzzleHttp\Client;
 
-class GiteeOauth
+class GiteeOauth implements Handle
 {
     protected $client;
     protected $config;

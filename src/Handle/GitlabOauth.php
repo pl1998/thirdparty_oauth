@@ -13,7 +13,7 @@ namespace Pl1998\ThirdpartyOauth\Handle;
 
 use GuzzleHttp\Client;
 
-class GitlabOauth
+class GitlabOauth implements Handle
 {
     protected $client;
     protected $config;
