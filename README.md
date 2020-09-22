@@ -8,7 +8,7 @@
 ## 安装
 
 ```shell
-$ composer require pl1998/thirdparty_oauth 
+$ composer require pltrue/thirdparty_oauth 
 ```
 
 <hr>
