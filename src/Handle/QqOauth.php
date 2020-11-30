@@ -31,11 +31,12 @@ class QqOauth implements Handle
             'response_type' => 'code',
             'client_id' => $this->config['client_id'],
             'redirect_uri' => $this->config['redirect_uri'],
-            'scope' => 'snsapi_login',
+            //scope错误
+         //   'scope' => 'snsapi_login',
             'state' => 'STATE',
         ]);
-
-        $url = $url.'?'.http_build_query($query).'#wechat_redirect';
+//不是微信删除#wechat_redirect
+        $url = $url.'?'.http_build_query($query);
 
         header('Location:'.$url);
         exit();
@@ -52,8 +53,8 @@ class QqOauth implements Handle
             'client_secret' => $this->config['client_secret'],
             'redirect_uri' => $this->config['redirect_uri'],
         ]);
-
-        return $this->client->request('POST', $url, [
+//不能post
+        return $this->client->request('get', $url, [//
             'query' => $query,
         ])->getBody()->getContents();
     }
