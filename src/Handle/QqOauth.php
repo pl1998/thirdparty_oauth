@@ -31,13 +31,13 @@ class QqOauth implements Handle
             'response_type' => 'code',
             'client_id' => $this->config['client_id'],
             'redirect_uri' => $this->config['redirect_uri'],
-            'scope' => 'snsapi_login',
-            'state' => 'STATE',
+            'scope' => "",
+            'state' => 'state',
         ]);
 
-        $url = $url.'?'.http_build_query($query).'#wechat_redirect';
+        $url = $url.'?'.http_build_query($query);
 
-        header('Location:'.$url);
+       header('Location:'.$url);
         exit();
     }
 
@@ -53,7 +53,7 @@ class QqOauth implements Handle
             'redirect_uri' => $this->config['redirect_uri'],
         ]);
 
-        return $this->client->request('POST', $url, [
+        return $this->client->request('get', $url, [
             'query' => $query,
         ])->getBody()->getContents();
     }
@@ -63,9 +63,10 @@ class QqOauth implements Handle
         $url = 'https://graph.qq.com/user/get_user_info';
 
         $result = $this->getUid($access_token);
+      
         $query = array_filter([
-            'uid' => $result['openid'],
-            'oauth_consumer_key' => $result['client_id'],
+            'openid' => $result->openid,
+            'oauth_consumer_key' => $result->client_id,
             'access_token' => $access_token,
         ]);
 
@@ -77,9 +78,15 @@ class QqOauth implements Handle
     public function getUid($access_token)
     {
         $url = 'https://graph.qq.com/oauth2.0/me?access_token='.$access_token;
-        $result = $this->client->post($url);
-        $result = json_decode($result->getBody()->getContents(), true);
-
-        return $result;
+        $str = $this->client->get($url)->getBody()->getContents();
+ if (strpos($str, "callback") !== false)
+     {
+        $lpos = strpos($str, "(");
+        $rpos = strrpos($str, ")");
+        $str  = substr($str, $lpos + 1, $rpos - $lpos -1);
+     }
+     $user = json_decode($str);
+     
+        return $user;
     }
 }
