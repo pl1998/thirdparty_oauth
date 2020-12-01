@@ -17,6 +17,7 @@ use Pl1998\ThirdpartyOauth\Handle\GitlabOauth;
 use Pl1998\ThirdpartyOauth\Handle\QqOauth;
 use Pl1998\ThirdpartyOauth\Handle\WeiboOauth;
 use Pl1998\ThirdpartyOauth\Handle\WeiXinOauth;
+use Pl1998\ThirdpartyOauth\Handle\MicrosoftOauth;
 use Pl1998\ThirdpartyOauth\Helpers;
 
 class SocialiteApi implements OauthLinterface
@@ -46,6 +47,9 @@ class SocialiteApi implements OauthLinterface
                 break;
             case 'qq':
                 return $this->api = new QqOauth($config);
+                break;
+            case 'microsoft':
+                return $this->api = new MicrosoftOauth($config);
                 break;
         }
     }
