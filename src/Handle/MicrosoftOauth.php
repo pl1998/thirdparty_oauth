@@ -31,7 +31,8 @@ class MicrosoftOauth implements Handle
             'response_type' => 'code',
             'client_id' => $this->config['client_id'],
             'redirect_uri' => $this->config['redirect_uri'],
-            'scope' => "User.Read",
+            'scope' => "User.Read openid profile",
+                        'prompt'=>'consent',
             'state' => 'https://6.mxin.ltd/login/mscallback',
         ]);
 
@@ -51,22 +52,45 @@ class MicrosoftOauth implements Handle
             'grant_type' => 'authorization_code',
             'client_secret' => $this->config['client_secret'],
             'redirect_uri' => $this->config['redirect_uri'],
+
         ]);
 
-        return
-         $this->client->request('POST', $url, [
+        $resp= ($this->client->request('POST', $url, [
             'form_params' => $query,
-        ])->getBody()->getContents();
+        ])->getBody()->getContents());
+        $id_token=json_decode($resp);
+       $s= explode( ".",$id_token->id_token);
+       
+      
+        
+        $data['unionid']=json_decode($this-> base64UrlDecode($s[1]))->oid;
+         $data['$access_token']=$id_token->access_token;
+        
+        return ($data);
+       
     }
-
+function base64UrlDecode(string $input)
+    {
+        $remainder = strlen($input) % 4;
+        if ($remainder) {
+            $addlen = 4 - $remainder;
+            $input .= str_repeat('=', $addlen);
+        }
+        return base64_decode(strtr($input, '-_', '+/'));
+    }
     public function getUserInfo($access_token)
     {
-         $url = '';
- return $this->client->request('GET', "https://microsoftgraph.chinacloudapi.cn/v1.0/me", [
+       
+ $userinfo=  json_decode($this->client->request('GET', "https://microsoftgraph.chinacloudapi.cn/oidc/userinfo", [
             'headers' => [
                 'Authorization' => $access_token,
             ],
-        ])->getBody()->getContents();
+        ])->getBody()->getContents());
+        
+       // var_dump( $userinfo);
+         $userinfo->openid=$userinfo->sub;
+        //  $userinfo->unioid=$userinfo->oid;
+        return $userinfo;
 
     }
 

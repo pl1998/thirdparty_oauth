@@ -32,7 +32,7 @@ class QqOauth implements Handle
             'client_id' => $this->config['client_id'],
             'redirect_uri' => $this->config['redirect_uri'],
             'scope' => "",
-            'state' => 'state',
+            'state' => 'stste',
         ]);
 
         $url = $url.'?'.http_build_query($query);
@@ -62,29 +62,33 @@ class QqOauth implements Handle
     {
         $url = 'https://graph.qq.com/user/get_user_info';
 
-        $result = $this->getUid($access_token);
-      
+       
+      $result=$this->getUid($access_token);
         $query = array_filter([
             'openid' => $result->openid,
             'oauth_consumer_key' => $result->client_id,
             'access_token' => $access_token,
         ]);
-
-        return $this->client->request('GET', $url, [
+$this->getUnionid($access_token);
+$userinfo=json_decode($this->client->request('GET', $url, [
             'query' => $query,
-        ])->getBody()->getContents();
+        ])->getBody()->getContents());
+        
+        $userinfo->openid=$this->getUid($access_token)->openid;
+         $userinfo->unionid=$this-> getUnionid($access_token)->unionid;
+        return $userinfo  ;
     }
 
+private function getUnionid($access_token){
+     $url = 'https://graph.qq.com/oauth2.0/me?access_token='.$access_token.'&unionid=1&fmt=json';
+        $str = $this->client->get($url)->getBody()->getContents();
+ return json_decode($str);
+}
     public function getUid($access_token)
     {
-        $url = 'https://graph.qq.com/oauth2.0/me?access_token='.$access_token;
+        $url = 'https://graph.qq.com/oauth2.0/me?access_token='.$access_token.'&fmt=json';
         $str = $this->client->get($url)->getBody()->getContents();
- if (strpos($str, "callback") !== false)
-     {
-        $lpos = strpos($str, "(");
-        $rpos = strrpos($str, ")");
-        $str  = substr($str, $lpos + 1, $rpos - $lpos -1);
-     }
+ 
      $user = json_decode($str);
      
         return $user;
