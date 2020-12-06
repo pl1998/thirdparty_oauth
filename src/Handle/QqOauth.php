@@ -31,13 +31,13 @@ class QqOauth implements Handle
             'response_type' => 'code',
             'client_id' => $this->config['client_id'],
             'redirect_uri' => $this->config['redirect_uri'],
-            'scope' => "",
+            'scope' => '',
             'state' => 'state',
         ]);
 
         $url = $url.'?'.http_build_query($query);
 
-       header('Location:'.$url);
+        header('Location:'.$url);
         exit();
     }
 
@@ -63,7 +63,7 @@ class QqOauth implements Handle
         $url = 'https://graph.qq.com/user/get_user_info';
 
         $result = $this->getUid($access_token);
-      
+
         $query = array_filter([
             'openid' => $result->openid,
             'oauth_consumer_key' => $result->client_id,
@@ -79,14 +79,13 @@ class QqOauth implements Handle
     {
         $url = 'https://graph.qq.com/oauth2.0/me?access_token='.$access_token;
         $str = $this->client->get($url)->getBody()->getContents();
- if (strpos($str, "callback") !== false)
-     {
-        $lpos = strpos($str, "(");
-        $rpos = strrpos($str, ")");
-        $str  = substr($str, $lpos + 1, $rpos - $lpos -1);
-     }
-     $user = json_decode($str);
-     
+        if (false !== strpos($str, 'callback')) {
+            $lpos = strpos($str, '(');
+            $rpos = strrpos($str, ')');
+            $str = substr($str, $lpos + 1, $rpos - $lpos - 1);
+        }
+        $user = json_decode($str);
+
         return $user;
     }
 }
