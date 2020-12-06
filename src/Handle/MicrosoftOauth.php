@@ -31,13 +31,13 @@ class MicrosoftOauth implements Handle
             'response_type' => 'code',
             'client_id' => $this->config['client_id'],
             'redirect_uri' => $this->config['redirect_uri'],
-            'scope' => "User.Read",
+            'scope' => 'User.Read',
             'state' => 'https://6.mxin.ltd/login/mscallback',
         ]);
 
         $url = $url.'?'.http_build_query($query);
 
-       header('Location:'.$url);
+        header('Location:'.$url);
         exit();
     }
 
@@ -61,17 +61,16 @@ class MicrosoftOauth implements Handle
 
     public function getUserInfo($access_token)
     {
-         $url = '';
- return $this->client->request('GET', "https://microsoftgraph.chinacloudapi.cn/v1.0/me", [
+        $url = '';
+
+        return $this->client->request('GET', 'https://microsoftgraph.chinacloudapi.cn/v1.0/me', [
             'headers' => [
                 'Authorization' => $access_token,
             ],
         ])->getBody()->getContents();
-
     }
 
     public function getUid($access_token)
     {
-     
     }
 }
