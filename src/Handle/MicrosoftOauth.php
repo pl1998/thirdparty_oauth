@@ -21,12 +21,17 @@ class MicrosoftOauth implements Handle
     public function __construct($config)
     {
         $this->config = $config;
+        if(!isset($this->config["region"])){
+        	$this->config["region"]="us";
+}
         $this->client = new Client();
     }
 
     public function authorization()
-    {
+    {   $url = 'https://login.microsoftonline.com/common/oauth2/v2.0/authorize';
+if($this->config["region"]=="cn"){
         $url = 'https://login.chinacloudapi.cn/common/oauth2/v2.0/authorize';
+        }
         $query = array_filter([
             'response_type' => 'code',
             'client_id' => $this->config['client_id'],
@@ -44,8 +49,10 @@ class MicrosoftOauth implements Handle
 
     public function getAccessToken()
     {
+    	   $url = 'https://login.microsoftonline.com/common/oauth2/v2.0/token';
+if($this->config["region"]=="cn"){
         $url = 'https://login.chinacloudapi.cn/common/oauth2/v2.0/token';
-
+}
         $query = array_filter([
             'client_id' => $this->config['client_id'],
             'code' => $_GET['code'],
@@ -79,7 +86,7 @@ function base64UrlDecode(string $input)
         return base64_decode(strtr($input, '-_', '+/'));
     }
     public function getUserInfo($access_token)
-    {
+    {$url="https://graph.microsoft.com/oidc/userinfo";
        
  $userinfo=  json_decode($this->client->request('GET', "https://microsoftgraph.chinacloudapi.cn/oidc/userinfo", [
             'headers' => [
