@@ -29,10 +29,9 @@ class AlipayOauth implements Handle
     {
         $url = 'https://openauth.alipay.com/oauth2/publicAppAuthorize.htm';
         $query = array_filter([
-
             'app_id' => $this->config['client_id'],
             'redirect_uri' => $this->config['redirect_uri'],
-            'scope' => "auth_user",
+            'scope' => 'auth_user',
             'state' => 'https://6.mxin.ltd/login/alipaycallback',
         ]);
 
@@ -62,13 +61,9 @@ class AlipayOauth implements Handle
         $query['sign'] = $this->generateSign($query, $query['sign_type']);
 
         //retur
-        return ($this->client->request('POST', $url, [
+        return $this->client->request('POST', $url, [
             'query' => http_build_query($query),
-
-
-        ])->getBody()->getContents());
-
-
+        ])->getBody()->getContents();
     }
 
     public function getUserInfo($access_token)
@@ -90,7 +85,6 @@ class AlipayOauth implements Handle
         ]);
         $query['sign'] = $this->generateSign($query, $query['sign_type']);
 
-
         $userinfo = json_decode($this->client->request('POST', $url, [
             'query' => http_build_query($query),
         ])->getBody()->getContents())->alipay_user_info_share_response;
@@ -99,27 +93,25 @@ class AlipayOauth implements Handle
         $userinfo->openid = $userinfo->user_id;
 
         return $userinfo;
-
     }
 
     public function getUid($access_token)
     {
-
     }
 
-    public function generateSign($params, $signType = "RSA")
+    public function generateSign($params, $signType = 'RSA')
     {
         return $this->sign($this->getSignContent($params), $signType);
     }
 
-    protected function sign($data, $signType = "RSA")
+    protected function sign($data, $signType = 'RSA')
     {
         $priKey = $this->config['client_secret'];
         $res = "-----BEGIN RSA PRIVATE KEY-----\n".
             wordwrap($priKey, 64, "\n", true).
             "\n-----END RSA PRIVATE KEY-----";
-        ($res) or die('您使用的私钥格式错误，请检查RSA私钥配置');
-        if ("RSA2" == $signType) {
+        ($res) or exit('您使用的私钥格式错误，请检查RSA私钥配置');
+        if ('RSA2' == $signType) {
             openssl_sign($data, $sign, $res, version_compare(PHP_VERSION, '5.4.0',
                 '<') ? SHA256 : OPENSSL_ALGO_SHA256); //OPENSSL_ALGO_SHA256是php5.4.8以上版本才支持
         } else {
@@ -133,21 +125,21 @@ class AlipayOauth implements Handle
     public function getSignContent($params)
     {
         ksort($params);
-        $stringToBeSigned = "";
+        $stringToBeSigned = '';
         $i = 0;
         foreach ($params as $k => $v) {
-            if (false === $this->checkEmpty($v) && "@" != substr($v, 0, 1)) {
+            if (false === $this->checkEmpty($v) && '@' != substr($v, 0, 1)) {
                 // 转换成目标字符集
                 $v = $this->characet($v, $this->charset);
-                if ($i == 0) {
-                    $stringToBeSigned .= "$k"."="."$v";
+                if (0 == $i) {
+                    $stringToBeSigned .= "$k".'='."$v";
                 } else {
-                    $stringToBeSigned .= "&"."$k"."="."$v";
+                    $stringToBeSigned .= '&'."$k".'='."$v";
                 }
-                $i++;
+                ++$i;
             }
         }
-        unset ($k, $v);
+        unset($k, $v);
 
         return $stringToBeSigned;
     }
@@ -157,10 +149,10 @@ class AlipayOauth implements Handle
         if (!isset($value)) {
             return true;
         }
-        if ($value === null) {
+        if (null === $value) {
             return true;
         }
-        if (trim($value) === "") {
+        if ('' === trim($value)) {
             return true;
         }
 
@@ -169,15 +161,17 @@ class AlipayOauth implements Handle
 
     /**
      * 转换字符集编码
+     *
      * @param $data
      * @param $targetCharset
+     *
      * @return string
      */
-    function characet($data, $targetCharset)
+    public function characet($data, $targetCharset)
     {
         if (!empty($data)) {
             $fileType = $this->charset;
-            if (strcasecmp($fileType, $targetCharset) != 0) {
+            if (0 != strcasecmp($fileType, $targetCharset)) {
                 $data = mb_convert_encoding($data, $targetCharset, $fileType);
                 //$data = iconv($fileType, $targetCharset.'//IGNORE', $data);
             }
