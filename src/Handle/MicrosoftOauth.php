@@ -87,11 +87,10 @@ function base64UrlDecode(string $input)
     }
     public function getUserInfo($access_token)
     {$url="https://graph.microsoft.com/oidc/userinfo";
-     if($this->config["region"]=="cn"){
-        $url = 'https://graph.chinacloudapi.cn//oidc/userinfo';
+       if($this->config["region"]=="cn"){
+        $url = 'https://microsoftgraph.chinacloudapi.cn/oidc/userinfo';
 }
-       
- $userinfo=  json_decode($this->client->request('GET',  $url, [
+ $userinfo=  json_decode($this->client->request('GET', $url, [
             'headers' => [
                 'Authorization' => $access_token,
             ],
