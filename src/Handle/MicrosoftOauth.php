@@ -21,17 +21,23 @@ class MicrosoftOauth implements Handle
     public function __construct($config)
     {
         $this->config = $config;
+        if(!isset($this->config["region"])){
+        	$this->config["region"]="us";
+}
         $this->client = new Client();
     }
 
     public function authorization()
-    {
+    {   $url = 'https://login.microsoftonline.com/common/oauth2/v2.0/authorize';
+if($this->config["region"]=="cn"){
         $url = 'https://login.chinacloudapi.cn/common/oauth2/v2.0/authorize';
+        }
         $query = array_filter([
             'response_type' => 'code',
             'client_id' => $this->config['client_id'],
             'redirect_uri' => $this->config['redirect_uri'],
-            'scope' => "User.Read",
+            'scope' => "User.Read openid profile",
+                        'prompt'=>'consent',
             'state' => 'https://6.mxin.ltd/login/mscallback',
         ]);
 
@@ -43,30 +49,57 @@ class MicrosoftOauth implements Handle
 
     public function getAccessToken()
     {
+    	   $url = 'https://login.microsoftonline.com/common/oauth2/v2.0/token';
+if($this->config["region"]=="cn"){
         $url = 'https://login.chinacloudapi.cn/common/oauth2/v2.0/token';
-
+}
         $query = array_filter([
             'client_id' => $this->config['client_id'],
             'code' => $_GET['code'],
             'grant_type' => 'authorization_code',
             'client_secret' => $this->config['client_secret'],
             'redirect_uri' => $this->config['redirect_uri'],
+
         ]);
 
-        return
-         $this->client->request('POST', $url, [
+        $resp= ($this->client->request('POST', $url, [
             'form_params' => $query,
-        ])->getBody()->getContents();
+        ])->getBody()->getContents());
+        $id_token=json_decode($resp);
+       $s= explode( ".",$id_token->id_token);
+       
+      
+        
+        $data['unionid']=json_decode($this-> base64UrlDecode($s[1]))->oid;
+         $data['$access_token']=$id_token->access_token;
+        
+        return ($data);
+       
     }
-
-    public function getUserInfo($access_token)
+function base64UrlDecode(string $input)
     {
-         $url = '';
- return $this->client->request('GET', "https://microsoftgraph.chinacloudapi.cn/v1.0/me", [
+        $remainder = strlen($input) % 4;
+        if ($remainder) {
+            $addlen = 4 - $remainder;
+            $input .= str_repeat('=', $addlen);
+        }
+        return base64_decode(strtr($input, '-_', '+/'));
+    }
+    public function getUserInfo($access_token)
+    {$url="https://graph.microsoft.com/oidc/userinfo";
+       if($this->config["region"]=="cn"){
+        $url = 'https://microsoftgraph.chinacloudapi.cn/oidc/userinfo';
+}
+ $userinfo=  json_decode($this->client->request('GET', $url, [
             'headers' => [
                 'Authorization' => $access_token,
             ],
-        ])->getBody()->getContents();
+        ])->getBody()->getContents());
+        
+       // var_dump( $userinfo);
+         $userinfo->openid=$userinfo->sub;
+        //  $userinfo->unioid=$userinfo->oid;
+        return $userinfo;
 
     }
 

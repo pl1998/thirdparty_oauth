@@ -45,6 +45,14 @@ class Helpers
           
               
                 break;
+                case "microsoft":
+                    return $aouth;
+                  break;
+                
+                case "alipay":
+                   return  json_decode($aouth)->alipay_system_oauth_token_response->access_token;
+                
+                 break;
             default:
                 $aouth = json_decode($aouth, true);
 
