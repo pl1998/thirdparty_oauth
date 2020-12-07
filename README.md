@@ -50,6 +50,10 @@ $ composer require pltrue/thirdparty_oauth
    * [gitee应用创建地址](https://gitee.com/oauth/applications)
    * [gitlab应用创建地址](https://gitlab.com/oauth/applications)
    * [微博应用创建地址](https://open.weibo.com/)
+   * [microcoft应用创建地址](https://azure.com/)
+   * [QQ互联创建地址](https://connect.qq.com/index.html)
+   * [支付宝应用](https://open.alipay.com/platform/home.htm?from=wwwalipay)
+   
    
 
 ##### 参数说明 
