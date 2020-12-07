@@ -1,6 +1,6 @@
 <h1> thirdparty_oauth </h1>
 
-<p> 这是一个社会第三方登录扩展包 目前支持 github gitee 微博 gitlab QQ 微信 登录.</p>
+<p> 这是一个社会第三方登录扩展包 目前支持 github gitee 微博 gitlab QQ 微信 支付宝 微软 微软世纪互联 登录.</p>
 
 [![Build Status](https://travis-ci.org/pl1998/thirdparty_oauth.svg?branch=master)](https://travis-ci.org/pl1998/thirdparty_oauth)
 ![StyleCI build status](https://github.styleci.io/repos/295677202/shield)
