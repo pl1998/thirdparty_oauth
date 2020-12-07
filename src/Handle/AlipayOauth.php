@@ -48,7 +48,7 @@ class AlipayOauth implements Handle
         $query = array_filter([
             'app_id' => $this->config['client_id'],
             'method' => 'alipay.system.oauth.token',
-            'code' => $_GET['code'],
+            'code' => $_GET['code'] ?? $_GET['auth_code'],
             'grant_type' => 'authorization_code',
             'timestamp' => date('Y-m-d H:i:s'),
             'version' => '1.0',
