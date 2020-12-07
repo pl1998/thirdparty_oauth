@@ -37,26 +37,21 @@ class Helpers
                 break;
             case 'qq':
                 $params = array();
-     parse_str($aouth, $params);
-   
-   return   $params["access_token"];
-           
-       
-          
-              
+                parse_str($aouth, $params);
+
+                return $params["access_token"];
                 break;
-                case "microsoft":
-                    return $aouth;
-                  break;
-                
-                case "alipay":
-                   return  json_decode($aouth)->alipay_system_oauth_token_response->access_token;
-                
-                 break;
+            case "microsoft":
+                return $aouth;
+                break;
+            case "alipay":
+                return json_decode($aouth)->alipay_system_oauth_token_response->access_token;
+
+                break;
             default:
                 $aouth = json_decode($aouth, true);
 
-                return  $aouth[$key];
+                return $aouth[$key];
                 break;
         }
     }
@@ -74,4 +69,5 @@ class Helpers
             return false;
         }
     }
+
 }
