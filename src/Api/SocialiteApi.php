@@ -58,7 +58,7 @@ class SocialiteApi implements OauthLinterface
                 break;
                  case 'xiaomi':
                 return $this->api = new XiaomiOauth($config);
-                break;        }
+                break; }
     }
 
     public function authorization()
