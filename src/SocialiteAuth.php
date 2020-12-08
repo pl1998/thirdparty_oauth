@@ -28,7 +28,7 @@ class SocialiteAuth implements Socialite
      *
      * @var string[]
      */
-    private static $deiver = ['gitee', 'github', 'weibo', 'gitlab', 'qq', 'weixin', 'microsoft', 'alipay'];
+    private static $deiver = ['gitee', 'github', 'weibo', 'gitlab', 'qq', 'weixin', 'microsoft', 'alipay','xiaomi'];
 
     /**
      * 配置文件.
