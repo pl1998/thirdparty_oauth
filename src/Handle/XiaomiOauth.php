@@ -31,13 +31,13 @@ class XiaomiOauth implements Handle
             'response_type' => 'code',
             'client_id' => $this->config['client_id'],
             'redirect_uri' => $this->config['redirect_uri'],
-            'scope' => "1 3",
+            'scope' => '1 3',
             'state' => '',
         ]);
 
         $url = $url.'?'.http_build_query($query);
 
-       header('Location:'.$url);
+        header('Location:'.$url);
         exit();
     }
 
@@ -54,10 +54,11 @@ class XiaomiOauth implements Handle
         ]);
 
         //return
-        $ss=$this->client->request('get', $url, [
+        $ss = $this->client->request('get', $url, [
             'query' => $query,
         ])->getBody()->getContents();
-    return  $res=  str_replace("&&&START&&&","",$ss);
+
+        return $res = str_replace('&&&START&&&', '', $ss);
         dump($res);
         exit;
     }
@@ -66,28 +67,27 @@ class XiaomiOauth implements Handle
     {
         $url = 'https://open.account.xiaomi.com/user/profile';
 
-       
-    
         $query = array_filter([
-           
             'client_id' => $this->config['client_id'],
             'token' => $access_token,
         ]);
-$this->getUnionid($access_token);
-$userinfo=json_decode($this->client->request('GET', $url, [
+        $this->getUnionid($access_token);
+        $userinfo = json_decode($this->client->request('GET', $url, [
             'query' => $query,
         ])->getBody()->getContents())->data;
-      
-        return $userinfo  ;
+
+        return $userinfo;
     }
 
-private function getUnionid($access_token){
-     $url = 'https://graph.qq.com/oauth2.0/me?access_token='.$access_token.'&unionid=1&fmt=json';
+    private function getUnionid($access_token)
+    {
+        $url = 'https://graph.qq.com/oauth2.0/me?access_token='.$access_token.'&unionid=1&fmt=json';
         $str = $this->client->get($url)->getBody()->getContents();
- return json_decode($str);
-}
+
+        return json_decode($str);
+    }
+
     public function getUid($access_token)
     {
-       
     }
 }
