@@ -55,7 +55,7 @@ class WeiXinOauth implements Handle
             'secret' => $this->config['client_secret'],
         ]);
 
-        return $this->client->request('POST', $url, [
+        return $this->client->request('get', $url, [
             'query' => $query,
         ])->getBody()->getContents();
     }
