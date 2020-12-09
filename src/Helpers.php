@@ -27,18 +27,15 @@ class Helpers
                 $access_token = $params[1];
                 $access_token = explode('&', $access_token);
                 $access_token = 'Bearer '.$access_token[0];
-
                 return $access_token;
                 break;
             case 'gitlab':
                 $aouth = json_decode($aouth, true);
-
                 return 'Bearer '.$aouth[$key];
                 break;
             case 'qq':
                 $params = array();
                 parse_str($aouth, $params);
-
                 return $params["access_token"];
                 break;
             case "microsoft":
@@ -46,11 +43,9 @@ class Helpers
                 break;
             case "alipay":
                 return json_decode($aouth)->alipay_system_oauth_token_response->access_token;
-
                 break;
             default:
                 $aouth = json_decode($aouth, true);
-
                 return $aouth[$key];
                 break;
         }

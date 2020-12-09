@@ -37,7 +37,7 @@ class QqOauth implements Handle
 
         $url = $url.'?'.http_build_query($query);
 
-       header('Location:'.$url);
+        header('Location:'.$url);
         exit();
     }
 
@@ -62,7 +62,7 @@ class QqOauth implements Handle
     {
         $url = 'https://graph.qq.com/user/get_user_info';
 
-       
+
       $result=$this->getUid($access_token);
         $query = array_filter([
             'openid' => $result->openid,
@@ -73,7 +73,7 @@ $this->getUnionid($access_token);
 $userinfo=json_decode($this->client->request('GET', $url, [
             'query' => $query,
         ])->getBody()->getContents());
-        
+
         $userinfo->openid=$this->getUid($access_token)->openid;
          $userinfo->unionid=$this-> getUnionid($access_token)->unionid;
         return $userinfo  ;
@@ -88,9 +88,9 @@ private function getUnionid($access_token){
     {
         $url = 'https://graph.qq.com/oauth2.0/me?access_token='.$access_token.'&fmt=json';
         $str = $this->client->get($url)->getBody()->getContents();
- 
+
      $user = json_decode($str);
-     
+
         return $user;
     }
 }
