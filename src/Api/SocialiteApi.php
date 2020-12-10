@@ -19,6 +19,7 @@ use Pl1998\ThirdpartyOauth\Handle\WeiboOauth;
 use Pl1998\ThirdpartyOauth\Handle\WeiXinOauth;
 use Pl1998\ThirdpartyOauth\Handle\MicrosoftOauth;
 use Pl1998\ThirdpartyOauth\Handle\AlipayOauth;
+use Pl1998\ThirdpartyOauth\Handle\XiaomiOauth;
 use Pl1998\ThirdpartyOauth\Helpers;
 
 class SocialiteApi implements OauthLinterface
@@ -55,7 +56,9 @@ class SocialiteApi implements OauthLinterface
             case 'microsoft':
                 return $this->api = new MicrosoftOauth($config);
                 break;
-        }
+                 case 'xiaomi':
+                return $this->api = new XiaomiOauth($config);
+                break; }
     }
 
     public function authorization()
@@ -75,16 +78,12 @@ class SocialiteApi implements OauthLinterface
         if ('weixin' == $this->deiver) {
             return $this->api->getUserInfo(json_decode($aouth, true));
         } elseif ('microsoft' == $this->deiver) {
-           
-          
-              $access_token = Helpers::getAccessToken($this->deiver, $aouth['$access_token']);
-$userinfo=$this->api->getUserInfo($access_token);
-$userinfo->unionid=$aouth['unionid'];
-//$userinfo->openid=$aouth['sub'];
+            $access_token = Helpers::getAccessToken($this->deiver, $aouth['$access_token']);
+            $userinfo = $this->api->getUserInfo($access_token);
+            $userinfo->unionid = $aouth['unionid'];
+            //$userinfo->openid=$aouth['sub'];
             return $userinfo;
-            
-        }
-        else {
+        } else {
             $access_token = Helpers::getAccessToken($this->deiver, $aouth);
 
             return $this->api->getUserInfo($access_token);

@@ -34,14 +34,19 @@ class Helpers
                 return 'Bearer '.$aouth[$key];
                 break;
             case 'qq':
-                $params = array();
+                $params = [];
                 parse_str($aouth, $params);
+<<<<<<< HEAD
                 return $params["access_token"];
+=======
+
+                return $params['access_token'];
+>>>>>>> 1af42363515a78349a9765c8a4ebb10b9aa153d1
                 break;
-            case "microsoft":
+            case 'microsoft':
                 return $aouth;
                 break;
-            case "alipay":
+            case 'alipay':
                 return json_decode($aouth)->alipay_system_oauth_token_response->access_token;
                 break;
             default:
@@ -64,5 +69,4 @@ class Helpers
             return false;
         }
     }
-
 }

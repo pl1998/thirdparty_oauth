@@ -28,7 +28,7 @@ class SocialiteAuth implements Socialite
      *
      * @var string[]
      */
-    private static $deiver = ['gitee', 'github', 'weibo', 'gitlab', 'qq', 'weixin','microsoft','alipay'];
+    private static $deiver = ['gitee', 'github', 'weibo', 'gitlab', 'qq', 'weixin', 'microsoft', 'alipay', 'xiaomi'];
 
     /**
      * 配置文件.
@@ -114,10 +114,11 @@ class SocialiteAuth implements Socialite
         if (!in_array($deiver, self::$deiver)) {
             throw new InvalidArgumentException('目前不支持该平台');
         }
-        
-        if($deiver =='microsoft') array_push($parameter,'region');        
-        
-     
+
+        if ('microsoft' == $deiver) {
+            array_push($parameter, 'region');
+        }
+
         if (false == Helpers::intendedEffect(array_keys($this->config), $parameter)) {
             throw new InvalidArgumentException('配置信息错误');
         }

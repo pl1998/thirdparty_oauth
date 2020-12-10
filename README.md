@@ -1,6 +1,6 @@
 <h1> thirdparty_oauth </h1>
 
-<p> 这是一个社会第三方登录扩展包 目前支持 github gitee 微博 gitlab QQ 微信 支付宝 微软 微软世纪互联 登录.</p>
+<p> 这是一个社会第三方登录扩展包 目前支持 github gitee 微博 gitlab QQ 微信 支付宝 小米 微软 微软世纪互联 登录.</p>
 
 [![Build Status](https://travis-ci.org/pl1998/thirdparty_oauth.svg?branch=master)](https://travis-ci.org/pl1998/thirdparty_oauth)
 ![StyleCI build status](https://github.styleci.io/repos/295677202/shield)
@@ -26,6 +26,7 @@ $ composer require pltrue/thirdparty_oauth
 | ------| -------- | --------- | ---- | ---- |
 | 2020-12-06|   fix 、feat   | 新增`Microsoft`登录 修复微信、QQ的bug   | [742481030](https://github.com/742481030)     | 已合并到master分支     |
 | 2020-12-07|   feat         | 新增`支付宝`登录    | [742481030](https://github.com/742481030)  | 已合并到master分支     |
+| 2020-12-08|   feat         | 新增`小米账户`登录    | [742481030](https://github.com/742481030)  | 已合并到master分支     |
 
 
 
@@ -51,6 +52,7 @@ $ composer require pltrue/thirdparty_oauth
    * [microcoft应用创建地址](https://azure.com/)
    * [QQ互联创建地址](https://connect.qq.com/index.html)
    * [支付宝应用](https://open.alipay.com/platform/home.htm?from=wwwalipay)
+   * [小米应用](https://dev.mi.com/console/)
    
    
 

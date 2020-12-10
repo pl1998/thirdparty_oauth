@@ -34,8 +34,8 @@ class MicrosoftOauth implements Handle
     {
         $this->config = $config;
 
-        if (!isset($this->config["region"])) {
-            $this->config["region"] = "us";
+        if (!isset($this->config['region'])) {
+            $this->config['region'] = 'us';
         }
 
         $this->client = new Client();
@@ -43,13 +43,13 @@ class MicrosoftOauth implements Handle
 
     public function authorization()
     {
-        $url = self::$endpoint[$this->config["region"]]['authorization'];
+        $url = self::$endpoint[$this->config['region']]['authorization'];
 
         $query = array_filter([
             'response_type' => 'code',
             'client_id' => $this->config['client_id'],
             'redirect_uri' => $this->config['redirect_uri'],
-            'scope' => "User.Read openid profile",
+            'scope' => 'User.Read openid profile',
             'prompt' => 'consent',
             'state' => 'https://6.mxin.ltd/login/mscallback',
         ]);
@@ -62,32 +62,28 @@ class MicrosoftOauth implements Handle
 
     public function getAccessToken()
     {
-
-        $url = self::$endpoint[$this->config["region"]]['token'];
+        $url = self::$endpoint[$this->config['region']]['token'];
         $query = array_filter([
             'client_id' => $this->config['client_id'],
             'code' => $_GET['code'],
             'grant_type' => 'authorization_code',
             'client_secret' => $this->config['client_secret'],
             'redirect_uri' => $this->config['redirect_uri'],
-
         ]);
 
         $resp = ($this->client->request('POST', $url, [
             'form_params' => $query,
         ])->getBody()->getContents());
         $id_token = json_decode($resp);
-        $s = explode(".", $id_token->id_token);
-
+        $s = explode('.', $id_token->id_token);
 
         $data['unionid'] = json_decode($this->base64UrlDecode($s[1]))->oid;
         $data['$access_token'] = $id_token->access_token;
 
-        return ($data);
-
+        return $data;
     }
 
-    function base64UrlDecode(string $input)
+    public function base64UrlDecode(string $input)
     {
         $remainder = strlen($input) % 4;
         if ($remainder) {
@@ -100,23 +96,19 @@ class MicrosoftOauth implements Handle
 
     public function getUserInfo($access_token)
     {
-
-        $url = self::$endpoint[$this->config["region"]]['userinfo'];
+        $url = self::$endpoint[$this->config['region']]['userinfo'];
         $userinfo = json_decode($this->client->request('GET', $url, [
             'headers' => [
                 'Authorization' => $access_token,
             ],
         ])->getBody()->getContents());
 
-
         $userinfo->openid = $userinfo->sub;
 
         return $userinfo;
-
     }
 
     public function getUid($access_token)
     {
-
     }
 }
