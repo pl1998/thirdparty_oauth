@@ -34,10 +34,10 @@ class SocialiteApi implements OauthLinterface
         $this->deiver = $deiver;
         switch ($deiver) {
             case 'alipay':
-               return $this->api = new AlipayOauth($config);
+                return $this->api = new AlipayOauth($config);
                 break;
             case 'github':
-               return $this->api = new GithubOauth($config);
+                return $this->api = new GithubOauth($config);
                 break;
             case 'weibo':
                 return $this->api = new WeiboOauth($config);
@@ -57,13 +57,13 @@ class SocialiteApi implements OauthLinterface
             case 'microsoft':
                 return $this->api = new MicrosoftOauth($config);
                 break;
-                 case 'xiaomi':
+            case 'xiaomi':
                 return $this->api = new XiaomiOauth($config);
                 break;
-                case 'google':
-                    return $this->api = new GoogleOauth($config);
-                    break;
-            }
+            case 'google':
+                return $this->api = new GoogleOauth($config);
+                break;
+        }
     }
 
     public function authorization()
@@ -86,7 +86,7 @@ class SocialiteApi implements OauthLinterface
             $access_token = Helpers::getAccessToken($this->deiver, $aouth['$access_token']);
             $userinfo = $this->api->getUserInfo($access_token);
             $userinfo->unionid = $aouth['unionid'];
-            //$userinfo->openid=$aouth['sub'];
+            
             return $userinfo;
         } else {
             $access_token = Helpers::getAccessToken($this->deiver, $aouth);

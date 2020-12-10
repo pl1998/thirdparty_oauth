@@ -48,7 +48,7 @@ class AlipayOauth implements Handle
         $query = array_filter([
             'app_id' => $this->config['client_id'],
             'method' => 'alipay.system.oauth.token',
-            'code' => $_GET['code'] ?? $_GET['auth_code'],
+            'code' => empty($_GET['code']) ? $_GET['auth_code'] : $_GET['code'],
             'grant_type' => 'authorization_code',
             'timestamp' => date('Y-m-d H:i:s'),
             'version' => '1.0',
@@ -56,7 +56,7 @@ class AlipayOauth implements Handle
             'sign_type' => 'RSA2',
             'charset' => 'utf-8',
             'redirect_uri' => $this->config['redirect_uri'],
-            // 'sign'=>$this->config['client_secret']
+
         ]);
         $query['sign'] = $this->generateSign($query, $query['sign_type']);
 

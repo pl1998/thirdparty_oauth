@@ -36,12 +36,7 @@ class Helpers
             case 'qq':
                 $params = [];
                 parse_str($aouth, $params);
-<<<<<<< HEAD
                 return $params["access_token"];
-=======
-
-                return $params['access_token'];
->>>>>>> 1af42363515a78349a9765c8a4ebb10b9aa153d1
                 break;
             case 'microsoft':
                 return $aouth;

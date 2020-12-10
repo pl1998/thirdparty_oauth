@@ -36,7 +36,6 @@ class XiaomiOauth implements Handle
         ]);
 
         $url = $url.'?'.http_build_query($query);
-
         header('Location:'.$url);
         exit();
     }
@@ -46,14 +45,13 @@ class XiaomiOauth implements Handle
         $url = 'https://account.xiaomi.com/oauth2/token';
 
         $query = array_filter([
-            'client_id' => $this->config['client_id'],
-            'code' => $_GET['code'],
-            'grant_type' => 'authorization_code',
+            'client_id'     => $this->config['client_id'],
+            'code'          => $_GET['code'],
+            'grant_type'    => 'authorization_code',
             'client_secret' => $this->config['client_secret'],
-            'redirect_uri' => $this->config['redirect_uri'],
+            'redirect_uri'  => $this->config['redirect_uri'],
         ]);
 
-        //return
         $ss = $this->client->request('get', $url, [
             'query' => $query,
         ])->getBody()->getContents();
@@ -72,9 +70,8 @@ class XiaomiOauth implements Handle
             'token' => $access_token,
         ]);
         $this->getUnionid($access_token);
-        $userinfo = json_decode($this->client->request('GET', $url, [
-            'query' => $query,
-        ])->getBody()->getContents())->data;
+
+        $userinfo = json_decode($this->client->request('GET', $url, ['query' => $query,])->getBody()->getContents())->data;
 
         return $userinfo;
     }
