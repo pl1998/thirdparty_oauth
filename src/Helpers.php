@@ -27,16 +27,19 @@ class Helpers
                 $access_token = $params[1];
                 $access_token = explode('&', $access_token);
                 $access_token = 'Bearer '.$access_token[0];
+
                 return $access_token;
                 break;
             case 'gitlab':
                 $aouth = json_decode($aouth, true);
+
                 return 'Bearer '.$aouth[$key];
                 break;
             case 'qq':
                 $params = [];
                 parse_str($aouth, $params);
-                return $params["access_token"];
+
+                return $params['access_token'];
                 break;
             case 'microsoft':
                 return $aouth;
@@ -46,6 +49,7 @@ class Helpers
                 break;
             default:
                 $aouth = json_decode($aouth, true);
+
                 return $aouth[$key];
                 break;
         }

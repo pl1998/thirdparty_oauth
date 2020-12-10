@@ -86,7 +86,7 @@ class SocialiteApi implements OauthLinterface
             $access_token = Helpers::getAccessToken($this->deiver, $aouth['$access_token']);
             $userinfo = $this->api->getUserInfo($access_token);
             $userinfo->unionid = $aouth['unionid'];
-            
+
             return $userinfo;
         } else {
             $access_token = Helpers::getAccessToken($this->deiver, $aouth);
