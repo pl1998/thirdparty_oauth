@@ -27,6 +27,7 @@ $ composer require pltrue/thirdparty_oauth
 | 2020-12-06|   fix 、feat   | 新增`Microsoft`登录 修复微信、QQ的bug   | [742481030](https://github.com/742481030)     | 已合并到master分支     |
 | 2020-12-07|   feat         | 新增`支付宝`登录    | [742481030](https://github.com/742481030)  | 已合并到master分支     |
 | 2020-12-08|   feat         | 新增`小米账户`登录    | [742481030](https://github.com/742481030)  | 已合并到master分支     |
+| 2020-12-09|   feat         | 新增`google账户`登录    | [742481030](https://github.com/742481030)  | 已合并到master分支     |
 
 
 
@@ -53,6 +54,7 @@ $ composer require pltrue/thirdparty_oauth
    * [QQ互联创建地址](https://connect.qq.com/index.html)
    * [支付宝应用](https://open.alipay.com/platform/home.htm?from=wwwalipay)
    * [小米应用](https://dev.mi.com/console/)
+   * [google应用](https://console.developers.google.com)
    
    
 
