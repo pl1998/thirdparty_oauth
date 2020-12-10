@@ -56,7 +56,6 @@ class AlipayOauth implements Handle
             'sign_type' => 'RSA2',
             'charset' => 'utf-8',
             'redirect_uri' => $this->config['redirect_uri'],
-
         ]);
         $query['sign'] = $this->generateSign($query, $query['sign_type']);
 

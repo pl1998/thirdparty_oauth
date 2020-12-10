@@ -31,7 +31,7 @@ class QqOauth implements Handle
             'response_type' => 'code',
             'client_id' => $this->config['client_id'],
             'redirect_uri' => $this->config['redirect_uri'],
-            'scope' => "",
+            'scope' => '',
             'state' => 'stste',
         ]);
 
@@ -76,8 +76,7 @@ class QqOauth implements Handle
             'query' => $query,
         ])->getBody()->getContents());
 
-
-        $userinfo->openid  = $this->getUid($access_token)->openid;
+        $userinfo->openid = $this->getUid($access_token)->openid;
         $userinfo->unionid = $this->getUnionid($access_token)->unionid;
 
         return $userinfo;
