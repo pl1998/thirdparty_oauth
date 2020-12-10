@@ -63,7 +63,6 @@ class SocialiteApi implements OauthLinterface
                 case 'google':
                     return $this->api = new GoogleOauth($config);
                     break;
-            
             }
     }
 

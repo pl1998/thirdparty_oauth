@@ -26,16 +26,12 @@ class GoogleOauth implements Handle
 
     public function authorization()
     {
-
-
-        $redirect_uris=urlencode( $this->config['redirect_uri']);
-        $client_id=$this->config['client_id'];
-        $scope=urlencode('https://www.googleapis.com/auth/userinfo.profile');
+        $redirect_uris = urlencode($this->config['redirect_uri']);
+        $client_id = $this->config['client_id'];
+        $scope = urlencode('https://www.googleapis.com/auth/userinfo.profile');
         $url = "https://accounts.google.com/o/oauth2/auth?response_type=code&access_type=offline&client_id={$client_id}&redirect_uri={$redirect_uris}&state&scope={$scope}&approval_prompt=auto";
-        header('Location:' . $url);
+        header('Location:'.$url);
 
-
-        
         exit();
     }
 
@@ -60,21 +56,17 @@ class GoogleOauth implements Handle
     {
         $url = 'https://www.googleapis.com/oauth2/v1/userinfo';
 
-     
         $query = array_filter([
-          
             'access_token' => $access_token,
         ]);
-       
+
         $userinfo = json_decode($this->client->request('GET', $url, [
             'query' => $query,
         ])->getBody()->getContents());
 
-        $userinfo->openid =$userinfo->id;
+        $userinfo->openid = $userinfo->id;
         $userinfo->unionid = $userinfo->id;
 
         return $userinfo;
     }
-
-    
 }
