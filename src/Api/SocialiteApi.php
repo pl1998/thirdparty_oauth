@@ -20,6 +20,7 @@ use Pl1998\ThirdpartyOauth\Handle\WeiXinOauth;
 use Pl1998\ThirdpartyOauth\Handle\MicrosoftOauth;
 use Pl1998\ThirdpartyOauth\Handle\AlipayOauth;
 use Pl1998\ThirdpartyOauth\Handle\XiaomiOauth;
+use Pl1998\ThirdpartyOauth\Handle\GoogleOauth;
 use Pl1998\ThirdpartyOauth\Helpers;
 
 class SocialiteApi implements OauthLinterface
@@ -58,7 +59,12 @@ class SocialiteApi implements OauthLinterface
                 break;
                  case 'xiaomi':
                 return $this->api = new XiaomiOauth($config);
-                break; }
+                break;
+                case 'google':
+                    return $this->api = new GoogleOauth($config);
+                    break;
+            
+            }
     }
 
     public function authorization()
