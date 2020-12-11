@@ -67,7 +67,6 @@ class SocialiteApi implements OauthLinterface
                       case 'huawei':
                     return $this->api = new HuaweiOauth($config);
                     break;
-            
             }
     }
 

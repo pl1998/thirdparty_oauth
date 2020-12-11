@@ -31,8 +31,8 @@ class HuaweiOauth implements Handle
             'response_type' => 'code',
             'client_id' => $this->config['client_id'],
             'redirect_uri' => $this->config['redirect_uri'],
-            'access_type'=>'offline',
-            'scope' => 'https://www.huawei.com/auth/account/base.profile https://www.huawei.com/auth/account/mobile.number email openid' ,
+            'access_type' => 'offline',
+            'scope' => 'https://www.huawei.com/auth/account/base.profile https://www.huawei.com/auth/account/mobile.number email openid',
             'state' => 'stste',
         ]);
 
@@ -48,44 +48,42 @@ class HuaweiOauth implements Handle
 
         $query = array_filter([
             'client_id' => $this->config['client_id'],
-            'code' => $_GET['code']??$_GET['authorization_code'],
+            'code' => $_GET['code'] ?? $_GET['authorization_code'],
             'grant_type' => 'authorization_code',
             'client_secret' => $this->config['client_secret'],
             'redirect_uri' => $this->config['redirect_uri'],
         ]);
 
-         $res=  json_decode( $this->client->request('post', $url, [
+        $res = json_decode($this->client->request('post', $url, [
             'form_params' => $query,
         ])->getBody()->getContents());
-     $this->access_token=$res->access_token;
-      $this->refresh_token=$res->refresh_token;
-       $this->id_token=$res->id_token;
-         $s = explode('.', $this->id_token);
-         $this->info= json_decode($this->base64UrlDecode($s[1]));
+        $this->access_token = $res->access_token;
+        $this->refresh_token = $res->refresh_token;
+        $this->id_token = $res->id_token;
+        $s = explode('.', $this->id_token);
+        $this->info = json_decode($this->base64UrlDecode($s[1]));
 
-       return $res->access_token;
-     
+        return $res->access_token;
     }
 
     public function getUserInfo($access_token)
     {
         $url = 'https://api.cloud.huawei.com/rest.php?nsp_fmt=JSON&nsp_svc=huawei.oauth2.user.getTokenInfo';
 
-      
         $query = array_filter([
             'openid' => 'OPENID',
-            
+
             'access_token' => $access_token,
         ]);
-      
+
         $userinfo = json_decode($this->client->request('POST', $url, [
             'form_params' => $query,
         ])->getBody()->getContents());
-        
 
-      $userinfo->unionid=$userinfo->union_id;
-        $userinfo->nikename=$this->info->display_name;
-        $userinfo->email=$this->info->email;
+        $userinfo->unionid = $userinfo->union_id;
+        $userinfo->nikename = $this->info->display_name;
+        $userinfo->email = $this->info->email;
+
         return $userinfo;
     }
 
@@ -99,9 +97,9 @@ class HuaweiOauth implements Handle
 
     public function getUid($access_token)
     {
-       
     }
-      public function base64UrlDecode(string $input)
+
+    public function base64UrlDecode(string $input)
     {
         $remainder = strlen($input) % 4;
         if ($remainder) {
