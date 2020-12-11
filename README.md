@@ -28,7 +28,7 @@ $ composer require pltrue/thirdparty_oauth
 | 2020-12-07|   feat         | 新增`支付宝`登录    | [742481030](https://github.com/742481030)  | 已合并到master分支     |
 | 2020-12-08|   feat         | 新增`小米账户`登录    | [742481030](https://github.com/742481030)  | 已合并到master分支     |
 | 2020-12-09|   feat         | 新增`google账户`登录    | [742481030](https://github.com/742481030)  | 已合并到master分支     |
-| 2020-12-00|   feat         | 新增`华为账户`登录    | [742481030](https://github.com/742481030)  | 已合并到master分支     |
+| 2020-12-10|   feat         | 新增`华为账户`登录    | [742481030](https://github.com/742481030)  | 已合并到master分支     |
 
 
 ## 兼容
