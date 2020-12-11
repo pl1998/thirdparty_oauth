@@ -61,8 +61,8 @@ class HuaweiOauth implements Handle
       $this->refresh_token=$res->refresh_token;
        $this->id_token=$res->id_token;
          $s = explode('.', $this->id_token);
-         $userinfo= json_decode($this->base64UrlDecode($s[1]));
-dump($userinfo);
+         $this->info= json_decode($this->base64UrlDecode($s[1]));
+
        return $res->access_token;
      
     }
@@ -84,7 +84,8 @@ dump($userinfo);
         
 
       $userinfo->unionid=$userinfo->union_id;
-       
+        $userinfo->nikename=$this->info->display_name;
+        $userinfo->email=$this->info->email;
         return $userinfo;
     }
 
