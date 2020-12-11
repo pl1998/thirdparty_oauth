@@ -46,6 +46,11 @@ class Helpers
                 break;
             case 'alipay':
                 return json_decode($aouth)->alipay_system_oauth_token_response->access_token;
+
+                break;
+                 case 'huawei':
+                return($aouth);
+
                 break;
             default:
                 $aouth = json_decode($aouth, true);

@@ -13,7 +13,7 @@ namespace Pl1998\ThirdpartyOauth\Handle;
 
 use GuzzleHttp\Client;
 
-class QqOauth implements Handle
+class HuaweiOauth implements Handle
 {
     protected $client;
     protected $config;
@@ -26,12 +26,13 @@ class QqOauth implements Handle
 
     public function authorization()
     {
-        $url = 'https://graph.qq.com/oauth2.0/authorize';
+        $url = 'https://oauth-login.cloud.huawei.com/oauth2/v2/authorize';
         $query = array_filter([
             'response_type' => 'code',
             'client_id' => $this->config['client_id'],
             'redirect_uri' => $this->config['redirect_uri'],
-            'scope' => '',
+            'access_type'=>'offline',
+            'scope' => 'https://www.huawei.com/auth/account/base.profile https://www.huawei.com/auth/account/mobile.number email openid' ,
             'state' => 'stste',
         ]);
 
@@ -43,39 +44,47 @@ class QqOauth implements Handle
 
     public function getAccessToken()
     {
-        $url = 'https://graph.qq.com/oauth2.0/token?grant_type=authorization_code';
+        $url = 'https://oauth-login.cloud.huawei.com/oauth2/v3/token';
 
         $query = array_filter([
             'client_id' => $this->config['client_id'],
-            'code' => $_GET['code'],
+            'code' => $_GET['code']??$_GET['authorization_code'],
             'grant_type' => 'authorization_code',
             'client_secret' => $this->config['client_secret'],
             'redirect_uri' => $this->config['redirect_uri'],
         ]);
 
-        return $this->client->request('get', $url, [
-            'query' => $query,
-        ])->getBody()->getContents();
+         $res=  json_decode( $this->client->request('post', $url, [
+            'form_params' => $query,
+        ])->getBody()->getContents());
+     $this->access_token=$res->access_token;
+      $this->refresh_token=$res->refresh_token;
+       $this->id_token=$res->id_token;
+         $s = explode('.', $this->id_token);
+         $userinfo= json_decode($this->base64UrlDecode($s[1]));
+dump($userinfo);
+       return $res->access_token;
+     
     }
 
     public function getUserInfo($access_token)
     {
-        $url = 'https://graph.qq.com/user/get_user_info';
+        $url = 'https://api.cloud.huawei.com/rest.php?nsp_fmt=JSON&nsp_svc=huawei.oauth2.user.getTokenInfo';
 
-        $result = $this->getUid($access_token);
+      
         $query = array_filter([
-            'openid' => $result->openid,
-            'oauth_consumer_key' => $result->client_id,
+            'openid' => 'OPENID',
+            
             'access_token' => $access_token,
         ]);
-        $this->getUnionid($access_token);
-        $userinfo = json_decode($this->client->request('GET', $url, [
-            'query' => $query,
+      
+        $userinfo = json_decode($this->client->request('POST', $url, [
+            'form_params' => $query,
         ])->getBody()->getContents());
+        
 
-        $userinfo->openid = $this->getUid($access_token)->openid;
-        $userinfo->unionid = $this->getUnionid($access_token)->unionid;
-
+      $userinfo->unionid=$userinfo->union_id;
+       
         return $userinfo;
     }
 
@@ -89,11 +98,16 @@ class QqOauth implements Handle
 
     public function getUid($access_token)
     {
-        $url = 'https://graph.qq.com/oauth2.0/me?access_token='.$access_token.'&fmt=json';
-        $str = $this->client->get($url)->getBody()->getContents();
+       
+    }
+      public function base64UrlDecode(string $input)
+    {
+        $remainder = strlen($input) % 4;
+        if ($remainder) {
+            $addlen = 4 - $remainder;
+            $input .= str_repeat('=', $addlen);
+        }
 
-        $user = json_decode($str);
-
-        return $user;
+        return base64_decode(strtr($input, '-_', '+/'));
     }
 }

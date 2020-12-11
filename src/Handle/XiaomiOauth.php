@@ -36,6 +36,7 @@ class XiaomiOauth implements Handle
         ]);
 
         $url = $url.'?'.http_build_query($query);
+
         header('Location:'.$url);
         exit();
     }
@@ -52,6 +53,7 @@ class XiaomiOauth implements Handle
             'redirect_uri' => $this->config['redirect_uri'],
         ]);
 
+        //return
         $ss = $this->client->request('get', $url, [
             'query' => $query,
         ])->getBody()->getContents();
@@ -70,8 +72,9 @@ class XiaomiOauth implements Handle
             'token' => $access_token,
         ]);
         $this->getUnionid($access_token);
-
-        $userinfo = json_decode($this->client->request('GET', $url, ['query' => $query])->getBody()->getContents())->data;
+        $userinfo = json_decode($this->client->request('GET', $url, [
+            'query' => $query,
+        ])->getBody()->getContents())->data;
 
         return $userinfo;
     }
