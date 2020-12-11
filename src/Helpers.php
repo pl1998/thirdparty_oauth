@@ -49,7 +49,7 @@ class Helpers
 
                 break;
                  case 'huawei':
-                return($aouth);
+                return $aouth;
 
                 break;
             default:
