@@ -17,7 +17,9 @@ class QqOauth implements Handle
 {
     protected $client;
     protected $config;
-
+    protected $authorization_url='https://graph.qq.com/oauth2.0/authorize';
+    protected $token_url='https://graph.qq.com/oauth2.0/token?grant_type=authorization_code';
+    protected $userinfo_url='https://graph.qq.com/user/get_user_info';
     public function __construct($config)
     {
         $this->config = $config;
@@ -26,16 +28,16 @@ class QqOauth implements Handle
 
     public function authorization()
     {
-        $url = 'https://graph.qq.com/oauth2.0/authorize';
+        //$url = 'https://graph.qq.com/oauth2.0/authorize';
         $query = array_filter([
             'response_type' => 'code',
             'client_id' => $this->config['client_id'],
             'redirect_uri' => $this->config['redirect_uri'],
             'scope' => '',
-            'state' => 'stste',
+               'state' => 'https://6.mxin.ltd/login/qqcallback',
         ]);
 
-        $url = $url.'?'.http_build_query($query);
+        $url = $this->authorization_url.'?'.http_build_query($query);
 
         header('Location:'.$url);
         exit();
@@ -43,19 +45,27 @@ class QqOauth implements Handle
 
     public function getAccessToken()
     {
-        $url = 'https://graph.qq.com/oauth2.0/token?grant_type=authorization_code';
+       // $url = 'https://graph.qq.com/oauth2.0/token?grant_type=authorization_code';
 
         $query = array_filter([
             'client_id' => $this->config['client_id'],
             'code' => $_GET['code'],
             'grant_type' => 'authorization_code',
             'client_secret' => $this->config['client_secret'],
-            'redirect_uri' => $this->config['redirect_uri'],
+            'redirect_uri' => $this->config['redirect_uri'], 
+            'fmt'=>'json'
         ]);
 
-        return $this->client->request('get', $url, [
+         
+$res=$this->client->request('get', $this->token_url, [
             'query' => $query,
         ])->getBody()->getContents();
+        return  json_decode($res)->access_token;
+        exit;
+        
+    
+
+    
     }
 
     public function getUserInfo($access_token)
