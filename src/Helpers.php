@@ -36,10 +36,8 @@ class Helpers
                 return 'Bearer '.$aouth[$key];
                 break;
             case 'qq':
-                $params = [];
-                parse_str($aouth, $params);
-
-                return $params['access_token'];
+              
+                return $aouth;
                 break;
             case 'microsoft':
                 return $aouth;
