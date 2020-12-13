@@ -36,7 +36,10 @@ class Helpers
                 return 'Bearer '.$aouth[$key];
                 break;
             case 'qq':
-              
+                
+                return $aouth;
+case 'douyin':
+                
                 return $aouth;
                 break;
             case 'microsoft':
@@ -47,7 +50,7 @@ class Helpers
 
                 break;
                  case 'huawei':
-                return $aouth;
+                return($aouth);
 
                 break;
             default:
