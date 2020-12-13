@@ -28,7 +28,7 @@ class line implements Handle
 
     public function authorization()
     {
-       
+        $query = array_filter([
             'response_type' => 'code',
             'client_id' => $this->config['client_id'],
             'redirect_uri' => $this->config['redirect_uri'],
