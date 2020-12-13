@@ -31,6 +31,7 @@ $ composer require pltrue/thirdparty_oauth
 | 2020-12-10|   feat         | 新增`华为账户`登录    | [742481030](https://github.com/742481030)  | 已合并到master分支     |
  2020-12-11|   fix         | qq统一使用json接口    | [742481030](https://github.com/742481030)  | 已合并到master分支     |
  | 2020-12-12|   feat         | 新增`抖音账户`登录    | [742481030](https://github.com/742481030)  | 已合并到master分支     |
+  | 2020-12-13|   feat         | 新增`Line账户`登录    | [742481030](https://github.com/742481030)  | 已合并到master分支     |
 
 ## 兼容
 > * 支持php >=5.6 
