@@ -38,7 +38,11 @@ class Helpers
             case 'qq':
                 
                 return $aouth;
-case 'douyin':
+           case 'douyin':
+                
+                return $aouth;
+                break;
+           case   'line':
                 
                 return $aouth;
                 break;
