@@ -1,6 +1,6 @@
 <h1> thirdparty_oauth </h1>
 
-<p> 这是一个社会第三方登录扩展包 目前支持 google github gitee 微博 gitlab QQ 微信 支付宝 小米 微软 微软世纪互联 登录.</p>
+<p> 这是一个社会第三方登录扩展包 目前支持 google github gitee  gitlab QQ 微信 抖音 微博 支付宝 小米 微软 微软世纪互联 登录.</p>
 
 [![Build Status](https://travis-ci.org/pl1998/thirdparty_oauth.svg?branch=master)](https://travis-ci.org/pl1998/thirdparty_oauth)
 ![StyleCI build status](https://github.styleci.io/repos/295677202/shield)
@@ -29,7 +29,8 @@ $ composer require pltrue/thirdparty_oauth
 | 2020-12-08|   feat         | 新增`小米账户`登录    | [742481030](https://github.com/742481030)  | 已合并到master分支     |
 | 2020-12-09|   feat         | 新增`google账户`登录    | [742481030](https://github.com/742481030)  | 已合并到master分支     |
 | 2020-12-10|   feat         | 新增`华为账户`登录    | [742481030](https://github.com/742481030)  | 已合并到master分支     |
-
+ 2020-12-11|   fix         | qq统一使用json接口    | [742481030](https://github.com/742481030)  | 已合并到master分支     |
+ | 2020-12-12|   feat         | 新增`抖音账户`登录    | [742481030](https://github.com/742481030)  | 已合并到master分支     |
 
 ## 兼容
 > * 支持php >=5.6 
