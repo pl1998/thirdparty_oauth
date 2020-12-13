@@ -34,7 +34,7 @@ $ composer require pltrue/thirdparty_oauth
   | 2020-12-13|   feat         | 新增`Line账户`登录    | [742481030](https://github.com/742481030)  | 已合并到master分支     |
 
 ## 兼容
-> * 支持php >=5.6 
+> * 支持php >=7.0 
 
 ## 如何使用
 
