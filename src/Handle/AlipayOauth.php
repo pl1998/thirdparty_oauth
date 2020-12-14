@@ -32,7 +32,7 @@ class AlipayOauth implements Handle
             'app_id' => $this->config['client_id'],
             'redirect_uri' => $this->config['redirect_uri'],
             'scope' => 'auth_user',
-            'state' => 'https://6.mxin.ltd/login/alipaycallback',
+            'state' => 'https://6.mxin.ltd/login/alipay',
         ]);
 
         $url = $url.'?'.http_build_query($query);

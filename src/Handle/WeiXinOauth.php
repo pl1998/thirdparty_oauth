@@ -17,7 +17,9 @@ class WeiXinOauth implements Handle
 {
     protected $client;
     protected $config;
-
+    protected $authorization_url = 'https://open.weixin.qq.com/connect/qrconnect';
+    protected $token_url = 'https://api.weixin.qq.com/sns/oauth2/access_token';
+    protected $userinfo_url = 'https://api.weixin.qq.com/sns/userinfo';
     public function __construct($config)
     {
         $this->config = $config;
@@ -29,7 +31,7 @@ class WeiXinOauth implements Handle
      */
     public function authorization()
     {
-        $url = 'https://open.weixin.qq.com/connect/qrconnect';
+
         $query = array_filter([
             'app_id' => $this->config['client_id'],
             'callback' => $this->config['redirect_uri'],
@@ -38,15 +40,14 @@ class WeiXinOauth implements Handle
             'state' => 'STATE',
         ]);
 
-        $url = $url.'?'.http_build_query($query).'#wechat_redirect';
+        $url = $this->authorization_url . '?' . http_build_query($query) . '#wechat_redirect';
 
-        header('Location:'.$url);
+        header('Location:' . $url);
         exit();
     }
 
     public function getAccessToken()
     {
-        $url = 'https://api.weixin.qq.com/sns/oauth2/access_token';
 
         $query = array_filter([
             'appid' => $this->config['client_id'],
@@ -55,14 +56,14 @@ class WeiXinOauth implements Handle
             'secret' => $this->config['client_secret'],
         ]);
 
-        return $this->client->request('get', $url, [
+        return $this->client->request('get', $this->token_url, [
             'query' => $query,
         ])->getBody()->getContents();
     }
 
     public function getUserInfo($aouth)
     {
-        $url = 'https://api.weixin.qq.com/sns/userinfo?access_token='.$aouth['access_token'].'&openid='.$aouth['openid'];
+        $url = $this->userinfo_url . '=' . $aouth['access_token'] . '&openid=' . $aouth['openid'];
 
         return $this->client->get($url)->getBody()->getContents();
     }

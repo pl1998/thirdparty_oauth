@@ -26,7 +26,7 @@ class Helpers
                 $params = explode('=', $aouth);
                 $access_token = $params[1];
                 $access_token = explode('&', $access_token);
-                $access_token = 'Bearer '.$access_token[0];
+                $access_token = $access_token[0];
 
                 return $access_token;
                 break;
@@ -38,11 +38,11 @@ class Helpers
             case 'qq':
                 
                 return $aouth;
-           case 'douyin':
+case 'douyin':
                 
                 return $aouth;
                 break;
-           case   'line':
+                case 'line':
                 
                 return $aouth;
                 break;
@@ -58,9 +58,9 @@ class Helpers
 
                 break;
             default:
-                $aouth = json_decode($aouth, true);
+              
 
-                return $aouth[$key];
+                return $aouth;
                 break;
         }
     }

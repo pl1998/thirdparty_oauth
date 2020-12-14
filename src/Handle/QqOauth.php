@@ -17,9 +17,9 @@ class QqOauth implements Handle
 {
     protected $client;
     protected $config;
-    protected $authorization_url='https://graph.qq.com/oauth2.0/authorize';
-    protected $token_url='https://graph.qq.com/oauth2.0/token?grant_type=authorization_code';
-    protected $userinfo_url='https://graph.qq.com/user/get_user_info';
+    protected $authorization_url = 'https://graph.qq.com/oauth2.0/authorize';
+    protected $token_url = 'https://graph.qq.com/oauth2.0/token?grant_type=authorization_code';
+    protected $userinfo_url = 'https://graph.qq.com/user/get_user_info';
     public function __construct($config)
     {
         $this->config = $config;
@@ -28,49 +28,44 @@ class QqOauth implements Handle
 
     public function authorization()
     {
-        //$url = 'https://graph.qq.com/oauth2.0/authorize';
+
         $query = array_filter([
             'response_type' => 'code',
             'client_id' => $this->config['client_id'],
             'redirect_uri' => $this->config['redirect_uri'],
             'scope' => '',
-               'state' => 'https://6.mxin.ltd/login/qqcallback',
+            'state' => 'https://6.mxin.ltd/login/qq',
         ]);
 
-        $url = $this->authorization_url.'?'.http_build_query($query);
+        $url = $this->authorization_url . '?' . http_build_query($query);
 
-        header('Location:'.$url);
+        header('Location:' . $url);
         exit();
     }
 
     public function getAccessToken()
     {
-       // $url = 'https://graph.qq.com/oauth2.0/token?grant_type=authorization_code';
 
         $query = array_filter([
             'client_id' => $this->config['client_id'],
             'code' => $_GET['code'],
             'grant_type' => 'authorization_code',
             'client_secret' => $this->config['client_secret'],
-            'redirect_uri' => $this->config['redirect_uri'], 
-            'fmt'=>'json'
+            'redirect_uri' => $this->config['redirect_uri'],
+            'fmt' => 'json',
         ]);
 
-         
-$res=$this->client->request('get', $this->token_url, [
+        $res = $this->client->request('get', $this->token_url, [
             'query' => $query,
         ])->getBody()->getContents();
-        return  json_decode($res)->access_token;
+        return json_decode($res)->access_token;
         exit;
-        
-    
 
-    
     }
 
     public function getUserInfo($access_token)
     {
-        $url = 'https://graph.qq.com/user/get_user_info';
+      
 
         $result = $this->getUid($access_token);
         $query = array_filter([
@@ -79,7 +74,7 @@ $res=$this->client->request('get', $this->token_url, [
             'access_token' => $access_token,
         ]);
         $this->getUnionid($access_token);
-        $userinfo = json_decode($this->client->request('GET', $url, [
+        $userinfo = json_decode($this->client->request('GET', $this->userinfo_url, [
             'query' => $query,
         ])->getBody()->getContents());
 
@@ -91,7 +86,7 @@ $res=$this->client->request('get', $this->token_url, [
 
     private function getUnionid($access_token)
     {
-        $url = 'https://graph.qq.com/oauth2.0/me?access_token='.$access_token.'&unionid=1&fmt=json';
+        $url = 'https://graph.qq.com/oauth2.0/me?access_token=' . $access_token . '&unionid=1&fmt=json';
         $str = $this->client->get($url)->getBody()->getContents();
 
         return json_decode($str);
@@ -99,7 +94,7 @@ $res=$this->client->request('get', $this->token_url, [
 
     public function getUid($access_token)
     {
-        $url = 'https://graph.qq.com/oauth2.0/me?access_token='.$access_token.'&fmt=json';
+        $url = 'https://graph.qq.com/oauth2.0/me?access_token=' . $access_token . '&fmt=json';
         $str = $this->client->get($url)->getBody()->getContents();
 
         $user = json_decode($str);
