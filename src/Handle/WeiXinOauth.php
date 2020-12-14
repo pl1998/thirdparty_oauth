@@ -65,6 +65,6 @@ class WeiXinOauth implements Handle
     {
         $url = $this->userinfo_url . '=' . $aouth['access_token'] . '&openid=' . $aouth['openid'];
 
-        return $this->client->get($url)->getBody()->getContents();
+        return   json_decode($this->client->get($url)->getBody()->getContents());
     }
 }
