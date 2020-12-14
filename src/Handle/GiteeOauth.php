@@ -64,6 +64,6 @@ class GiteeOauth implements Handle
     {
         $url = 'https://gitee.com/api/v5/user?access_token='.$access_token;
 
-        return $this->client->get($url)->getBody()->getContents();
+        return json_decode($this->client->get($url)->getBody()->getContents());
     }
 }
