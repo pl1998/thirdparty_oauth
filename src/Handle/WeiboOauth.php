@@ -65,9 +65,9 @@ class WeiboOauth implements Handle
             'access_token' => $access_token,
         ]);
 
-        return $this->client->request('GET', $url, [
+        return json_decode($this->client->request('GET', $url, [
             'query' => $query,
-        ])->getBody()->getContents();
+        ])->getBody()->getContents());
     }
 
     public function getUid($access_token)
