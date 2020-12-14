@@ -17,7 +17,9 @@ class XiaomiOauth implements Handle
 {
     protected $client;
     protected $config;
-
+    protected $authorization_url = 'https://account.xiaomi.com/oauth2/authorize';
+    protected $token_url = 'https://account.xiaomi.com/oauth2/token';
+    protected $userinfo_url = 'https://open.account.xiaomi.com/user/profile';
     public function __construct($config)
     {
         $this->config = $config;
@@ -26,7 +28,7 @@ class XiaomiOauth implements Handle
 
     public function authorization()
     {
-        $url = 'https://account.xiaomi.com/oauth2/authorize';
+
         $query = array_filter([
             'response_type' => 'code',
             'client_id' => $this->config['client_id'],
@@ -35,15 +37,14 @@ class XiaomiOauth implements Handle
             'state' => '',
         ]);
 
-        $url = $url.'?'.http_build_query($query);
+        $url = $this->authorization_url . '?' . http_build_query($query);
 
-        header('Location:'.$url);
+        header('Location:' . $url);
         exit();
     }
 
     public function getAccessToken()
     {
-        $url = 'https://account.xiaomi.com/oauth2/token';
 
         $query = array_filter([
             'client_id' => $this->config['client_id'],
@@ -53,41 +54,34 @@ class XiaomiOauth implements Handle
             'redirect_uri' => $this->config['redirect_uri'],
         ]);
 
-        //return
-        $ss = $this->client->request('get', $url, [
+        $ss = $this->client->request('get', $this->token_url, [
             'query' => $query,
         ])->getBody()->getContents();
 
-        return $res = str_replace('&&&START&&&', '', $ss);
-        dump($res);
+        $res = \json_decode(str_replace('&&&START&&&', '', $ss));
+        $this->openid = $res->openId;
+        return $this->access_token = $res->access_token;
         exit;
     }
 
     public function getUserInfo($access_token)
     {
-        $url = 'https://open.account.xiaomi.com/user/profile';
 
         $query = array_filter([
             'client_id' => $this->config['client_id'],
             'token' => $access_token,
         ]);
-        $this->getUnionid($access_token);
-        $userinfo = json_decode($this->client->request('GET', $url, [
+       
+        $user = json_decode($this->client->request('GET', $this->userinfo_url, [
             'query' => $query,
         ])->getBody()->getContents())->data;
+        $userinfo=new \stdClass;
+        $userinfo->unionid=$user->unionId;
+        $userinfo->openid= $this->openid;
+         $userinfo->nikename=$user->miliaoNick;
+         $userinfo->avatar=$user->miliaoIcon_120;
 
         return $userinfo;
     }
 
-    private function getUnionid($access_token)
-    {
-        $url = 'https://graph.qq.com/oauth2.0/me?access_token='.$access_token.'&unionid=1&fmt=json';
-        $str = $this->client->get($url)->getBody()->getContents();
-
-        return json_decode($str);
-    }
-
-    public function getUid($access_token)
-    {
-    }
 }

@@ -10,6 +10,7 @@
  */
 
 namespace Pl1998\ThirdpartyOauth\Api;
+
 use Pl1998\ThirdpartyOauth\Handle\{
     AlipayOauth,
     Douyin,
@@ -23,10 +24,14 @@ use Pl1998\ThirdpartyOauth\Handle\{
     XiaomiOauth,
     HuaweiOauth,
     MicrosoftOauth,
-    LineOauth
+    LineOauth,
+    TwitterOauth,
+    FacebookOauth
 
 
 };
+
+
 
 use Pl1998\ThirdpartyOauth\Helpers;
 
