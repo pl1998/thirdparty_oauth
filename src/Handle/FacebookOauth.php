@@ -17,9 +17,9 @@ class FacebookOauth implements Handle
 {
     protected $client;
     protected $config;
-    protected $authorization_url='https://access.line.me/oauth2/v2.1/authorize';
-    protected $token_url='https://api.line.me/oauth2/v2.1/token';
-    protected $userinfo_url='https://api.line.me/v2/profile';
+    protected $authorization_url = 'https://www.facebook.com/v3.1/dialog/oauth';
+    protected $token_url = 'https://graph.facebook.com/v3.1/oauth/access_token';
+    protected $userinfo_url = 'https://graph.facebook.com/v3.1/me';
     public function __construct($config)
     {
         $this->config = $config;
@@ -28,66 +28,64 @@ class FacebookOauth implements Handle
 
     public function authorization()
     {
+
         $query = array_filter([
             'response_type' => 'code',
             'client_id' => $this->config['client_id'],
             'redirect_uri' => $this->config['redirect_uri'],
-            'scope' => 'profile openid',
-               'state' => 'https://6.mxin.ltd/login/qqcallback',
+            'scope' => 'user_about_me,email,read_stream',
+            'state' => 'https://6.mxin.ltd/login/qq',
         ]);
 
-        $url = $this->authorization_url.'?'.http_build_query($query);
+        $url = $this->authorization_url . '?' . http_build_query($query);
 
-        header('Location:'.$url);
+        header('Location:' . $url);
         exit();
     }
 
     public function getAccessToken()
     {
-       // $url = 'https://graph.qq.com/oauth2.0/token?grant_type=authorization_code';
 
         $query = array_filter([
             'client_id' => $this->config['client_id'],
             'code' => $_GET['code'],
             'grant_type' => 'authorization_code',
             'client_secret' => $this->config['client_secret'],
-            'redirect_uri' => $this->config['redirect_uri'], 
-            'fmt'=>'json'
+            'redirect_uri' => $this->config['redirect_uri'],
+          
         ]);
 
-         
-$res=$this->client->request('get', $this->token_url, [
-            'form_params' => $query,
+        $res = $this->client->request('get', $this->token_url, [
+            'query' => $query,
         ])->getBody()->getContents();
-        return  json_decode($res)->access_token;
+        return json_decode($res)->access_token;
         exit;
-        
-    
 
-    
     }
 
     public function getUserInfo($access_token)
     {
-       
-
       
-     
-     
+
+        
+        $query = array_filter([
+            
+            'access_token' => $access_token,
+            'filds'=>'id,name,email,picture.width(400)'
+        ]);
+        $this->getUnionid($access_token);
         $userinfo = json_decode($this->client->request('GET', $this->userinfo_url, [
-           
-            'headers' => [
-                'Authorization' =>'Bearer' .$access_token,
-            ]
+            'query' => $query,
         ])->getBody()->getContents());
 
-        $userinfo->openid = $userinfo->userId;
-        $userinfo->unionid = $userinfo->userId;
-        $userinfo->nikename=$userinfo->displayName;
-        
-
+        $userinfo->openid = $userinfo->id;
+        $userinfo->unionid = $userinfo->id;
+        $userinfo->nikename = $userinfo->name;
+        $userinfo->email = $userinfo->email ?? '';
         return $userinfo;
     }
 
- 
+    
+
+   
 }
