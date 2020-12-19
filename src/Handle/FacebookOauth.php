@@ -13,11 +13,13 @@ namespace Pl1998\ThirdpartyOauth\Handle;
 
 use GuzzleHttp\Client;
 
-class WeiboOauth implements Handle
+class FacebookOauth implements Handle
 {
     protected $client;
     protected $config;
-
+    protected $authorization_url = 'https://www.facebook.com/v3.1/dialog/oauth';
+    protected $token_url = 'https://graph.facebook.com/v3.1/oauth/access_token';
+    protected $userinfo_url = 'https://graph.facebook.com/v3.1/me';
     public function __construct($config)
     {
         $this->config = $config;
@@ -26,56 +28,64 @@ class WeiboOauth implements Handle
 
     public function authorization()
     {
-        $url = 'https://api.weibo.com/oauth2/authorize';
 
         $query = array_filter([
+            'response_type' => 'code',
             'client_id' => $this->config['client_id'],
             'redirect_uri' => $this->config['redirect_uri'],
+            'scope' => 'user_about_me,email,read_stream',
+            'state' => 'https://6.mxin.ltd/login/qq',
         ]);
 
-        $url = $url.'?'.http_build_query($query);
-        header('Location:'.$url);
+        $url = $this->authorization_url . '?' . http_build_query($query);
+
+        header('Location:' . $url);
         exit();
     }
 
     public function getAccessToken()
     {
-        $url = 'https://api.weibo.com/oauth2/access_token';
 
         $query = array_filter([
             'client_id' => $this->config['client_id'],
             'code' => $_GET['code'],
+            'grant_type' => 'authorization_code',
             'client_secret' => $this->config['client_secret'],
             'redirect_uri' => $this->config['redirect_uri'],
-            'grant_type' => 'authorization_code',
+          
         ]);
 
-        return $this->client->request('POST', $url, [
+        $res = $this->client->request('get', $this->token_url, [
             'query' => $query,
         ])->getBody()->getContents();
+        return json_decode($res)->access_token;
+        exit;
+
     }
 
     public function getUserInfo($access_token)
     {
-        $url = 'https://api.weibo.com/2/users/show.json?uid=%s&access_token=%s';
+      
 
-        $uid = $this->getUid($access_token);
+        
         $query = array_filter([
-            'uid' => $uid,
+            
             'access_token' => $access_token,
+            'filds'=>'id,name,email,picture.width(400)'
         ]);
-
-        return json_decode($this->client->request('GET', $url, [
+        $this->getUnionid($access_token);
+        $userinfo = json_decode($this->client->request('GET', $this->userinfo_url, [
             'query' => $query,
         ])->getBody()->getContents());
+
+        $userinfo->openid = $userinfo->id;
+        $userinfo->unionid = $userinfo->id;
+        $userinfo->nikename = $userinfo->name;
+        $userinfo->email = $userinfo->email ?? '';
+        return $userinfo;
     }
 
-    public function getUid($access_token)
-    {
-        $url = 'https://api.weibo.com/oauth2/get_token_info?access_token='.$access_token;
-        $result = $this->client->post($url);
-        $result = json_decode($result->getBody()->getContents(), true);
+    
 
-        return $result['uid'];
-    }
+   
 }

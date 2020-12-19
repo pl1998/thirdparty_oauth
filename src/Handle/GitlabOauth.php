@@ -58,10 +58,10 @@ class GitlabOauth implements Handle
     {
         $url = 'https://gitlab.example.com/api/v4/user';
 
-        return $this->client->request('POST', $url, [
+        return json_decode($this->client->request('POST', $url, [
             'headers' => [
                 'Authorization' => $access_token,
             ],
-        ])->getBody()->getContents();
+        ])->getBody()->getContents());
     }
 }
