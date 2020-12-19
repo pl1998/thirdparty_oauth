@@ -11,27 +11,21 @@
 
 namespace Pl1998\ThirdpartyOauth\Api;
 
-use Pl1998\ThirdpartyOauth\Handle\{
-    AlipayOauth,
-    Douyin,
-    QqOauth,
-    GoogleOauth,
-    GithubOauth,
-    GiteeOauth,
-    GitlabOauth,
-    WeiXinOauth,
-    WeiboOauth,
-    XiaomiOauth,
-    HuaweiOauth,
-    MicrosoftOauth,
-    LineOauth,
-    TwitterOauth,
-    FacebookOauth
-
-
-};
-
-
+use Pl1998\ThirdpartyOauth\Handle\AlipayOauth;
+use Pl1998\ThirdpartyOauth\Handle\DouyinOauth;
+use Pl1998\ThirdpartyOauth\Handle\GiteeOauth;
+use Pl1998\ThirdpartyOauth\Handle\QqOauth;
+use Pl1998\ThirdpartyOauth\Handle\GoogleOauth;
+use Pl1998\ThirdpartyOauth\Handle\GithubOauth;
+use Pl1998\ThirdpartyOauth\Handle\GitlabOauth;
+use Pl1998\ThirdpartyOauth\Handle\WeiXinOauth;
+use Pl1998\ThirdpartyOauth\Handle\WeiboOauth;
+use Pl1998\ThirdpartyOauth\Handle\XiaomiOauth;
+use Pl1998\ThirdpartyOauth\Handle\HuaweiOauth;
+use Pl1998\ThirdpartyOauth\Handle\MicrosoftOauth;
+use Pl1998\ThirdpartyOauth\Handle\line;
+use Pl1998\ThirdpartyOauth\Handle\TwitterOauth;
+use Pl1998\ThirdpartyOauth\Handle\FacebookOauth;
 
 use Pl1998\ThirdpartyOauth\Helpers;
 
@@ -72,13 +66,12 @@ class SocialiteApi implements OauthLinterface
                  case 'xiaomi':
                 return $this->api = new XiaomiOauth($config);
                 break;
-                case 'google':
-                    return $this->api = new GoogleOauth($config);
-                    break;
-                      case 'huawei':
-                    return $this->api = new HuaweiOauth($config);
-                    break;
-            
+            case 'google':
+                return $this->api = new GoogleOauth($config);
+                break;
+            case 'huawei':
+                return $this->api = new HuaweiOauth($config);
+                break;
             }
     }
 

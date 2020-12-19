@@ -58,12 +58,14 @@ class SocialiteAuth implements Socialite
         if (array_key_exists($deiver, $this->config)) {
             $this->config = $this->config[$deiver];
         }
-
         $this->verified($deiver);
+        try {
+            $api = new SocialiteApi($deiver, $this->config);
+            $this->userJson = $api->getUserInfo();
 
-        $api = new SocialiteApi($deiver, $this->config);
-
-        $this->userJson = $api->getUserInfo();
+        }catch (InvalidArgumentException $exception) {
+            throw new InvalidArgumentException($exception->getMessage(),$exception->getCode());
+        }
 
         return $this;
     }

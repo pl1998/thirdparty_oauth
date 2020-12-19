@@ -36,14 +36,14 @@ class Helpers
                 return 'Bearer '.$aouth[$key];
                 break;
             case 'qq':
-                
+
                 return $aouth;
-case 'douyin':
-                
+         case 'douyin':
+
                 return $aouth;
                 break;
                 case 'line':
-                
+
                 return $aouth;
                 break;
             case 'microsoft':
@@ -58,7 +58,7 @@ case 'douyin':
 
                 break;
             default:
-              
+
 
                 return $aouth;
                 break;
