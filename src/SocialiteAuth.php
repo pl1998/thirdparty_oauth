@@ -28,7 +28,7 @@ class SocialiteAuth implements Socialite
      *
      * @var string[]
      */
-    private static $deiver = ['gitee', 'github', 'weibo', 'gitlab', 'qq', 'weixin', 'microsoft', 'alipay', 'xiaomi','google','huawei','douyin','line'];
+    private static $deiver = ['gitee', 'github', 'weibo', 'gitlab', 'qq', 'weixin', 'microsoft', 'alipay', 'xiaomi', 'google', 'huawei', 'douyin', 'line'];
 
     /**
      * 配置文件.
@@ -62,9 +62,8 @@ class SocialiteAuth implements Socialite
         try {
             $api = new SocialiteApi($deiver, $this->config);
             $this->userJson = $api->getUserInfo();
-
-        }catch (InvalidArgumentException $exception) {
-            throw new InvalidArgumentException($exception->getMessage(),$exception->getCode());
+        } catch (InvalidArgumentException $exception) {
+            throw new InvalidArgumentException($exception->getMessage(), $exception->getCode());
         }
 
         return $this;

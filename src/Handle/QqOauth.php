@@ -20,6 +20,7 @@ class QqOauth implements Handle
     protected $authorization_url = 'https://graph.qq.com/oauth2.0/authorize';
     protected $token_url = 'https://graph.qq.com/oauth2.0/token?grant_type=authorization_code';
     protected $userinfo_url = 'https://graph.qq.com/user/get_user_info';
+
     public function __construct($config)
     {
         $this->config = $config;
@@ -28,7 +29,6 @@ class QqOauth implements Handle
 
     public function authorization()
     {
-
         $query = array_filter([
             'response_type' => 'code',
             'client_id' => $this->config['client_id'],
@@ -37,15 +37,14 @@ class QqOauth implements Handle
             'state' => 'https://6.mxin.ltd/login/qq',
         ]);
 
-        $url = $this->authorization_url . '?' . http_build_query($query);
+        $url = $this->authorization_url.'?'.http_build_query($query);
 
-        header('Location:' . $url);
+        header('Location:'.$url);
         exit();
     }
 
     public function getAccessToken()
     {
-
         $query = array_filter([
             'client_id' => $this->config['client_id'],
             'code' => $_GET['code'],
@@ -58,15 +57,13 @@ class QqOauth implements Handle
         $res = $this->client->request('get', $this->token_url, [
             'query' => $query,
         ])->getBody()->getContents();
+
         return json_decode($res)->access_token;
         exit;
-
     }
 
     public function getUserInfo($access_token)
     {
-      
-
         $result = $this->getUid($access_token);
         $query = array_filter([
             'openid' => $result->openid,
@@ -86,7 +83,7 @@ class QqOauth implements Handle
 
     private function getUnionid($access_token)
     {
-        $url = 'https://graph.qq.com/oauth2.0/me?access_token=' . $access_token . '&unionid=1&fmt=json';
+        $url = 'https://graph.qq.com/oauth2.0/me?access_token='.$access_token.'&unionid=1&fmt=json';
         $str = $this->client->get($url)->getBody()->getContents();
 
         return json_decode($str);
@@ -94,7 +91,7 @@ class QqOauth implements Handle
 
     public function getUid($access_token)
     {
-        $url = 'https://graph.qq.com/oauth2.0/me?access_token=' . $access_token . '&fmt=json';
+        $url = 'https://graph.qq.com/oauth2.0/me?access_token='.$access_token.'&fmt=json';
         $str = $this->client->get($url)->getBody()->getContents();
 
         $user = json_decode($str);

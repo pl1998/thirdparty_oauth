@@ -59,10 +59,10 @@ class GithubOauth implements Handle
     {
         $url = 'https://api.github.com/user';
 
-        return $userinfo=json_decode($this->client->request('GET', $url, [
+        return $userinfo = json_decode($this->client->request('GET', $url, [
             'headers' => [
                 'Authorization' => 'Bearer '.$access_token,
             ],
-        ])->getBody()->getContents()) ;
+        ])->getBody()->getContents());
     }
 }

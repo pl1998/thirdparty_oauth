@@ -20,6 +20,7 @@ class XiaomiOauth implements Handle
     protected $authorization_url = 'https://account.xiaomi.com/oauth2/authorize';
     protected $token_url = 'https://account.xiaomi.com/oauth2/token';
     protected $userinfo_url = 'https://open.account.xiaomi.com/user/profile';
+
     public function __construct($config)
     {
         $this->config = $config;
@@ -28,7 +29,6 @@ class XiaomiOauth implements Handle
 
     public function authorization()
     {
-
         $query = array_filter([
             'response_type' => 'code',
             'client_id' => $this->config['client_id'],
@@ -37,15 +37,14 @@ class XiaomiOauth implements Handle
             'state' => '',
         ]);
 
-        $url = $this->authorization_url . '?' . http_build_query($query);
+        $url = $this->authorization_url.'?'.http_build_query($query);
 
-        header('Location:' . $url);
+        header('Location:'.$url);
         exit();
     }
 
     public function getAccessToken()
     {
-
         $query = array_filter([
             'client_id' => $this->config['client_id'],
             'code' => $_GET['code'],
@@ -60,28 +59,27 @@ class XiaomiOauth implements Handle
 
         $res = \json_decode(str_replace('&&&START&&&', '', $ss));
         $this->openid = $res->openId;
+
         return $this->access_token = $res->access_token;
         exit;
     }
 
     public function getUserInfo($access_token)
     {
-
         $query = array_filter([
             'client_id' => $this->config['client_id'],
             'token' => $access_token,
         ]);
-       
+
         $user = json_decode($this->client->request('GET', $this->userinfo_url, [
             'query' => $query,
         ])->getBody()->getContents())->data;
-        $userinfo=new \stdClass;
-        $userinfo->unionid=$user->unionId;
-        $userinfo->openid= $this->openid;
-         $userinfo->nikename=$user->miliaoNick;
-         $userinfo->avatar=$user->miliaoIcon_120;
+        $userinfo = new \stdClass();
+        $userinfo->unionid = $user->unionId;
+        $userinfo->openid = $this->openid;
+        $userinfo->nikename = $user->miliaoNick;
+        $userinfo->avatar = $user->miliaoIcon_120;
 
         return $userinfo;
     }
-
 }

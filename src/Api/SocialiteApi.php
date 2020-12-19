@@ -12,7 +12,6 @@
 namespace Pl1998\ThirdpartyOauth\Api;
 
 use Pl1998\ThirdpartyOauth\Handle\AlipayOauth;
-use Pl1998\ThirdpartyOauth\Handle\DouyinOauth;
 use Pl1998\ThirdpartyOauth\Handle\GiteeOauth;
 use Pl1998\ThirdpartyOauth\Handle\QqOauth;
 use Pl1998\ThirdpartyOauth\Handle\GoogleOauth;
@@ -23,10 +22,6 @@ use Pl1998\ThirdpartyOauth\Handle\WeiboOauth;
 use Pl1998\ThirdpartyOauth\Handle\XiaomiOauth;
 use Pl1998\ThirdpartyOauth\Handle\HuaweiOauth;
 use Pl1998\ThirdpartyOauth\Handle\MicrosoftOauth;
-use Pl1998\ThirdpartyOauth\Handle\line;
-use Pl1998\ThirdpartyOauth\Handle\TwitterOauth;
-use Pl1998\ThirdpartyOauth\Handle\FacebookOauth;
-
 use Pl1998\ThirdpartyOauth\Helpers;
 
 class SocialiteApi implements OauthLinterface
