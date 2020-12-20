@@ -1820,10 +1820,15 @@ if( $this->isAliClient()){
         ]);
         $query['sign'] = $this->generateSign($query, $query['sign_type']);
 
-        //retur
-        return $this->client->request('POST', $url, [
+        
+        $ress= json_decode($this->client->request('POST', $url, [
             'query' => http_build_query($query),
-        ])->getBody()->getContents();
+        ])->getBody()->getContents());
+        if(isset($ress->alipay_system_oauth_token_response->access_token)){
+return $ress->alipay_system_oauth_token_response->access_token;
+ }else{
+        dump($ress);
+exit;}
     }
 
     public function getUserInfo($access_token)
