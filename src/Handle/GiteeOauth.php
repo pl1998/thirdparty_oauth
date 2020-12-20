@@ -32,14 +32,14 @@ class GiteeOauth implements Handle
         $url = 'https://gitee.com/oauth/authorize';
 
         $query = array_filter([
-            'client_id' => $this->config['client_id'],
-            'redirect_uri' => $this->config['redirect_uri'],
+            'client_id'     => $this->config['client_id'],
+            'redirect_uri'  => $this->config['redirect_uri'],
             'response_type' => 'code',
         ]);
 
-        $url = $url.'?'.http_build_query($query);
+        $url = $url . '?' . http_build_query($query);
 
-        header('Location:'.$url);
+        header('Location:' . $url);
         exit();
     }
 
@@ -48,10 +48,10 @@ class GiteeOauth implements Handle
         $url = 'https://gitee.com/oauth/token';
 
         $query = array_filter([
-            'client_id' => $this->config['client_id'],
-            'redirect_uri' => $this->config['redirect_uri'],
-            'code' => $_GET['code'],
-            'grant_type' => 'authorization_code',
+            'client_id'     => $this->config['client_id'],
+            'redirect_uri'  => $this->config['redirect_uri'],
+            'code'          => $_GET['code'],
+            'grant_type'    => 'authorization_code',
             'client_secret' => $this->config['client_secret'],
         ]);
 
@@ -62,7 +62,7 @@ class GiteeOauth implements Handle
 
     public function getUserInfo($access_token)
     {
-        $url = 'https://gitee.com/api/v5/user?access_token='.$access_token;
+        $url = 'https://gitee.com/api/v5/user?access_token=' . $access_token;
 
         return json_decode($this->client->get($url)->getBody()->getContents());
     }

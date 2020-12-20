@@ -29,12 +29,12 @@ class WeiboOauth implements Handle
         $url = 'https://api.weibo.com/oauth2/authorize';
 
         $query = array_filter([
-            'client_id' => $this->config['client_id'],
+            'client_id'    => $this->config['client_id'],
             'redirect_uri' => $this->config['redirect_uri'],
         ]);
 
-        $url = $url.'?'.http_build_query($query);
-        header('Location:'.$url);
+        $url = $url . '?' . http_build_query($query);
+        header('Location:' . $url);
         exit();
     }
 
@@ -43,11 +43,11 @@ class WeiboOauth implements Handle
         $url = 'https://api.weibo.com/oauth2/access_token';
 
         $query = array_filter([
-            'client_id' => $this->config['client_id'],
-            'code' => $_GET['code'],
+            'client_id'     => $this->config['client_id'],
+            'code'          => $_GET['code'],
             'client_secret' => $this->config['client_secret'],
-            'redirect_uri' => $this->config['redirect_uri'],
-            'grant_type' => 'authorization_code',
+            'redirect_uri'  => $this->config['redirect_uri'],
+            'grant_type'    => 'authorization_code',
         ]);
 
         return $this->client->request('POST', $url, [
@@ -59,9 +59,9 @@ class WeiboOauth implements Handle
     {
         $url = 'https://api.weibo.com/2/users/show.json?uid=%s&access_token=%s';
 
-        $uid = $this->getUid($access_token);
+        $uid   = $this->getUid($access_token);
         $query = array_filter([
-            'uid' => $uid,
+            'uid'          => $uid,
             'access_token' => $access_token,
         ]);
 
@@ -72,7 +72,7 @@ class WeiboOauth implements Handle
 
     public function getUid($access_token)
     {
-        $url = 'https://api.weibo.com/oauth2/get_token_info?access_token='.$access_token;
+        $url    = 'https://api.weibo.com/oauth2/get_token_info?access_token=' . $access_token;
         $result = $this->client->post($url);
         $result = json_decode($result->getBody()->getContents(), true);
 

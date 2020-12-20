@@ -33,17 +33,17 @@ class SocialiteApi implements OauthLinterface
 {
     protected $api;
 
-    protected $deiver;
+    protected $deliver;
 
     public function __construct($deiver, array $config)
     {
-        $this->deiver = $deiver;
+        $this->deliver = $deiver;
         switch ($deiver) {
             case 'alipay':
-               return $this->api = new AlipayOauth($config);
+                return $this->api = new AlipayOauth($config);
                 break;
             case 'github':
-               return $this->api = new GithubOauth($config);
+                return $this->api = new GithubOauth($config);
                 break;
             case 'weibo':
                 return $this->api = new WeiboOauth($config);
@@ -63,7 +63,7 @@ class SocialiteApi implements OauthLinterface
             case 'microsoft':
                 return $this->api = new MicrosoftOauth($config);
                 break;
-                 case 'xiaomi':
+            case 'xiaomi':
                 return $this->api = new XiaomiOauth($config);
                 break;
             case 'google':
@@ -72,7 +72,7 @@ class SocialiteApi implements OauthLinterface
             case 'huawei':
                 return $this->api = new HuaweiOauth($config);
                 break;
-            }
+        }
     }
 
     public function authorization()
@@ -80,25 +80,25 @@ class SocialiteApi implements OauthLinterface
         return $this->api->authorization();
     }
 
-    public function getAccessToken()
+    public function getAccessToken(): string
     {
         return $this->api->getAccessToken();
     }
 
-    public function getUserInfo()
+    public function getUserInfo(): object
     {
         $aouth = $this->getAccessToken();
 
-        if ('weixin' == $this->deiver) {
+        if ('weixin' == $this->deliver) {
             return $this->api->getUserInfo(json_decode($aouth, true));
-        } elseif ('microsoft' == $this->deiver) {
-            $access_token = Helpers::getAccessToken($this->deiver, $aouth['$access_token']);
-            $userinfo = $this->api->getUserInfo($access_token);
+        } elseif ('microsoft' == $this->deliver) {
+            $access_token      = Helpers::getAccessToken($this->deliver, $aouth['$access_token']);
+            $userinfo          = $this->api->getUserInfo($access_token);
             $userinfo->unionid = $aouth['unionid'];
             //$userinfo->openid=$aouth['sub'];
             return $userinfo;
         } else {
-            $access_token = Helpers::getAccessToken($this->deiver, $aouth);
+            $access_token = Helpers::getAccessToken($this->deliver, $aouth);
 
             return $this->api->getUserInfo($access_token);
         }

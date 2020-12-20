@@ -23,7 +23,7 @@ class Helpers
     {
         switch ($deiver) {
             case 'github':
-                $params = explode('=', $aouth);
+                $params       = explode('=', $aouth);
                 $access_token = $params[1];
                 $access_token = explode('&', $access_token);
                 $access_token = $access_token[0];
@@ -33,30 +33,10 @@ class Helpers
             case 'gitlab':
                 $aouth = json_decode($aouth, true);
 
-                return 'Bearer '.$aouth[$key];
+                return 'Bearer ' . $aouth[$key];
                 break;
-            case 'qq':
 
-                return $aouth;
-         case 'douyin':
 
-                return $aouth;
-                break;
-                case 'line':
-
-                return $aouth;
-                break;
-            case 'microsoft':
-                return $aouth;
-                break;
-            case 'alipay':
-                return json_decode($aouth)->alipay_system_oauth_token_response->access_token;
-
-                break;
-                 case 'huawei':
-                return($aouth);
-
-                break;
             default:
 
 

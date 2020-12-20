@@ -29,7 +29,7 @@ class DouyinOauth implements Handle
 
     public function authorization()
     {
-
+        //$url = 'https://graph.qq.com/oauth2.0/authorize';
         $query = array_filter([
             'response_type' => 'code',
             'client_key'    => $this->config['client_id'],
@@ -46,6 +46,7 @@ class DouyinOauth implements Handle
 
     public function getAccessToken()
     {
+        // $url = 'https://graph.qq.com/oauth2.0/token?grant_type=authorization_code';
 
         $query = array_filter([
             'client_key'    => $this->config['client_id'],
@@ -57,17 +58,11 @@ class DouyinOauth implements Handle
         ]);
 
 
-        $res = json_decode($this->client->request('get', $this->token_url, [
+        $res           = json_decode($this->client->request('get', $this->token_url, [
             'query' => $query,
         ])->getBody()->getContents())->data;
-        if (isset($res->access_token)) {
-            $this->openid  = $res->open_id;
-            $this->unionid = $res->unionid;
-
-            return $res->access_token;
-        } else {
-            exit("获取 ACCESS_TOKEN 出错：" . $res);
-        }
+        $this->openid  = $res->open_id;
+        $this->unionid = $res->unionid;
 
         return $res->access_token;
         exit;
@@ -75,24 +70,21 @@ class DouyinOauth implements Handle
 
     }
 
-    public function getUserInfo($access_token): object
+    public function getUserInfo($access_token)
     {
 
         $query = array_filter([
-            'open_id'      => $this->openid,
+            'open_id' => $this->openid,
+
             'access_token' => $access_token,
         ]);
 
         $userinfo = json_decode($this->client->request('GET', $this->userinfo_url, [
             'query' => $query,
         ])->getBody()->getContents())->data;
-        if (isset($userinfo->>open_id)) {
-            $userinfo->openid  = $userinfo->open_id;
-            $userinfo->unionid = $userinfo->union_id;
-        } else {
-            die('获取用户信息失败');
-        }
 
+        $userinfo->openid  = $userinfo->open_id;
+        $userinfo->unionid = $userinfo->union_id;
 
         return $userinfo;
     }
