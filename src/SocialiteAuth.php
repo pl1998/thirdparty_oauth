@@ -11,6 +11,7 @@
 
 namespace Pl1998\ThirdpartyOauth;
 
+use mysql_xdevapi\DatabaseObject;
 use Pl1998\ThirdpartyOauth\Api\SocialiteApi;
 use Pl1998\ThirdpartyOauth\Exceptions\InvalidArgumentException;
 
@@ -28,7 +29,7 @@ class SocialiteAuth implements Socialite
      *
      * @var string[]
      */
-    private static $deiver = ['gitee', 'github', 'weibo', 'gitlab', 'qq', 'weixin', 'microsoft', 'alipay', 'xiaomi','google','huawei','douyin','line'];
+    private static $deiver = ['gitee', 'github', 'weibo', 'gitlab', 'qq', 'weixin', 'microsoft', 'alipay', 'xiaomi', 'google', 'huawei', 'douyin', 'line'];
 
     /**
      * 配置文件.
@@ -42,17 +43,8 @@ class SocialiteAuth implements Socialite
         $this->config = $config;
     }
 
-    /**
-     * 获取回调地址信息.
-     *
-     * @param $deiver
-     * @param array $config
-     *
-     * @throws InvalidArgumentException
-     *
-     * @return $this
-     */
-    public function driver($deiver)
+
+    public function driver($deiver): SocialiteAuth
     {
         //兼容laravel app容器参数注入
         if (array_key_exists($deiver, $this->config)) {
@@ -60,11 +52,11 @@ class SocialiteAuth implements Socialite
         }
         $this->verified($deiver);
         try {
-            $api = new SocialiteApi($deiver, $this->config);
+            $api            = new SocialiteApi($deiver, $this->config);
             $this->userJson = $api->getUserInfo();
 
-        }catch (InvalidArgumentException $exception) {
-            throw new InvalidArgumentException($exception->getMessage(),$exception->getCode());
+        } catch (InvalidArgumentException $exception) {
+            throw new InvalidArgumentException($exception->getMessage(), $exception->getCode());
         }
 
         return $this;
@@ -88,7 +80,7 @@ class SocialiteAuth implements Socialite
      *
      * @return int
      */
-    public function redirect($deiver)
+    public function redirect($deiver): authorization
     {
         //该方法兼容laravel app容器参数注入
 
@@ -97,9 +89,9 @@ class SocialiteAuth implements Socialite
         }
 
         $api = new SocialiteApi($deiver, $this->config);
-        $httpcCode = $api->authorization();
+        $api->authorization();
 
-        return $httpcCode;
+
     }
 
     /**
@@ -109,7 +101,7 @@ class SocialiteAuth implements Socialite
      *
      * @throws InvalidArgumentException
      */
-    private function verified($deiver)
+    private function verified($deiver): void
     {
         $parameter = ['client_id', 'redirect_uri', 'client_secret'];
 
