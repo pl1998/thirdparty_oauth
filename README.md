@@ -1,9 +1,8 @@
 <h1> thirdparty_oauth </h1>
 
 <p> 这是一个社会第三方登录扩展包 目前支持</p>
-   
-   * 1. QQ(app/h5/web).
-   * 2.微信(web扫码).
+ * 1. QQ(app/h5/web).
+ * 2.微信(web扫码).
  * 3.微博(app/h5/web.
  * 4.支付宝(web/h5/app).
  * 5. 小米(web/h5).
@@ -18,7 +17,7 @@
  * 14 line.
  * 15.twitter.
 
-
+<hr>
 [![Build Status](https://travis-ci.org/pl1998/thirdparty_oauth.svg?branch=master)](https://travis-ci.org/pl1998/thirdparty_oauth)
 ![StyleCI build status](https://github.styleci.io/repos/295677202/shield)
 
