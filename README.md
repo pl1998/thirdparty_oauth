@@ -1,6 +1,9 @@
 <h1> thirdparty_oauth </h1>
 
 <p> 这是一个社会第三方登录扩展包 目前支持</p>
+   
+   * [github应用创建地址](https://github.com/settings/developers)
+   * [gitee应用创建地址](https://gitee.com/oauth/applications)
    * 1. QQ(app/h5/web).
    * 2.微信(web扫码).
 > * 3.微博(app/h5/web.
