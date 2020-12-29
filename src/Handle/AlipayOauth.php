@@ -48,7 +48,7 @@ class AlipayOauth implements Handle
 
   
 //$dd="https://render.alipay.com/p/s/i/?scheme=".urlencode($goappurl);
- $dd=$this->config['redirect_uri']."?&auth_code=code&scheme=".urlencode($goappurl);
+ $dd=$this->config['redirect_uri']."?auth_code=code&scheme=".urlencode($goappurl);
 
 
        header('Location:' . $dd);  exit;
@@ -77,10 +77,10 @@ function isqq(){
 }
     public function getAccessToken()
     {if(!$this->isAliClient()){
-         if(isset($_GET['access_token'])){//兼容app授权登陆 dcloud返回access_token;
-         if(!isset($this->config['urlscehme'])){
-             exit('配置参数缺少urlscheme');
-         }
+         if($_GET['auth_code']=='code'){//兼容app授权登陆 dcloud返回access_token;
+        // if(!isset($this->config['urlscehme'])){
+         //    exit('配置参数缺少urlscheme');
+        // }
              ?>
              <script>document.addEventListener('plusready',function(){  
     checkArguments();  
@@ -152,7 +152,7 @@ $mobile= $clent["scheme"];
     
     <?
     echo $this->appurl;
-    echo base64_decode("ICAKICAgICAgIDwhLS0g5Li75paH5Lu2IC0tPgogICAgICAgPG1ldGEgbmFtZT0idmlld3BvcnQiIGNvbnRlbnQ9IndpZHRoPWRldmljZS13aWR0aCx1c2VyLXNjYWxhYmxlPW5vLGluaXRpYWwtc2NhbGU9MSxtYXhpbXVtLXNjYWxlPTEsbWluaW11bS1zY2FsZT0xIj4KPCEtLSDkuLvmlofku7YgLS0+CjxsaW5rIHJlbD0ic3R5bGVzaGVldCIgaHJlZj0iaHR0cHM6Ly9ndy5hbGlwYXlvYmplY3RzLmNvbS9hcy9nL2FudHVpL2FudHVpLzEwLjEuMzIvcmVtL2FudHVpLmNzcyIvPgoKPCEtLSDnu4Tku7YgLS0+CjxsaW5rIHJlbD0ic3R5bGVzaGVldCIgaHJlZj0iaHR0cHM6Ly9ndy5hbGlwYXlvYmplY3RzLmNvbS9hcy9nL2FudHVpL2FudHVpLzEwLjEuMzIvPz9yZW0vd2lkZ2V0L21lc3NhZ2UuY3NzLHJlbS9pY29uL21lc3NhZ2UuY3NzLHJlbS93aWRnZXQvc2VhcmNoLmNzcyIvPgoKPCEtLSBqcyAtLT4KCiAgICAgICAgPGxpbmsgcmVsPSJzdHlsZXNoZWV0IiB0eXBlPSJ0ZXh0L2NzcyIgaHJlZj0iaHR0cHM6Ly9ndy5hbGlwYXlvYmplY3RzLmNvbS9hcy9nL2FudHVpL2FudHVpLzEwLjEuMzIvZHBsL3dpZGdldC9tZXNzYWdlLmNzcyIgLz4KPGRpdiBjbGFzcz0iYW0tbWVzc2FnZSByZXN1bHQiPgogICAgPGkgY2xhc3M9ImFtLWljb24gcmVzdWx0IHN1Y2Nlc3MiPjwvaT4KICAgIDxkaXYgY2xhc3M9ImFtLW1lc3NhZ2UtbWFpbiI+5o6I5p2D5oiQ5YqfPC9kaXY+CiAgICA8ZGl2IGNsYXNzPSJhbS1tZXNzYWdlLXN1YiI+PC9kaXY+CjwvZGl2Pgo8ZGl2IGNsYXNzPSJhbS1idXR0b24td3JhcCI+CiAgICA8YSBjbGFzcz0iYW0tYnV0dG9uIGJsdWUiIGhyZWY9Ig==").'scme201903166355084306c6ec://'.$url.'">授权成功uc访问</a><a class="am-button white" href="'.$this->appurl.'">qq浏览器访问</a></div></body>';
+    echo base64_decode("ICAKICAgICAgIDwhLS0g5Li75paH5Lu2IC0tPgogICAgICAgPG1ldGEgbmFtZT0idmlld3BvcnQiIGNvbnRlbnQ9IndpZHRoPWRldmljZS13aWR0aCx1c2VyLXNjYWxhYmxlPW5vLGluaXRpYWwtc2NhbGU9MSxtYXhpbXVtLXNjYWxlPTEsbWluaW11bS1zY2FsZT0xIj4KPCEtLSDkuLvmlofku7YgLS0+CjxsaW5rIHJlbD0ic3R5bGVzaGVldCIgaHJlZj0iaHR0cHM6Ly9ndy5hbGlwYXlvYmplY3RzLmNvbS9hcy9nL2FudHVpL2FudHVpLzEwLjEuMzIvcmVtL2FudHVpLmNzcyIvPgoKPCEtLSDnu4Tku7YgLS0+CjxsaW5rIHJlbD0ic3R5bGVzaGVldCIgaHJlZj0iaHR0cHM6Ly9ndy5hbGlwYXlvYmplY3RzLmNvbS9hcy9nL2FudHVpL2FudHVpLzEwLjEuMzIvPz9yZW0vd2lkZ2V0L21lc3NhZ2UuY3NzLHJlbS9pY29uL21lc3NhZ2UuY3NzLHJlbS93aWRnZXQvc2VhcmNoLmNzcyIvPgoKPCEtLSBqcyAtLT4KCiAgICAgICAgPGxpbmsgcmVsPSJzdHlsZXNoZWV0IiB0eXBlPSJ0ZXh0L2NzcyIgaHJlZj0iaHR0cHM6Ly9ndy5hbGlwYXlvYmplY3RzLmNvbS9hcy9nL2FudHVpL2FudHVpLzEwLjEuMzIvZHBsL3dpZGdldC9tZXNzYWdlLmNzcyIgLz4KPGRpdiBjbGFzcz0iYW0tbWVzc2FnZSByZXN1bHQiPgogICAgPGkgY2xhc3M9ImFtLWljb24gcmVzdWx0IHN1Y2Nlc3MiPjwvaT4KICAgIDxkaXYgY2xhc3M9ImFtLW1lc3NhZ2UtbWFpbiI+5o6I5p2D5oiQ5YqfPC9kaXY+CiAgICA8ZGl2IGNsYXNzPSJhbS1tZXNzYWdlLXN1YiI+PC9kaXY+CjwvZGl2Pgo8ZGl2IGNsYXNzPSJhbS1idXR0b24td3JhcCI+CiAgICA8YSBjbGFzcz0iYW0tYnV0dG9uIGJsdWUiIGhyZWY9Ig==").'scme201903166355084306c6ec://'.$url.'">授权成功6mxinapp访问</a><a class="am-button white" href="'.$this->appurl.'">浏览器访问</a></div></body>';
    
                        
 
