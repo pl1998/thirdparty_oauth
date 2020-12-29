@@ -21,12 +21,12 @@ class MicrosoftOauth implements Handle
         'cn' => [
             'authorization' => 'https://login.chinacloudapi.cn/common/oauth2/v2.0/authorize',
             'token'         => 'https://login.chinacloudapi.cn/common/oauth2/v2.0/token',
-            'userinfo'      => 'https://microsoftgraph.chinacloudapi.cn/oidc/userinfo',
+            'userinfo'      => 'https://microsoftgraph.chinacloudapi.cn/v1.0/me',
         ],
         'us' => [
             'authorization' => 'https://login.microsoftonline.com/common/oauth2/v2.0/authorize',
             'token'         => 'https://login.microsoftonline.com/common/oauth2/v2.0/token',
-            'userinfo'      => 'https://graph.microsoft.com/oidc/userinfo',
+            'userinfo'      => 'https://graph.microsoft.com/v1.0/me',
         ],
     ];
 
@@ -51,7 +51,7 @@ class MicrosoftOauth implements Handle
             'redirect_uri'  => $this->config['redirect_uri'],
             'scope'         => 'User.Read openid profile',
             'prompt'        => 'consent',
-            'state'         => 'https://6.mxin.ltd/login/mscallback',
+            'state'         => 'https://6.mxin.ltd/login/microsoft',
         ]);
 
         $url = $url . '?' . http_build_query($query);
@@ -78,7 +78,7 @@ class MicrosoftOauth implements Handle
         $s        = explode('.', $id_token->id_token);
 
         $data['unionid']       = json_decode($this->base64UrlDecode($s[1]))->oid;
-        $data['$access_token'] = $id_token->access_token;
+      return  $data['$access_token'] = $id_token->access_token;
 
         return $data;
     }
@@ -103,7 +103,7 @@ class MicrosoftOauth implements Handle
             ],
         ])->getBody()->getContents());
 
-        $userinfo->openid = $userinfo->sub;
+        //$userinfo->openid = $userinfo->sub;
 
         return $userinfo;
     }

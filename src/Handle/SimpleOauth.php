@@ -13,14 +13,19 @@ namespace Pl1998\ThirdpartyOauth\Handle;
 
 use GuzzleHttp\Client;
 
-class QqOauth extends SimpleOauth implements Handle 
+class SimpleOauth implements Handle
 {
     protected $client;
     protected $config;
-    protected $authorization_url = 'https://graph.qq.com/oauth2.0/authorize';
-    protected $token_url         = 'https://graph.qq.com/oauth2.0/token?grant_type=authorization_code';
-    protected $userinfo_url      = 'https://graph.qq.com/user/get_user_info';
-
+    protected $authorization_url ;
+    protected $token_url         ;
+    protected $userinfo_url      ;
+    public $openid;
+    public $unionid;
+    public $email;
+    public $nickname;
+    public $avatar;
+    
     public function __construct($config)
     {
         $this->config = $config;
@@ -46,11 +51,7 @@ class QqOauth extends SimpleOauth implements Handle
 
     public function getAccessToken()
     {
-        if(isset($_GET['access_token'])){//兼容app授权登陆 dcloud返回access_token;
-         
-        
-            return $_GET['access_token'];
-        }
+
         $query = array_filter([
             'client_id'     => $this->config['client_id'],
             'code'          => $_GET['code'],

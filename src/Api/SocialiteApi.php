@@ -26,6 +26,7 @@ use Pl1998\ThirdpartyOauth\Handle\MicrosoftOauth;
 use Pl1998\ThirdpartyOauth\Handle\line;
 use Pl1998\ThirdpartyOauth\Handle\TwitterOauth;
 use Pl1998\ThirdpartyOauth\Handle\FacebookOauth;
+use Pl1998\ThirdpartyOauth\Handle\JdOauth;
 
 use Pl1998\ThirdpartyOauth\Helpers;
 
@@ -40,6 +41,12 @@ class SocialiteApi implements OauthLinterface
         $this->deliver = $deiver;
         switch ($deiver) {
             case 'alipay':
+                return $this->api = new AlipayOauth($config);
+                break;
+                case 'jd':
+                return $this->api = new JdOauth($config);
+                break;
+                case 'alipayapp':
                 return $this->api = new AlipayOauth($config);
                 break;
             case 'github':
@@ -58,6 +65,10 @@ class SocialiteApi implements OauthLinterface
                 return $this->api = new WeiXinOauth($config);
                 break;
             case 'qq':
+                return $this->api = new QqOauth($config);
+                break;
+                 break;
+            case 'qqapp':
                 return $this->api = new QqOauth($config);
                 break;
             case 'microsoft':
@@ -91,13 +102,15 @@ class SocialiteApi implements OauthLinterface
 
         if ('weixin' == $this->deliver) {
             return $this->api->getUserInfo(json_decode($aouth, true));
-        } elseif ('microsoft' == $this->deliver) {
+        }
+        /*elseif ('microsoft' == $this->deliver) {
             $access_token      = Helpers::getAccessToken($this->deliver, $aouth['$access_token']);
             $userinfo          = $this->api->getUserInfo($access_token);
             $userinfo->unionid = $aouth['unionid'];
             //$userinfo->openid=$aouth['sub'];
             return $userinfo;
-        } else {
+        } */
+        else {
             $access_token = Helpers::getAccessToken($this->deliver, $aouth);
 
             return $this->api->getUserInfo($access_token);

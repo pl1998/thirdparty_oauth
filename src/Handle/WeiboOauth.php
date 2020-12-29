@@ -39,7 +39,10 @@ class WeiboOauth implements Handle
     }
 
     public function getAccessToken()
-    {
+    {if ($_GET["code"]=="token"){
+        
+        return $_GET['access_token'];
+    }
         $url = 'https://api.weibo.com/oauth2/access_token';
 
         $query = array_filter([
@@ -50,9 +53,10 @@ class WeiboOauth implements Handle
             'grant_type'    => 'authorization_code',
         ]);
 
-        return $this->client->request('POST', $url, [
+      return  $res=json_decode($this->client->request('POST', $url, [
             'query' => $query,
-        ])->getBody()->getContents();
+        ])->getBody()->getContents())->access_token;
+       
     }
 
     public function getUserInfo($access_token)
