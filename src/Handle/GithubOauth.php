@@ -31,13 +31,13 @@ class GithubOauth implements Handle
         $url = 'https://github.com/login/oauth/authorize';
 
         $query = array_filter([
-            'client_id'    => $this->config['client_id'],
+            'client_id' => $this->config['client_id'],
             'redirect_uri' => $this->config['redirect_uri'],
         ]);
 
-        $url = $url . '?' . http_build_query($query);
+        $url = $url.'?'.http_build_query($query);
 
-        header('Location:' . $url);
+        header('Location:'.$url);
         exit();
     }
 
@@ -48,9 +48,9 @@ class GithubOauth implements Handle
         return $this->client->request('POST', $url, [
             'form_params' => [
                 'client_secret' => $this->config['client_secret'],
-                'code'          => $_GET['code'],
-                'client_id'     => $this->config['client_id'],
-                'redirect_uri'  => $this->config['redirect_uri'],
+                'code' => $_GET['code'],
+                'client_id' => $this->config['client_id'],
+                'redirect_uri' => $this->config['redirect_uri'],
             ],
         ])->getBody()->getContents();
     }
@@ -61,7 +61,7 @@ class GithubOauth implements Handle
 
         return $userinfo = json_decode($this->client->request('GET', $url, [
             'headers' => [
-                'Authorization' => 'Bearer ' . $access_token,
+                'Authorization' => 'Bearer '.$access_token,
             ],
         ])->getBody()->getContents());
     }
