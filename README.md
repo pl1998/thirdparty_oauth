@@ -1,9 +1,29 @@
 <h1> thirdparty_oauth </h1>
 
-<p> 这是一个社会第三方登录扩展包 目前支持 google github gitee  gitlab facebook QQ 微信 抖音 微博 支付宝 小米 微软 微软世纪互联 登录.</p>
+<p> 这是一个PHP社会化登录的第三方登录扩展包</p>
 
 [![Build Status](https://travis-ci.org/pl1998/thirdparty_oauth.svg?branch=master)](https://travis-ci.org/pl1998/thirdparty_oauth)
 ![StyleCI build status](https://github.styleci.io/repos/295677202/shield)
+
+
+## 目前支持第三方登录
+
+    
+ * 1.QQ(app/h5/web).
+ * 2.微信(web扫码).
+ * 3.微博(app/h5/web.
+ * 4.支付宝(web/h5/app).
+ * 5.小米(web/h5).
+ * 6.抖音.
+ * 7.世纪互联(微软).
+ * 8.微软.
+ * 9.gitee.
+ * 10.github.
+ * 11.gitlab.
+ * 12.google(有墙).
+ * 13.facebook(有墙).
+ * 14 line.
+ * 15.twitter.
 
 ## 安装
 
@@ -29,10 +49,12 @@ $ composer require pltrue/thirdparty_oauth
 | 2020-12-08|   feat         | 新增`小米账户`登录    | [742481030](https://github.com/742481030)  | 已合并到master分支     |
 | 2020-12-09|   feat         | 新增`google账户`登录    | [742481030](https://github.com/742481030)  | 已合并到master分支     |
 | 2020-12-10|   feat         | 新增`华为账户`登录    | [742481030](https://github.com/742481030)  | 已合并到master分支     |
- 2020-12-11|   fix         | qq统一使用json接口    | [742481030](https://github.com/742481030)  | 已合并到master分支     |
- | 2020-12-12|   feat         | 新增`抖音账户`登录    | [742481030](https://github.com/742481030)  | 已合并到master分支     |
-  | 2020-12-13|   feat         | 新增`Line账户`登录    | [742481030](https://github.com/742481030)  | 已合并到master分支     |
-   | 2020-12-16|   feat         | 新增`Facebook账户`登录    | [742481030](https://github.com/742481030)  | 已合并到master分支     |
+| 2020-12-11|   fix         | qq统一使用json接口    | [742481030](https://github.com/742481030)  | 已合并到master分支     |
+| 2020-12-12|   feat         | 新增`抖音账户`登录    | [742481030](https://github.com/742481030)  | 已合并到master分支     |
+| 2020-12-13|   feat         | 新增`Line账户`登录    | [742481030](https://github.com/742481030)  | 已合并到master分支     |
+| 2020-12-16|   feat         | 新增`Facebook账户`登录    | [742481030](https://github.com/742481030)  | 已合并到master分支     |
+| 2020-12-29|   fix         | 增加兼容支付宝qq app混合应用兼容   | [742481030](https://github.com/742481030)  | 已合并到master分支     |
+| 2020-12-29|   feat         | 新增`京东账户`登录    | [742481030](https://github.com/742481030)  | 已合并到master分支     |
 
 
 ## 兼容
@@ -58,6 +80,7 @@ $ composer require pltrue/thirdparty_oauth
    * [支付宝应用](https://open.alipay.com/platform/home.htm?from=wwwalipay)
    * [小米应用](https://dev.mi.com/console/)
    * [google应用](https://console.developers.google.com)
+   * [京东应用](https://jos.jd.com/)
    
    
 
@@ -313,11 +336,7 @@ Route::get('callback/github','IndexController@callback')->name('github回调接�
 
 ```
 <br/>
-<br/>
-
 
 ## License
 <hr>
 MIT
-
-

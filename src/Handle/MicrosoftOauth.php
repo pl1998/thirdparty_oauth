@@ -15,18 +15,18 @@ use GuzzleHttp\Client;
 
 class MicrosoftOauth implements Handle
 {
-    protected $client;
-    protected $config;
+    protected        $client;
+    protected        $config;
     protected static $endpoint = [
         'cn' => [
             'authorization' => 'https://login.chinacloudapi.cn/common/oauth2/v2.0/authorize',
-            'token' => 'https://login.chinacloudapi.cn/common/oauth2/v2.0/token',
-            'userinfo' => 'https://microsoftgraph.chinacloudapi.cn/oidc/userinfo',
+            'token'         => 'https://login.chinacloudapi.cn/common/oauth2/v2.0/token',
+            'userinfo'      => 'https://microsoftgraph.chinacloudapi.cn/v1.0/me',
         ],
         'us' => [
             'authorization' => 'https://login.microsoftonline.com/common/oauth2/v2.0/authorize',
-            'token' => 'https://login.microsoftonline.com/common/oauth2/v2.0/token',
-            'userinfo' => 'https://graph.microsoft.com/oidc/userinfo',
+            'token'         => 'https://login.microsoftonline.com/common/oauth2/v2.0/token',
+            'userinfo'      => 'https://graph.microsoft.com/v1.0/me',
         ],
     ];
 
@@ -47,38 +47,38 @@ class MicrosoftOauth implements Handle
 
         $query = array_filter([
             'response_type' => 'code',
-            'client_id' => $this->config['client_id'],
-            'redirect_uri' => $this->config['redirect_uri'],
-            'scope' => 'User.Read openid profile',
-            'prompt' => 'consent',
-            'state' => 'https://6.mxin.ltd/login/mscallback',
+            'client_id'     => $this->config['client_id'],
+            'redirect_uri'  => $this->config['redirect_uri'],
+            'scope'         => 'User.Read openid profile',
+            'prompt'        => 'consent',
+            'state'         => 'https://6.mxin.ltd/login/microsoft',
         ]);
 
-        $url = $url.'?'.http_build_query($query);
+        $url = $url . '?' . http_build_query($query);
 
-        header('Location:'.$url);
+        header('Location:' . $url);
         exit();
     }
 
     public function getAccessToken()
     {
-        $url = self::$endpoint[$this->config['region']]['token'];
+        $url   = self::$endpoint[$this->config['region']]['token'];
         $query = array_filter([
-            'client_id' => $this->config['client_id'],
-            'code' => $_GET['code'],
-            'grant_type' => 'authorization_code',
+            'client_id'     => $this->config['client_id'],
+            'code'          => $_GET['code'],
+            'grant_type'    => 'authorization_code',
             'client_secret' => $this->config['client_secret'],
-            'redirect_uri' => $this->config['redirect_uri'],
+            'redirect_uri'  => $this->config['redirect_uri'],
         ]);
 
-        $resp = ($this->client->request('POST', $url, [
+        $resp     = ($this->client->request('POST', $url, [
             'form_params' => $query,
         ])->getBody()->getContents());
         $id_token = json_decode($resp);
-        $s = explode('.', $id_token->id_token);
+        $s        = explode('.', $id_token->id_token);
 
-        $data['unionid'] = json_decode($this->base64UrlDecode($s[1]))->oid;
-        $data['$access_token'] = $id_token->access_token;
+        $data['unionid']       = json_decode($this->base64UrlDecode($s[1]))->oid;
+      return  $data['$access_token'] = $id_token->access_token;
 
         return $data;
     }
@@ -88,7 +88,7 @@ class MicrosoftOauth implements Handle
         $remainder = strlen($input) % 4;
         if ($remainder) {
             $addlen = 4 - $remainder;
-            $input .= str_repeat('=', $addlen);
+            $input  .= str_repeat('=', $addlen);
         }
 
         return base64_decode(strtr($input, '-_', '+/'));
@@ -96,14 +96,14 @@ class MicrosoftOauth implements Handle
 
     public function getUserInfo($access_token)
     {
-        $url = self::$endpoint[$this->config['region']]['userinfo'];
+        $url      = self::$endpoint[$this->config['region']]['userinfo'];
         $userinfo = json_decode($this->client->request('GET', $url, [
             'headers' => [
                 'Authorization' => $access_token,
             ],
         ])->getBody()->getContents());
 
-        $userinfo->openid = $userinfo->sub;
+        //$userinfo->openid = $userinfo->sub;
 
         return $userinfo;
     }

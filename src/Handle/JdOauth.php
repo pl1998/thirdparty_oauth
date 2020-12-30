@@ -13,13 +13,13 @@ namespace Pl1998\ThirdpartyOauth\Handle;
 
 use GuzzleHttp\Client;
 
-class WeiXinOauth implements Handle
+class JdOauth implements Handle
 {
     protected $client;
     protected $config;
-    protected $authorization_url = 'https://open.weixin.qq.com/connect/qrconnect';
-    protected $token_url         = 'https://api.weixin.qq.com/sns/oauth2/access_token';
-    protected $userinfo_url      = 'https://api.weixin.qq.com/sns/userinfo';
+    protected $authorization_url = 'https://open-oauth.jd.com/oauth2/to_login';
+    protected $token_url         = 'https://open-oauth.jd.com/oauth2/access_token';
+    protected $userinfo_url      = '';
 
     public function __construct($config)
     {
@@ -34,10 +34,10 @@ class WeiXinOauth implements Handle
     {
 
         $query = array_filter([
-            'app_id'        => $this->config['client_id'],
+            'app_key'        => $this->config['client_id'],
             'callback'      => $this->config['redirect_uri'],
             'response_type' => 'code',
-            'scope'         => 'snsapi_login',
+            'scope'         => 'snsapi_base|snsapi_union_login',
             'state'         => 'STATE',
         ]);
 
@@ -57,15 +57,21 @@ class WeiXinOauth implements Handle
             'secret'     => $this->config['client_secret'],
         ]);
 
-        return $this->client->request('get', $this->token_url, [
+         $res=json_decode($this->client->request('get', $this->token_url, [
             'query' => $query,
-        ])->getBody()->getContents();
+        ])->getBody()->getContents());
+        $this->openid=$res->open_id;
+        return $res->access_token;
     }
 
     public function getUserInfo($aouth)
     {
-        $url = $this->userinfo_url . '=' . $aouth['access_token'] . '&openid=' . $aouth['openid'];
-
-        return json_decode($this->client->get($url)->getBody()->getContents());
+         $user           = new \stdClass();
+        $user->openid   = $this->openid;
+        $user->unionid  = $this->openid;
+        $user->email    = $user->openid . "@open.jd.com";
+       // $user->nickname = $userinfo->nickname;
+      //  $user->avatar   = $userinfo->figureurl_2;
+        return $user;
     }
 }
