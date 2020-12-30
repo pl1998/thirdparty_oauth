@@ -62,11 +62,9 @@ class SocialiteAuth implements Socialite
         try {
             $api = new SocialiteApi($deiver, $this->config);
             $this->userJson = $api->getUserInfo();
-
-        }catch (InvalidArgumentException $exception) {
+        }catch (\Exception $exception) {
             throw new InvalidArgumentException($exception->getMessage(),$exception->getCode());
         }
-
         return $this;
     }
 
