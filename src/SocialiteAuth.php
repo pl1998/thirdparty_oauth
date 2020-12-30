@@ -11,7 +11,6 @@
 
 namespace Pl1998\ThirdpartyOauth;
 
-use mysql_xdevapi\DatabaseObject;
 use Pl1998\ThirdpartyOauth\Api\SocialiteApi;
 use Pl1998\ThirdpartyOauth\Exceptions\InvalidArgumentException;
 
@@ -29,7 +28,7 @@ class SocialiteAuth implements Socialite
      *
      * @var string[]
      */
-    private static $deiver = ['gitee', 'github', 'weibo', 'gitlab', 'qq', 'weixin', 'microsoft', 'alipay', 'xiaomi', 'google', 'huawei', 'douyin', 'line','qqapp','alipayapp','jd'];
+    private static $deiver = ['gitee', 'github', 'weibo', 'gitlab', 'qq', 'weixin', 'microsoft', 'alipay', 'xiaomi', 'google', 'huawei', 'douyin', 'line', 'qqapp', 'alipayapp', 'jd'];
 
     /**
      * 配置文件.
@@ -43,7 +42,6 @@ class SocialiteAuth implements Socialite
         $this->config = $config;
     }
 
-
     public function driver($deiver): SocialiteAuth
     {
         //兼容laravel app容器参数注入
@@ -52,12 +50,12 @@ class SocialiteAuth implements Socialite
         }
         $this->verified($deiver);
         try {
-            $api            = new SocialiteApi($deiver, $this->config);
+            $api = new SocialiteApi($deiver, $this->config);
             $this->userJson = $api->getUserInfo();
-
         } catch (InvalidArgumentException $exception) {
             throw new InvalidArgumentException($exception->getMessage(), $exception->getCode());
         }
+
         return $this;
     }
 
@@ -89,8 +87,6 @@ class SocialiteAuth implements Socialite
 
         $api = new SocialiteApi($deiver, $this->config);
         $api->authorization();
-
-
     }
 
     /**

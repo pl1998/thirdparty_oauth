@@ -23,7 +23,7 @@ class Helpers
     {
         switch ($deiver) {
             case 'github':
-                $params       = explode('=', $aouth);
+                $params = explode('=', $aouth);
                 $access_token = $params[1];
                 $access_token = explode('&', $access_token);
                 $access_token = $access_token[0];
@@ -33,13 +33,10 @@ class Helpers
             case 'gitlab':
                 $aouth = json_decode($aouth, true);
 
-                return 'Bearer ' . $aouth[$key];
+                return 'Bearer '.$aouth[$key];
                 break;
 
-
             default:
-
-
                 return $aouth;
                 break;
         }

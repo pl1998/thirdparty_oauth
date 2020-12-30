@@ -29,14 +29,14 @@ class GitlabOauth implements Handle
         $url = 'https://gitlab.example.com/oauth/authorize';
 
         $query = array_filter([
-            'client_id'     => $this->config['client_id'],
-            'redirect_uri'  => $this->config['redirect_uri'],
+            'client_id' => $this->config['client_id'],
+            'redirect_uri' => $this->config['redirect_uri'],
             'response_type' => 'code',
         ]);
 
-        $url = $url . '?' . http_build_query($query);
+        $url = $url.'?'.http_build_query($query);
 
-        header('Location:' . $url);
+        header('Location:'.$url);
         exit();
     }
 
@@ -47,9 +47,9 @@ class GitlabOauth implements Handle
         return $this->client->request('POST', $url, [
             'form_params' => [
                 'client_secret' => $this->config['client_secret'],
-                'code'          => $_GET['code'],
-                'client_id'     => $this->config['client_id'],
-                'redirect_uri'  => $this->config['redirect_uri'],
+                'code' => $_GET['code'],
+                'client_id' => $this->config['client_id'],
+                'redirect_uri' => $this->config['redirect_uri'],
             ],
         ])->getBody()->getContents();
     }
