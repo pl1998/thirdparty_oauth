@@ -38,10 +38,10 @@ class SocialiteApi implements OauthLinterface
             case 'alipay':
                 return $this->api = new AlipayOauth($config);
                 break;
-                case 'jd':
+            case 'jd':
                 return $this->api = new JdOauth($config);
                 break;
-                case 'alipayapp':
+            case 'alipayapp':
                 return $this->api = new AlipayOauth($config);
                 break;
             case 'github':
