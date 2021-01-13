@@ -9,9 +9,7 @@
         }
     ],
     "require": {
-        "guzzlehttp/guzzle": "~6.0",
-        "pltrue/thirdparty_oauth": "^1.15"
-      
+        "guzzlehttp/guzzle": "~6.0"
     },
     "autoload": {
         "psr-4": {
