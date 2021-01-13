@@ -135,8 +135,15 @@ $api = new SocialiteAuth([
     'client_secret' => ''
 ]);
 
-$user = $api->driver('gitee')->user();
+$user = $api->driver('jd')->user();
 
+interface auth
+ {
+    public function login();
+ 
+ }
+OAuth::huawei()->login();
+OAuth::jd()->login();
 var_dump($user);die;
 
 ```
