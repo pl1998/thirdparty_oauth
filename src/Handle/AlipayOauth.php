@@ -316,17 +316,4 @@ class AlipayOauth implements Handle
         #默认浏览器
         return "android";
     }
-
-    function mcurl($url)
-    {
-        $HTTP_Server = $url;
-        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, $HTTP_Server);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 30);
-        curl_setopt($ch, CURLOPT_USERAGENT, "Mozilla/5.0 (Linux; U; Android 9; zh-CN; PAR-AL00 Build/HUAWEIPAR-AL00) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/78.0.3904.108 UCBrowser/13.2.0.1100 Mobile Safari/537.36");
-        $res = curl_exec($ch);
-        curl_close($ch);
-        return $res;
-    }
 }
