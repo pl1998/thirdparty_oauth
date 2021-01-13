@@ -13,6 +13,7 @@ namespace Pl1998\ThirdpartyOauth\Api;
 
 use Pl1998\ThirdpartyOauth\Handle\AlipayOauth;
 use Pl1998\ThirdpartyOauth\Handle\GiteeOauth;
+use Pl1998\ThirdpartyOauth\Handle\Line;
 use Pl1998\ThirdpartyOauth\Handle\QqOauth;
 use Pl1998\ThirdpartyOauth\Handle\GoogleOauth;
 use Pl1998\ThirdpartyOauth\Handle\GithubOauth;
@@ -77,6 +78,9 @@ class SocialiteApi implements OauthLinterface
                 break;
             case 'huawei':
                 return $this->api = new HuaweiOauth($config);
+                break;
+            case 'line':
+                return $this->api = new Line($config);
                 break;
         }
     }

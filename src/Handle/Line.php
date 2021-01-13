@@ -45,8 +45,6 @@ class Line implements Handle
 
     public function getAccessToken()
     {
-        // $url = 'https://graph.qq.com/oauth2.0/token?grant_type=authorization_code';
-
         $query = array_filter([
             'client_id' => $this->config['client_id'],
             'code' => $_GET['code'],

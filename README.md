@@ -21,9 +21,7 @@
  * 10.github.
  * 11.gitlab.
  * 12.google(有墙).
- * 13.facebook(有墙).
- * 14 line.
- * 15.twitter.
+ * 13 line.
 
 ## 安装
 
@@ -52,7 +50,6 @@ $ composer require pltrue/thirdparty_oauth
 | 2020-12-11|   fix         | qq统一使用json接口    | [742481030](https://github.com/742481030)  | 已合并到master分支     |
 | 2020-12-12|   feat         | 新增`抖音账户`登录    | [742481030](https://github.com/742481030)  | 已合并到master分支     |
 | 2020-12-13|   feat         | 新增`Line账户`登录    | [742481030](https://github.com/742481030)  | 已合并到master分支     |
-| 2020-12-16|   feat         | 新增`Facebook账户`登录    | [742481030](https://github.com/742481030)  | 已合并到master分支     |
 | 2020-12-29|   fix         | 增加兼容支付宝qq app混合应用兼容   | [742481030](https://github.com/742481030)  | 已合并到master分支     |
 | 2020-12-29|   feat         | 新增`京东账户`登录    | [742481030](https://github.com/742481030)  | 已合并到master分支     |
 
