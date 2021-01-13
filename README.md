@@ -6,6 +6,11 @@
 ![StyleCI build status](https://github.styleci.io/repos/295677202/shield)
 
 
+## 兼容
+> * 支持php >=7.0
+
+
+
 ## 目前支持第三方登录
 
     
@@ -54,8 +59,6 @@ $ composer require pltrue/thirdparty_oauth
 | 2020-12-29|   feat         | 新增`京东账户`登录    | [742481030](https://github.com/742481030)  | 已合并到master分支     |
 
 
-## 兼容
-> * 支持php >=7.0 
 
 ## 如何使用
 
