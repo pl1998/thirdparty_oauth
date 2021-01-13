@@ -27,10 +27,12 @@ class Helpers
                 $access_token = $params[1];
                 $access_token = explode('&', $access_token);
                 $access_token = $access_token[0];
+
                 return $access_token;
                 break;
             case 'gitlab':
                 $aouth = json_decode($aouth, true);
+
                 return 'Bearer '.$aouth[$key];
                 break;
             default:
