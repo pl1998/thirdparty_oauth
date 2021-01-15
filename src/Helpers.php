@@ -37,6 +37,10 @@ class Helpers
                 $oauth = json_decode($oauth, true);
                 return $oauth[$key];
                 break;
+            case 'google':
+                $oauth = json_decode($oauth, true);
+                return $oauth[$key];
+                break;
             default:
                 return $oauth;
                 break;
