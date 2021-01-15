@@ -207,7 +207,7 @@ class TestController
      */
     public function authorization()
     {
-        $auth = new SocialiteAuth(Config::get('aouth.github'));
+        $auth = new SocialiteAuth(Config::get('oauth.github'));
 
         return $auth->redirect('github');
 
@@ -218,7 +218,7 @@ class TestController
      */
     public function giteeCallback()
     {
-        $api = new SocialiteAuth(Config::get('aouth.github'));
+        $api = new SocialiteAuth(Config::get('oauth.github'));
 
         $user = $api->driver('github')->user();
 
@@ -286,14 +286,14 @@ class OauthController extends Controller
     public function redirect()
     {
         //return   app('SocialiteAuth')->redirect('weibo');
-        $api = new SocialiteAuth(config('services.aouth.github'));
+        $api = new SocialiteAuth(config('services.oauth.github'));
         return $api->redirect('github');
     }
     public function auth()
     {
        // $api =    app('SocialiteAuth')->driver('weibo');
         //dd($api->user())
-        $api = new SocialiteAuth(config('services.aouth.github'));
+        $api = new SocialiteAuth(config('services.oauth.github'));
         $user = $api->driver('github')->user();
         dd($user);
     }

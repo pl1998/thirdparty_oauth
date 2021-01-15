@@ -60,9 +60,9 @@ class WeiXinOauth implements Handle
         ])->getBody()->getContents();
     }
 
-    public function getUserInfo($aouth)
+    public function getUserInfo($oauth)
     {
-        $url = $this->userinfo_url.'='.$aouth['access_token'].'&openid='.$aouth['openid'];
+        $url = $this->userinfo_url.'='.$oauth['access_token'].'&openid='.$oauth['openid'];
 
         return json_decode($this->client->get($url)->getBody()->getContents());
     }

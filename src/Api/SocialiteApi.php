@@ -97,20 +97,20 @@ class SocialiteApi implements OauthLinterface
 
     public function getUserInfo(): object
     {
-        $aouth = $this->getAccessToken();
+        $oauth = $this->getAccessToken();
 
         if ('weixin' == $this->deliver) {
-            return $this->api->getUserInfo(json_decode($aouth, true));
+            return $this->api->getUserInfo(json_decode($oauth, true));
         }
         /*elseif ('microsoft' == $this->deliver) {
-            $access_token      = Helpers::getAccessToken($this->deliver, $aouth['$access_token']);
+            $access_token      = Helpers::getAccessToken($this->deliver, $oauth['$access_token']);
             $userinfo          = $this->api->getUserInfo($access_token);
-            $userinfo->unionid = $aouth['unionid'];
-            //$userinfo->openid=$aouth['sub'];
+            $userinfo->unionid = $oauth['unionid'];
+            //$userinfo->openid=$oauth['sub'];
             return $userinfo;
         } */
         else {
-            $access_token = Helpers::getAccessToken($this->deliver, $aouth);
+            $access_token = Helpers::getAccessToken($this->deliver, $oauth);
 
             return $this->api->getUserInfo($access_token);
         }
