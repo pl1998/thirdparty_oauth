@@ -57,6 +57,7 @@ $ composer require pltrue/thirdparty_oauth
 | 2020-12-13|   feat         | 新增`Line账户`登录    | [742481030](https://github.com/742481030)  | 已合并到master分支     |
 | 2020-12-29|   fix         | 增加兼容支付宝qq app混合应用兼容   | [742481030](https://github.com/742481030)  | 已合并到master分支     |
 | 2020-12-29|   feat         | 新增`京东账户`登录    | [742481030](https://github.com/742481030)  | 已合并到master分支     |
+| 2020-12-29|   fix          | 兼容laravel7*    | [742481030](https://github.com/pl1998)  | 已合并到master分支     |
 
 
 
@@ -116,12 +117,12 @@ use Pl1998\ThirdpartyOauth\SocialiteAuth;
 
 $api = new SocialiteAuth([
     'client_id' => '74ee75f10437b4862d653a682111e5ddca1d24422f00ec884453ad232ae07ac9',
-    'redirect_uri' => 'http://oauth.Test/Test.php'
+    'redirect_uri' => 'http://oauth.test/test.php',
+    'client_secret'=>''
 ]);
 
-$json = $api->redirect('weibo');
+return $api->redirect('github');
 
-var_dump($json);
 ```
     
 #### 回调接口方法
@@ -134,19 +135,12 @@ use Pl1998\ThirdpartyOauth\SocialiteAuth;
 
 $api = new SocialiteAuth([
     'client_id' => '74ee75f10437b4862d653a682111e5ddca1d24422f00ec884453ad232ae07ac9',
-    'redirect_uri' => 'http://oauth.Test/Test.php',
+    'redirect_uri' => 'http://oauth.test/test.php',
     'client_secret' => ''
 ]);
 
-$user = $api->driver('jd')->user();
+$user = $api->driver('github')->user();
 
-interface auth
- {
-    public function login();
- 
- }
-OAuth::huawei()->login();
-OAuth::jd()->login();
 var_dump($user);die;
 
 ```
@@ -172,14 +166,9 @@ Route::get('gitee/callback','api/TestController/giteeCallback')->name('授权回
 return [
     'github' => [
             'client_id' => '2365a07a73dc25a27e5c7a968248b96beb53a1ad300de7ba6bf4ffe247a4b386',
-            'redirect_uri' => 'http://Test.Test/gitee/callback',
+            'redirect_uri' => 'http://test.test/gitee/callback',
             'client_secret' => ''
-        ],
-    'github' => [
-            'client_id' => '2365a07a73dc25a27e5c7a968248b96beb53a1ad300de7ba6bf4ffe247a4b386',
-            'redirect_uri' => 'http://Test.Test/gitee/callback',
-            'client_secret' => ''
-     ]
+        ]
 ];
 
 ```
@@ -241,9 +230,6 @@ class TestController
 
 ```php
 
-   .
-   .
-   .
   'oauth' => [
          'github' => [
              'client_id'    => env('GITHUB_CLIENT_ID'),
@@ -251,97 +237,68 @@ class TestController
              'client_secret'=>env('GITHUB_CLIENT_SECRET')
          ]
   ]
-   .....
 ```
 
 #### 在 <kbd>.env</kdb>中配置
 
 ```shell
-GITHUB_CLIENT_ID=xxxx
-GITHUB_REDIRECT_URI=xxx
-GITHUB_CLIENT_SECRET=xxx
+GITHUB_CLIENT_ID=684a49aa60ce
+GITHUB_CLINET_SECRETS=86c3800b0da6b6687e7572a9251860
+GITHUB_CALLBACK_URL=http://test.test/callback/github
 ```
 
 ## 创建路由
 
 ```php
-Route::get('auth/github','IndexController@auth')->name('github授权');
-Route::get('callback/github','IndexController@callback')->name('github回调接口');
+Route::get('auth/github-redirect','OauthController@redirect');
+Route::get('callback/github','OauthController@auth');
 ```
+
+
+##如果要使用laravel app 注入。先在`config/app.php`注册服务提供者 
+
+```php
+   ....
+    'providers' => [
+       \Pl1998\ThirdpartyOauth\ServiceProvider::class
+    ]
+```
+
 
 ## 控制器方法
 
 ```php
- /**
-     * 授权方法
-     * @return mixed
-     */
+<?php
+
+
+namespace App\Http\Controllers;
+use Pl1998\ThirdpartyOauth\SocialiteAuth;
+
+class OauthController extends Controller
+{
+    public function redirect()
+    {
+        //return   app('SocialiteAuth')->redirect('weibo');
+        $api = new SocialiteAuth(config('services.aouth.github'));
+        return $api->redirect('github');
+    }
     public function auth()
     {
-        //普通写法
-        // $auth = new SocialiteAuth(config('services.oauth'));
-        // $auth->redirect('github');
-
-        //laravel 容器使用
-         app('socialiteAuth')->redirect('github');
-
+       // $api =    app('SocialiteAuth')->driver('weibo');
+        //dd($api->user())
+        $api = new SocialiteAuth(config('services.aouth.github'));
+        $user = $api->driver('github');
+        dd($user->user());
     }
-    /**
-     * 回调方法
-     */
-    public function callback()
-    {
-        //普通写法
-        //$auth = new SocialiteAuth(config('services.oauth.github'));
-        //$user = $auth->driver('github')->user();
-        //var_dump($user);
-        //laravel 容器使用
-        $user = app('socialiteAuth')->driver('github')->user();
-        var_dump($user);
-    }
+}
+
+
 ```
-
-
 
 ## 返回示例
 
-```json
-{
-    "login": "pl1998",
-    "id": 43993206,
-    "node_id": "MDQ6VXNlcjQzOTkzMjA2",
-    "avatar_url": "https://avatars1.githubusercontent.com/u/43993206?v=4",
-    "gravatar_id": "",
-    "url": "https://api.github.com/users/pl1998",
-    "html_url": "https://github.com/pl1998",
-    "followers_url": "https://api.github.com/users/pl1998/followers",
-    "following_url": "https://api.github.com/users/pl1998/following{/other_user}",
-    "gists_url": "https://api.github.com/users/pl1998/gists{/gist_id}",
-    "starred_url": "https://api.github.com/users/pl1998/starred{/owner}{/repo}",
-    "subscriptions_url": "https://api.github.com/users/pl1998/subscriptions",
-    "organizations_url": "https://api.github.com/users/pl1998/orgs",
-    "repos_url": "https://api.github.com/users/pl1998/repos",
-    "events_url": "https://api.github.com/users/pl1998/events{/privacy}",
-    "received_events_url": "https://api.github.com/users/pl1998/received_events",
-    "type": "User",
-    "site_admin": false,
-    "name": "pltrue",
-    "company": null,
-    "blog": "pltrue.top",
-    "location": "深圳",
-    "email": null,
-    "hireable": null,
-    "bio": null,
-    "twitter_username": null,
-    "public_repos": 6,
-    "public_gists": 0,
-    "followers": 1,
-    "following": 1,
-    "created_at": "2018-10-09T12:42:14Z",
-    "updated_at": "2020-09-17T04:49:23Z"
-}
+![在这里插入图片描述](https://img-blog.csdnimg.cn/20210115174351473.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQyMDMyMTE3,size_16,color_FFFFFF,t_70#pic_center)
 
-```
 <br/>
 
 ## License
