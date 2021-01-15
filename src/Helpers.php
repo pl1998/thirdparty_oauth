@@ -33,6 +33,10 @@ class Helpers
                 $aouth = json_decode($aouth, true);
                 return 'Bearer '.$aouth[$key];
                 break;
+            case 'gitee':
+                $aouth = json_decode($aouth, true);
+                return $aouth[$key];
+                break;
             default:
                 return $aouth;
                 break;
