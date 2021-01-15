@@ -8,6 +8,13 @@
 
 ## 兼容
 > * 支持php >=7.0
+> 兼容laravel* 
+
+
+```shell
+# phpunit版本低 需要兼容php7<= laravel高版本安装
+ composer require pltrue/thirdparty_oauth  --with-all-dependencies
+```
 
 
 
@@ -287,10 +294,11 @@ class OauthController extends Controller
        // $api =    app('SocialiteAuth')->driver('weibo');
         //dd($api->user())
         $api = new SocialiteAuth(config('services.aouth.github'));
-        $user = $api->driver('github');
-        dd($user->user());
+        $user = $api->driver('github')->user();
+        dd($user);
     }
 }
+
 
 
 ```
