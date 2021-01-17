@@ -60,9 +60,8 @@ class GoogleOauth implements Handle
             'access_token' => $access_token,
         ]);
 
-        return  json_decode($this->client->request('GET', $url, [
+        return json_decode($this->client->request('GET', $url, [
             'query' => $query,
         ])->getBody()->getContents());
-
     }
 }
