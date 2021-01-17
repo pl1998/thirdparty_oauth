@@ -21,15 +21,15 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
 
     public function register()
     {
-        $this->app->singleton(SocialiteAuth::class, function () {
-            return new SocialiteAuth(config('services.aouth'));
+        $this->app->singleton(SocialiteAuth::class, function ($app) {
+            return new SocialiteAuth(config('services.$oauth'));
         });
 
-        $this->app->alias(SocialiteAuth::class, 'socialiteAuth');
+        $this->app->alias(SocialiteAuth::class, 'SocialiteAuth');
     }
 
     public function provides()
     {
-        return [SocialiteAuth::class, 'socialiteAuth'];
+        return [SocialiteAuth::class, 'SocialiteAuth'];
     }
 }

@@ -17,11 +17,11 @@ use Pl1998\ThirdpartyOauth\Exceptions\InvalidArgumentException;
 class SocialiteAuth implements Socialite
 {
     /**
-     * 用户json数据.
-     *
+     * user info object.
      * @var
      */
-    protected $userJson;
+    protected $userObject;
+
 
     /**
      * 目前支持的授权平台.
@@ -33,27 +33,31 @@ class SocialiteAuth implements Socialite
         'huawei', 'douyin', 'line', 'qqapp', 'alipayapp', 'jd', ];
 
     /**
-     * 配置文件.
-     *
+     * 初始化的配置数组.
      * @var array
      */
-    protected $config = [];
+    protected $config = [
+        'client_id'    => '',
+        'redirect_uri' => '',
+        'client_secret'=> ''
+    ];
 
-    public function __construct(array $config)
+    public function __construct($config = [])
     {
-        $this->config = $config;
+        if (is_array($config)) $this->config = $config;
     }
 
     public function driver($deiver): SocialiteAuth
     {
         //兼容laravel app容器参数注入
         if (array_key_exists($deiver, $this->config)) {
+
             $this->config = $this->config[$deiver];
         }
         $this->verified($deiver);
         try {
             $api = new SocialiteApi($deiver, $this->config);
-            $this->userJson = $api->getUserInfo();
+            $this->userObject = $api->getUserInfo();
         } catch (InvalidArgumentException $exception) {
             throw new InvalidArgumentException($exception->getMessage(), $exception->getCode());
         }
@@ -68,7 +72,7 @@ class SocialiteAuth implements Socialite
      */
     public function user()
     {
-        return $this->userJson;
+        return $this->userObject;
     }
 
     /**

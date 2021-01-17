@@ -63,7 +63,7 @@ class JdOauth implements Handle
         return $res->access_token;
     }
 
-    public function getUserInfo($aouth)
+    public function getUserInfo($oauth)
     {
         $user = new \stdClass();
         $user->openid = $this->openid;

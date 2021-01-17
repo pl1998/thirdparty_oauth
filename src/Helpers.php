@@ -14,16 +14,16 @@ namespace Pl1998\ThirdpartyOauth;
 class Helpers
 {
     /**
-     * @param $aouth
+     * @param $oauth
      * @param string $key
      *
      * @return mixed
      */
-    public static function getAccessToken($deiver, $aouth, $key = 'access_token')
+    public static function getAccessToken($deiver, $oauth, $key = 'access_token')
     {
         switch ($deiver) {
             case 'github':
-                $params = explode('=', $aouth);
+                $params = explode('=', $oauth);
                 $access_token = $params[1];
                 $access_token = explode('&', $access_token);
                 $access_token = $access_token[0];
@@ -32,11 +32,17 @@ class Helpers
                 break;
             case 'gitlab':
                 $aouth = json_decode($aouth, true);
-
                 return 'Bearer '.$aouth[$key];
+            case 'gitee':
+                $oauth = json_decode($oauth, true);
+                return $oauth[$key];
+                break;
+            case 'google':
+                $oauth = json_decode($oauth, true);
+                return $oauth[$key];
                 break;
             default:
-                return $aouth;
+                return $oauth;
                 break;
         }
     }
