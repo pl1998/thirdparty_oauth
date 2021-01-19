@@ -17,6 +17,7 @@ class AlipayOauth implements Handle
 {
     protected $client;
     protected $config;
+    protected $charset;
 
     public function __construct($config)
     {
@@ -40,57 +41,31 @@ class AlipayOauth implements Handle
             $dd = $this->config['redirect_uri'] . "?auth_code=code&scheme=" . urlencode($goappurl);
             header('Location:' . $dd);
             exit;
-            exit;
         }
         header('Location:' . $url);
-        exit();
+        exit;
     }
 
     function isAliClient()
     {
         return strpos($_SERVER['HTTP_USER_AGENT'], 'Alipay') !== false;
     }
-
-    function isMqq()
-    {
-        return strpos($_SERVER['HTTP_USER_AGENT'], 'MQQBrowser') !== false;
-    }
-
-    function isuc()
-    {
-        return strpos($_SERVER['HTTP_USER_AGENT'], 'UCBrowser') !== false;
-    }
-
-    function isqq()
-    {
-        return strpos($_SERVER['HTTP_USER_AGENT'], 'QQ/') !== false;
-    }
-
     public function getAccessToken()
     {
         if (!$this->isAliClient()) {
-            if ($_GET['auth_code'] == 'code') {//兼容app授权登陆 dcloud返回access_token;
-                // if(!isset($this->config['urlscehme'])){
-                //    exit('配置参数缺少urlscheme');
-                // }
+            if ($_GET['auth_code'] == 'code') {
                 ?>
                 <script>document.addEventListener('plusready', function () {
                         checkArguments();
                     }, false);
-
-                    // 判断启动方式
                     function checkArguments() {
                         console.log("plus.runtime.launcher: " + plus.runtime.launcher);
                         var args = plus.runtime.arguments;
-                        // alert(args);
                         if (args) {
                             var yes = args.replace("scme201903166355084306c6ec", "https")
-                            // alert(yes)
                             plus.webview.open(yes);
-                            // 处理args参数，如直达到某新页面等
                         }
                     }
-
                     // 处理从后台恢复
                     document.addEventListener('newintent', function () {
                         console.log("addEventListener: newintent");
@@ -102,7 +77,6 @@ class AlipayOauth implements Handle
                 exit;
             }
         }
-
         $clent = json_decode(base64_decode($_GET["state"]), true);
         $mobile = $clent["scheme"];
         if ($this->isAliClient()) {
@@ -152,8 +126,6 @@ class AlipayOauth implements Handle
 
         ]);
         $query['sign'] = $this->generateSign($query, $query['sign_type']);
-
-
         $ress = json_decode($this->client->request('POST', $url, [
             'query' => http_build_query($query),
         ])->getBody()->getContents());
@@ -173,7 +145,6 @@ class AlipayOauth implements Handle
             'app_id' => $this->config['client_id'],
             'method' => 'alipay.user.info.share',
             'auth_token' => $access_token,
-
             'timestamp' => date('Y-m-d H:i:s'),
             'version' => '1.0',
             'format' => 'JSON',
@@ -187,13 +158,10 @@ class AlipayOauth implements Handle
         $userinfo = json_decode($this->client->request('POST', $url, [
             'query' => http_build_query($query),
         ])->getBody()->getContents())->alipay_user_info_share_response;
-
-
         $userinfo->openid = $userinfo->user_id;
         $info = new \stdClass();
         $info->unionid = $info->openid = $userinfo->user_id;
         $info->nickname = $userinfo->nick_name ?? "支付宝用户";
-        dump($userinfo);
         unset($userinfo);
         return $info;
     }
@@ -272,7 +240,6 @@ class AlipayOauth implements Handle
             $fileType = $this->charset;
             if (0 != strcasecmp($fileType, $targetCharset)) {
                 $data = mb_convert_encoding($data, $targetCharset, $fileType);
-                //$data = iconv($fileType, $targetCharset.'//IGNORE', $data);
             }
         }
         return $data;
