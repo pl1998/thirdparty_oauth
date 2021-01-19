@@ -6,7 +6,7 @@
 [![Build Status](https://travis-ci.org/pl1998/thirdparty_oauth.svg?branch=master)](https://travis-ci.org/pl1998/thirdparty_oauth)
 ![StyleCI build status](https://github.styleci.io/repos/295677202/shield)
 <a href="https://packagist.org/packages/pltrue/thirdparty_oauth"><img src="https://img.shields.io/badge/php-v7.0+-blue" /></a> 
-<a href="https://packagist.org/packages/pltrue/thirdparty_oauth"><img src="https://img.shields.io/badge/downloads-43-brightgreen" /></a> 
+<a href="https://packagist.org/packages/pltrue/thirdparty_oauth"><img src="https://img.shields.io/badge/downloads-37-brightgreen" /></a> 
 
 
 ## 兼容
