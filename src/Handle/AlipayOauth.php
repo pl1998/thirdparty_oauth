@@ -35,6 +35,7 @@ class AlipayOauth implements Handle
             'scope' => 'auth_user',
             'state' => base64_encode(json_encode(["scheme" => self::scheme()])),
         ]);
+
         $url = $url . '?' . http_build_query($query);
         if (self::is_mobile()) {
             $goappurl = 'alipays://platformapi/startapp?appId=20000067&url=' . urlencode($url);
@@ -80,7 +81,7 @@ class AlipayOauth implements Handle
         $clent = json_decode(base64_decode($_GET["state"]), true);
         $mobile = $clent["scheme"];
         if ($this->isAliClient()) {
-            $code = $_GET['code'] ?? $_GET['auth_code'];
+            $code = $_GET['code'] ? $_GET['code'] : $_GET['auth_code'];
             $url = str_replace('https://', '', $this->config['redirect_uri'] . '?auth_code=' . $code . "&state=" . $_GET["state"]);
             switch ($mobile) {
                 case '6mxinltd':
@@ -115,7 +116,7 @@ class AlipayOauth implements Handle
         $query = array_filter([
             'app_id' => $this->config['client_id'],
             'method' => 'alipay.system.oauth.token',
-            'code' => $_GET['code'] ?? $_GET['auth_code'],
+            'code' => $_GET['code'] ? $_GET['code'] : $_GET['auth_code'],
             'grant_type' => 'authorization_code',
             'timestamp' => date('Y-m-d H:i:s'),
             'version' => '1.0',
@@ -132,7 +133,6 @@ class AlipayOauth implements Handle
         if (isset($ress->alipay_system_oauth_token_response->access_token)) {
             return $ress->alipay_system_oauth_token_response->access_token;
         } else {
-            dump($ress);
             exit;
         }
     }
@@ -155,14 +155,15 @@ class AlipayOauth implements Handle
         ]);
         $query['sign'] = $this->generateSign($query, $query['sign_type']);
 
-        $userinfo = json_decode($this->client->request('POST', $url, [
+        $user = $this->client->request('POST', $url, [
             'query' => http_build_query($query),
-        ])->getBody()->getContents())->alipay_user_info_share_response;
+        ])->getBody()->getContents();
+
+        $userinfo = json_decode($user)->alipay_user_info_share_response;
         $userinfo->openid = $userinfo->user_id;
         $info = new \stdClass();
         $info->unionid = $info->openid = $userinfo->user_id;
-        $info->nickname = $userinfo->nick_name ?? "支付宝用户";
-        unset($userinfo);
+        $info->nickname = $userinfo->nick_name ? $userinfo->nick_name : "支付宝用户";
         return $info;
     }
 
