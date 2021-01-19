@@ -64,7 +64,7 @@ $ composer require pltrue/thirdparty_oauth
 | 2020-12-13|   feat         | 新增`Line账户`登录    | [742481030](https://github.com/742481030)  | 已合并到master分支     |
 | 2020-12-29|   fix         | 增加兼容支付宝qq app混合应用兼容   | [742481030](https://github.com/742481030)  | 已合并到master分支     |
 | 2020-12-29|   feat         | 新增`京东账户`登录    | [742481030](https://github.com/742481030)  | 已合并到master分支     |
-| 2020-12-29|   fix          | 兼容laravel7*    | [742481030](https://github.com/pl1998)  | 已合并到master分支     |
+| 2020-12-29|   fix          | 兼容laravel7*    | [pl1998](https://github.com/pl1998)  | 已合并到master分支     |
 
 
 
