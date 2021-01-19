@@ -18,10 +18,10 @@ class SocialiteAuth implements Socialite
 {
     /**
      * user info object.
+     *
      * @var
      */
     protected $userObject;
-
 
     /**
      * 目前支持的授权平台.
@@ -30,28 +30,30 @@ class SocialiteAuth implements Socialite
      */
     private static $deiver = ['gitee', 'github', 'weibo', 'gitlab',
         'qq', 'weixin', 'microsoft', 'alipay', 'xiaomi', 'google',
-        'huawei', 'douyin', 'line', 'qqapp', 'alipayapp', 'jd'];
+        'huawei', 'douyin', 'line', 'qqapp', 'alipayapp', 'jd', ];
 
     /**
      * 初始化的配置数组.
+     *
      * @var array
      */
     protected $config = [
-        'client_id'    => '',
+        'client_id' => '',
         'redirect_uri' => '',
-        'client_secret'=> ''
+        'client_secret' => '',
     ];
 
     public function __construct($config = [])
     {
-        if (is_array($config)) $this->config = $config;
+        if (is_array($config)) {
+            $this->config = $config;
+        }
     }
 
     public function driver($deiver): SocialiteAuth
     {
         //兼容laravel app容器参数注入
         if (array_key_exists($deiver, $this->config)) {
-
             $this->config = $this->config[$deiver];
         }
         $this->verified($deiver);
