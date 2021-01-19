@@ -38,8 +38,8 @@ class AlipayOauth implements Handle
 
         $url = $url . '?' . http_build_query($query);
         if (self::is_mobile()) {
-            $goappurl = 'alipays://platformapi/startapp?appId=20000067&url=' . urlencode($url);
-            $dd = $this->config['redirect_uri'] . "?auth_code=code&scheme=" . urlencode($goappurl);
+            $alipay_url = 'alipays://platformapi/startapp?appId=20000067&url=' . urlencode($url);
+            $dd = $this->config['redirect_uri'] . "?auth_code=code&scheme=" . urlencode($alipay_url);
             header('Location:' . $dd);
             exit;
         }
@@ -78,8 +78,8 @@ class AlipayOauth implements Handle
                 exit;
             }
         }
-        $clent = json_decode(base64_decode($_GET["state"]), true);
-        $mobile = $clent["scheme"];
+        $client = json_decode(base64_decode($_GET["state"]), true);
+        $mobile = $client["scheme"];
         if ($this->isAliClient()) {
             $code = $_GET['code'] ? $_GET['code'] : $_GET['auth_code'];
             $url = str_replace('https://', '', $this->config['redirect_uri'] . '?auth_code=' . $code . "&state=" . $_GET["state"]);
@@ -127,11 +127,11 @@ class AlipayOauth implements Handle
 
         ]);
         $query['sign'] = $this->generateSign($query, $query['sign_type']);
-        $ress = json_decode($this->client->request('POST', $url, [
+        $res = json_decode($this->client->request('POST', $url, [
             'query' => http_build_query($query),
         ])->getBody()->getContents());
-        if (isset($ress->alipay_system_oauth_token_response->access_token)) {
-            return $ress->alipay_system_oauth_token_response->access_token;
+        if (isset($res->alipay_system_oauth_token_response->access_token)) {
+            return $res->alipay_system_oauth_token_response->access_token;
         } else {
             exit;
         }
