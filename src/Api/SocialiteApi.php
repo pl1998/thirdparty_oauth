@@ -11,7 +11,6 @@
 
 namespace Pl1998\ThirdpartyOauth\Api;
 
-use Pl1998\ThirdpartyOauth\Handle\AlipayOauth;
 use Pl1998\ThirdpartyOauth\Handle\GiteeOauth;
 use Pl1998\ThirdpartyOauth\Handle\Line;
 use Pl1998\ThirdpartyOauth\Handle\QqOauth;
@@ -36,9 +35,6 @@ class SocialiteApi implements OauthLinterface
     {
         $this->deliver = $deiver;
         switch ($deiver) {
-            case 'alipay':
-                return $this->api = new AlipayOauth($config);
-                break;
             case 'jd':
                 return $this->api = new JdOauth($config);
                 break;
@@ -101,17 +97,8 @@ class SocialiteApi implements OauthLinterface
 
         if ('weixin' == $this->deliver) {
             return $this->api->getUserInfo(json_decode($oauth, true));
-        }
-        /*elseif ('microsoft' == $this->deliver) {
-            $access_token      = Helpers::getAccessToken($this->deliver, $oauth['$access_token']);
-            $userinfo          = $this->api->getUserInfo($access_token);
-            $userinfo->unionid = $oauth['unionid'];
-            //$userinfo->openid=$oauth['sub'];
-            return $userinfo;
-        } */
-        else {
+        } else {
             $access_token = Helpers::getAccessToken($this->deliver, $oauth);
-
             return $this->api->getUserInfo($access_token);
         }
     }

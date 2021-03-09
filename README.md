@@ -10,7 +10,7 @@
 
 
 ## 兼容
-> * 支持php >=7.0
+> * 支持php >=7.2
 > 兼容laravel* 
 
 
@@ -24,19 +24,18 @@
 ## 目前支持第三方登录
 
     
- * 1.QQ(app/h5/web).
- * 2.微信(web扫码).
- * 3.微博(app/h5/web.
- * 4.支付宝(web/h5/app).
- * 5.小米(web/h5).
- * 6.抖音.
- * 7.世纪互联(微软).
- * 8.微软.
- * 9.gitee.
- * 10.github.
- * 11.gitlab.
- * 12.google(有墙).
- * 13 line.
+ * 1.QQ(app/h5/web)
+ * 2.微信(web扫码)
+ * 3.微博(app/h5/web)
+ * 4.小米(web/h5)
+ * 5.抖音
+ * 6.世纪互联(微软)
+ * 7.微软
+ * 8.gitee
+ * 9.github
+ * 10.gitlab
+ * 11.google(有墙)
+ * 12.line
 
 ## 安装
 
@@ -58,7 +57,6 @@ $ composer require pltrue/thirdparty_oauth
 | 日期   | 更新级别 | 更新内容      | 贡献者 | 当前状态 |
 | ------| -------- | --------- | ---- | ---- |
 | 2020-12-06|   fix 、feat   | 新增`Microsoft`登录 修复微信、QQ的bug   | [742481030](https://github.com/742481030)     | 已合并到master分支     |
-| 2020-12-07|   feat         | 新增`支付宝`登录    | [742481030](https://github.com/742481030)  | 已合并到master分支     |
 | 2020-12-08|   feat         | 新增`小米账户`登录    | [742481030](https://github.com/742481030)  | 已合并到master分支     |
 | 2020-12-09|   feat         | 新增`google账户`登录    | [742481030](https://github.com/742481030)  | 已合并到master分支     |
 | 2020-12-10|   feat         | 新增`华为账户`登录    | [742481030](https://github.com/742481030)  | 已合并到master分支     |
@@ -88,11 +86,9 @@ $ composer require pltrue/thirdparty_oauth
    * [微博应用创建地址](https://open.weibo.com/)
    * [microcoft应用创建地址](https://azure.com/)
    * [QQ互联创建地址](https://connect.qq.com/index.html)
-   * [支付宝应用](https://open.alipay.com/platform/home.htm?from=wwwalipay)
    * [小米应用](https://dev.mi.com/console/)
    * [google应用](https://console.developers.google.com)
    * [京东应用](https://jos.jd.com/)
-   
    
 
 ##### 参数说明 
