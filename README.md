@@ -1,29 +1,34 @@
-<h1> thirdparty_oauth </h1>
+<h1 align="center">ThirdpartyOauth</h1>
 
-<p> 这是一个PHP社会化登录的第三方登录扩展包</p>
+<p align="center">
 
 <a href="https://packagist.org/packages/pltrue/thirdparty_oauth"><img src="https://img.shields.io/badge/license-MIT-green" /></a> 
 [![Build Status](https://travis-ci.org/pl1998/thirdparty_oauth.svg?branch=master)](https://travis-ci.org/pl1998/thirdparty_oauth)
 ![StyleCI build status](https://github.styleci.io/repos/295677202/shield)
 <a href="https://packagist.org/packages/pltrue/thirdparty_oauth"><img src="https://img.shields.io/badge/php-v7.0+-blue" /></a> 
 <a href="https://packagist.org/packages/pltrue/thirdparty_oauth"><img src="https://img.shields.io/badge/downloads-37-brightgreen" /></a> 
+</p>
 
 
-## 兼容
-> * 支持php >=7.2
-> 兼容laravel* 
+这是一个社会化登录的第三方登录扩展包
 
+## 安装
+
+使用 composer 安装: 
 
 ```shell
-# phpunit版本低 需要兼容php7<= laravel高版本安装
- composer require pltrue/thirdparty_oauth  --with-all-dependencies
+$ composer require pltrue/thirdparty_oauth "v1.6"
 ```
 
+## 贡献
+你可以通过以下三种方式做出贡献:
 
+1. bug反馈   [issue tracker](https://github.com/pl1998/thirdparty_oauth/issues).
+2. 回答问题或修复错误 [issue tracker](https://github.com/pl1998/thirdparty_oauth/issues).
+3. 贡献新特性或更新wiki。
 
 ## 目前支持第三方登录
 
-    
  * 1.QQ(app/h5/web)
  * 2.微信(web扫码)
  * 3.微博(app/h5/web)
@@ -34,23 +39,11 @@
  * 8.gitee
  * 9.github
  * 10.gitlab
- * 11.google(有墙)
+ * 11.google
  * 12.line
-
-## 安装
-
-```shell
-$ composer require pltrue/thirdparty_oauth 
-```
 
 <hr>
 
-## 贡献
-你可以通过以下三种方式做出贡献:
-
-1. bug反馈   [issue tracker](https://github.com/pl1998/thirdparty_oauth/issues).
-2. 回答问题或修复错误 [issue tracker](https://github.com/pl1998/thirdparty_oauth/issues).
-3. 贡献新特性或更新wiki。
 
 ## 贡献者🎉、以及合并日志
 
@@ -111,9 +104,7 @@ $ composer require pltrue/thirdparty_oauth
 <br/>
 <br/>
 
-#### 授权方法  
-
-
+### 授权方法  
 
 ```php
 
@@ -128,10 +119,9 @@ $api = new SocialiteAuth([
 ]);
 
 return $api->redirect('github');
-
 ```
     
-#### 回调接口方法
+### 回调接口方法
 
 ```php
 
@@ -166,7 +156,7 @@ Route::get('gitee/callback','api/TestController/giteeCallback')->name('授权回
 
 ```
 
-## 配置文件
+### 配置文件
 
 ```php
 return [
