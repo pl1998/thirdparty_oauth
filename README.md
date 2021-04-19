@@ -92,6 +92,7 @@ $ composer require pltrue/thirdparty_oauth "v1.7"
 composer require pltrue/thirdparty_oauth "v1.7"
 ```
 #### 发布配置
+
 ```shell script
 php artisan vendor:publish --tag=oauth 
 ```
@@ -102,8 +103,10 @@ php artisan vendor:publish --tag=oauth
 ````php
 $api = new SocialiteAuth(config('oauth.github'));
 return $api->redirect('github');
+
 ````
-    *回调方法
+   *回调方法
+
 ```php
 public function githubCallBack()
     {
