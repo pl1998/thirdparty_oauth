@@ -19,10 +19,17 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
 {
     protected $defer = true;
 
+    public function boot()
+    {
+        $this->publishes([
+            __DIR__ . '/../config/oauth.php' => config_path('oauth.php'),'oauth'
+        ]);
+    }
+
     public function register()
     {
         $this->app->singleton(SocialiteAuth::class, function ($app) {
-            return new SocialiteAuth(config('services.$oauth'));
+            return new SocialiteAuth(config('oauth'));
         });
 
         $this->app->alias(SocialiteAuth::class, 'SocialiteAuth');
@@ -32,4 +39,6 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
     {
         return [SocialiteAuth::class, 'SocialiteAuth'];
     }
+
+
 }

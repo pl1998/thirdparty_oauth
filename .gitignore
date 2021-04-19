@@ -7,5 +7,5 @@ composer.lock
 .subsplit
 .php_cs.cache
 test.php
-test
+tests
 src/Handle/AlipayOauth.php

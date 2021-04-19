@@ -35,7 +35,7 @@ class GiteeOauth implements Handle
             'client_id' => $this->config['client_id'],
             'redirect_uri' => $this->config['redirect_uri'],
             'response_type' => 'code',
-        ]);
+        ]);//Car
 
         $url = $url.'?'.http_build_query($query);
 

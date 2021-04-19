@@ -114,7 +114,7 @@ use Pl1998\ThirdpartyOauth\SocialiteAuth;
 
 $api = new SocialiteAuth([
     'client_id' => '74ee75f10437b4862d653a682111e5ddca1d24422f00ec884453ad232ae07ac9',
-    'redirect_uri' => 'http://oauth.test/test.php',
+    'redirect_uri' => 'http://oauth.tests/tests.php',
     'client_secret'=>''
 ]);
 
@@ -131,7 +131,7 @@ use Pl1998\ThirdpartyOauth\SocialiteAuth;
 
 $api = new SocialiteAuth([
     'client_id' => '74ee75f10437b4862d653a682111e5ddca1d24422f00ec884453ad232ae07ac9',
-    'redirect_uri' => 'http://oauth.test/test.php',
+    'redirect_uri' => 'http://oauth.tests/tests.php',
     'client_secret' => ''
 ]);
 
@@ -162,7 +162,7 @@ Route::get('gitee/callback','api/TestController/giteeCallback')->name('授权回
 return [
     'github' => [
             'client_id' => '2365a07a73dc25a27e5c7a968248b96beb53a1ad300de7ba6bf4ffe247a4b386',
-            'redirect_uri' => 'http://test.test/gitee/callback',
+            'redirect_uri' => 'http://tests.tests/gitee/callback',
             'client_secret' => ''
         ]
 ];
