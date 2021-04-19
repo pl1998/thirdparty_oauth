@@ -22,8 +22,8 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
     public function boot()
     {
         $this->publishes([
-            __DIR__ . '/../config/oauth.php' => config_path('oauth.php'),'oauth'
-        ]);
+            __DIR__ . '/../config/oauth.php' => config_path('oauth.php')
+        ],'oauth');
     }
 
     public function register()
