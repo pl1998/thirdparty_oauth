@@ -87,9 +87,13 @@ $ composer require pltrue/thirdparty_oauth "v1.7"
 
 > 前后端分离下建议前端直接请求授权接口，后端负责回调接口即可
 
-#### 安装
+#### PHP-FPM下安装
 ```shell script
 composer require pltrue/thirdparty_oauth "v1.7"
+```
+#### laravel 常驻内存下安装
+```shell script
+composer require pltrue/thirdparty_oauth "v2.0"
 ```
 #### 发布配置
 
