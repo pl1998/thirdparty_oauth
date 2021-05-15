@@ -50,7 +50,7 @@ class QqOauth extends SimpleOauth implements Handle
         }
         $query = array_filter([
             'client_id' => $this->config['client_id'],
-            'code' => $_GET['code'],
+            'code' => request('code'),
             'grant_type' => 'authorization_code',
             'client_secret' => $this->config['client_secret'],
             'redirect_uri' => $this->config['redirect_uri'],

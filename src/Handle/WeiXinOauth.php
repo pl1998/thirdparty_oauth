@@ -50,7 +50,7 @@ class WeiXinOauth implements Handle
     {
         $query = array_filter([
             'appid' => $this->config['client_id'],
-            'code' => $_GET['code'],
+            'code' => request('code'),
             'grant_type' => 'authorization_code',
             'secret' => $this->config['client_secret'],
         ]);

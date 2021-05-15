@@ -12,7 +12,7 @@
 namespace Pl1998\ThirdpartyOauth\Api;
 
 use Pl1998\ThirdpartyOauth\Handle\GiteeOauth;
-use Pl1998\ThirdpartyOauth\Handle\Line;
+use Pl1998\ThirdpartyOauth\Handle\LineOauth;
 use Pl1998\ThirdpartyOauth\Handle\QqOauth;
 use Pl1998\ThirdpartyOauth\Handle\GoogleOauth;
 use Pl1998\ThirdpartyOauth\Handle\GithubOauth;
@@ -38,9 +38,10 @@ class SocialiteApi implements OauthLinterface
             case 'jd':
                 return $this->api = new JdOauth($config);
                 break;
-            case 'alipayapp':
-                return $this->api = new AlipayOauth($config);
-                break;
+//            case 'alipayapp':
+//
+//                return $this->api = new AlipayOauth($config);
+//                break;
             case 'github':
                 return $this->api = new GithubOauth($config);
                 break;
@@ -59,10 +60,6 @@ class SocialiteApi implements OauthLinterface
             case 'qq':
                 return $this->api = new QqOauth($config);
                 break;
-                 break;
-            case 'qqapp':
-                return $this->api = new QqOauth($config);
-                break;
             case 'microsoft':
                 return $this->api = new MicrosoftOauth($config);
                 break;
@@ -76,7 +73,7 @@ class SocialiteApi implements OauthLinterface
                 return $this->api = new HuaweiOauth($config);
                 break;
             case 'line':
-                return $this->api = new Line($config);
+                return $this->api = new LineOauth($config);
                 break;
         }
     }

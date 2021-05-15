@@ -47,7 +47,7 @@ class GitlabOauth implements Handle
         return $this->client->request('POST', $url, [
             'form_params' => [
                 'client_secret' => $this->config['client_secret'],
-                'code' => $_GET['code'],
+                'code' => request('code'),
                 'client_id' => $this->config['client_id'],
                 'redirect_uri' => $this->config['redirect_uri'],
             ],

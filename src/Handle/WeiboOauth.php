@@ -40,14 +40,14 @@ class WeiboOauth implements Handle
 
     public function getAccessToken()
     {
-        if ('token' == $_GET['code']) {
+        if ('token' == request('code')) {
             return $_GET['access_token'];
         }
         $url = 'https://api.weibo.com/oauth2/access_token';
 
         $query = array_filter([
             'client_id' => $this->config['client_id'],
-            'code' => $_GET['code'],
+            'code' => request('code'),
             'client_secret' => $this->config['client_secret'],
             'redirect_uri' => $this->config['redirect_uri'],
             'grant_type' => 'authorization_code',
