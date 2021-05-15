@@ -10,7 +10,12 @@
 </p>
 
 
-这是一个社会化登录的第三方登录扩展包
+<p>这是一个社会化登录的第三方登录扩展包 </p>
+
+v2.0版本兼容 [Laravel-Octane](https://github.com/laravel/octane)
+
+
+
 
 ## 安装
 
@@ -60,6 +65,7 @@ $ composer require pltrue/thirdparty_oauth "v1.7"
 | 2020-12-29|   feat         | 新增`京东账户`登录    | [742481030](https://github.com/742481030)  | 已合并到master分支     |
 | 2020-12-29|   fix          | 兼容laravel7*    | [pl1998](https://github.com/pl1998)  | 已合并到master分支     |
 | 2021-04-19|   feat          | 兼容laravel8* 支持laravel发布配置文件   | [pl1998](https://github.com/pl1998)  | 已合并到master分支     |
+| 2021-05-15|   feat          | v2.0版本 兼容laravel8* Laravel Octane 常驻内存   | [pl1998](https://github.com/pl1998)  | 已合并到master分支     |
 
 
 ## 如何申请应用授权？
@@ -91,7 +97,7 @@ $ composer require pltrue/thirdparty_oauth "v1.7"
 ```shell script
 composer require pltrue/thirdparty_oauth "v1.7"
 ```
-#### laravel 常驻内存下安装
+#### Laravel Octane  常驻内存下安装
 ```shell script
 composer require pltrue/thirdparty_oauth "v2.0"
 ```
